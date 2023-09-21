@@ -2,11 +2,9 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
-import Register from '../service/register.service'
 
 function register() {
-  const register = new Register()
-  return register.get()
+  console.log('deve registrar')  
 }
 
 const router = useRouter()
