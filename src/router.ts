@@ -9,12 +9,19 @@ import Login from './views/Login.vue'
 import Modal from './views/Modal.vue'
 import Card from './views/Card.vue'
 import Blank from './views/Blank.vue'
+import Register from './views/Register.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Login',
     component: Login,
+    meta: { layout: 'empty' },
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
     meta: { layout: 'empty' },
   },
   {

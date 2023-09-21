@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
-const email = ref('johndoe@mail.com')
-const password = ref('@#!@#asdf1231!_!@#')
+import Register from '../service/register.service'
 
-function login() {
-  router.push('/dashboard')
+function register() {
+  const register = new Register()
+  return register.get()
 }
+
+const router = useRouter()
+const registerData = reactive({
+  name: '',
+  gameLogin: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+})
 </script>
 
 <template>
@@ -37,11 +45,27 @@ function login() {
         <span class="text-2xl font-semibold text-gray-700">PWE</span>
       </div>
 
-      <form class="mt-4" @submit.prevent="login">
+      <form class="mt-4" @submit.prevent="register">
         <label class="block">
+          <span class="text-sm text-gray-700">Nome</span>
+          <input
+            v-model="registerData.name"
+            type="text"
+            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+          >
+        </label>
+        <label class="block mt-3">
+          <span class="text-sm text-gray-700">Login no jogo</span>
+          <input
+            v-model="registerData.gameLogin"
+            type="text"
+            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+          >
+        </label>
+        <label class="block mt-3">
           <span class="text-sm text-gray-700">Email</span>
           <input
-            v-model="email"
+            v-model="registerData.email"
             type="email"
             class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
           >
@@ -50,25 +74,26 @@ function login() {
         <label class="block mt-3">
           <span class="text-sm text-gray-700">Senha</span>
           <input
-            v-model="password"
+            v-model="registerData.password"
+            type="password"
+            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+          >
+        </label>
+        <label class="block mt-3">
+          <span class="text-sm text-gray-700">Confirme a senha</span>
+          <input
+            v-model="registerData.confirmPassword"
             type="password"
             class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
           >
         </label>
 
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex items-center justify-center mt-4">
           <div>
             <label class="inline-flex items-center">
               <input type="checkbox" class="text-indigo-600 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500">
-              <span class="mx-2 text-sm text-gray-600">Lembrar senha</span>
+              <span class="mx-2 text-sm text-gray-600">Eu li e concordo com os Termos de Uso</span>
             </label>
-          </div>
-
-          <div>
-            <a
-              class="block text-sm text-indigo-700 fontme hover:underline"
-              href="#"
-            >Esqueceu sua senha?</a>
           </div>
         </div>
 
@@ -77,15 +102,16 @@ function login() {
             type="submit"
             class="w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500"
           >
-            Entrar
+            Registrar
           </button>
-          <div class="mt-2">
-            <a
-              class="block text-sm text-center text-indigo-700 fontme hover:underline"
-              href="#"
-              @click.prevent="router.push('/register')"
-            >Cadastre-se</a>
-          </div>
+        </div>
+        <div class="mt-2 center flex items-center justify-center">
+          Já tem uma conta?
+          <a
+            class="block text-center ml-1 text-indigo-700 hover:underline"
+            href="#"
+            @click.prevent="router.push('/')"
+          >Acessar Conta</a>
         </div>
       </form>
     </div>
