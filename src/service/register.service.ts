@@ -8,7 +8,7 @@ export default class User {
     try {
       return await axios.post(`${url}/user`, body)
     } catch (error: any) {
-      return { error: error.response.data }
+      return { message: error.response.data }
     }
   }
 

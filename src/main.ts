@@ -14,7 +14,6 @@ import EmptyLayout from './components/EmptyLayout.vue'
 const app = createApp(App)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
-
 app.component('DefaultLayout', DashboardLayout)
 app.component('EmptyLayout', EmptyLayout)
 app.use(router)
