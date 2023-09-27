@@ -17,7 +17,7 @@ interface UserValues {
 }
 
 const validationSchema = toTypedSchema(zodSchema)
-const { handleSubmit, isSubmitting, errors } = useForm({ validationSchema })
+const { handleSubmit, isSubmitting, errors, meta } = useForm({ validationSchema })
 
 const { value: trueName } = useField('trueName')
 const { value: name } = useField('name')
@@ -25,29 +25,6 @@ const { value: email } = useField('email')
 const { value: password } = useField('password')
 const { value: passwordConfirm } = useField('passwordConfirm')
 const { value: terms } = useField('terms')
-
-// const formData = reactive({
-//   trueName,
-//   name,
-//   email,
-//   password,
-//   passwordConfirm,
-//   terms
-// })
-
-const active = reactive({ disabled: true })
-
-// watch(formData, async () => {
-//   const empty = Object.keys(formData).map((item: any) => {
-//     return formData[item]
-//   })
-//   if (empty.some(item => !item)) return console.log('ainda possui falsy')
-//   return disableButton()
-// })
-
-function disableButton () {
-  active.disabled = !active.disabled
-}
 
 const register = handleSubmit(onValidForm)
 
@@ -61,7 +38,7 @@ async function onValidForm (values: UserValues) {
   <div class="flex items-center justify-center h-screen px-6 bg-gray-200">
     <div class="w-full max-w-sm p-6 bg-white rounded-md shadow-md">
       <div class="flex items-center justify-center">
-        <img type="image" src="../../public/logo.png" alt="" class="h-24">
+        <img type="image" src="/logo.png" alt="" class="h-24">
         <!-- <span class="text-2xl font-semibold text-gray-700">--------</span> -->
       </div>
 
@@ -113,8 +90,9 @@ async function onValidForm (values: UserValues) {
         </div>
 
         <div class="mt-6">
-          <button type="submit" :disabled="isSubmitting || active.disabled" :class="{ 'bg-indigo-500': isSubmitting || active.disabled }"
-            class="w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500">
+          <button type="submit" :disabled="isSubmitting || !meta.valid"
+            :class="{ 'bg-indigo-500': isSubmitting || !meta.valid, 'bg-indigo-600': meta.valid && !isSubmitting }"
+            class="w-full px-4 py-2 text-sm text-center text-white rounded-md focus:outline-none hover:bg-indigo-500">
             <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
             <span v-else>Registrar</span>
           </button>

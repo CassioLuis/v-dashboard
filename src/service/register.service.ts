@@ -18,7 +18,7 @@ export default class User {
       if (data.length) return data
       return
     } catch (error: any) {
-      return { error: error.response.data }
+      return { message: error.response.data }
     }
   }
 
@@ -28,7 +28,7 @@ export default class User {
       if (data.length) return data
       return
     } catch (error: any) {
-      return { error: error.response.data }
+      return { message: error.response.data }
     }
   }
 }
