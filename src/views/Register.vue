@@ -2,9 +2,8 @@
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
-import { reactive, watch } from 'vue'
 import User from '../service/register.service.js'
-import { zodSchema } from '../schemas/zod.registerForm'
+import { zodSchema } from '../schemas/zod.registerform'
 
 const router = useRouter()
 
@@ -106,3 +105,4 @@ async function onValidForm (values: UserValues) {
     </div>
   </div>
 </template>
+../schemas/zod.registerform.js
