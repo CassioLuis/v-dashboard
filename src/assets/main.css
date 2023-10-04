@@ -19,3 +19,51 @@
 ::-webkit-scrollbar-thumb:hover{
   background: #718096;
 }
+
+.glass {
+  /* background: rgba(255, 255, 255, 0.7); */
+  /* background: rgba(194, 194, 194, 1); */
+  background: rgba(39, 39, 42, 0.7);
+  backdrop-filter: blur(2px); /* Aplicar um desfoque ao fundo */
+}
+
+.label {
+  @apply text-sm text-white font-semibold
+}
+
+.input {
+  @apply block w-full mt-1 text-white bg-zinc-700 border-gray-200 rounded-md focus:border-orange-600 focus:ring focus:ring-opacity-40 focus:ring-orange-500
+}
+
+.bg-image {
+  background-image: url('../../public/bg-image.jpg');
+  background-size: cover; /* Redimensiona a imagem para cobrir todo o elemento */
+  background-repeat: no-repeat; /* Evita a repetição da imagem */
+  background-position: center; /* Alinha a imagem ao centro do elemento */
+}
+
+.layout {
+  /* background-image: url('../../public/bg-image.jpg'), */
+  @apply bg-image flex justify-center h-screen bg-zinc-900
+}
+
+.form {
+  @apply glass w-full max-w-sm p-6 bg-zinc-800 shadow-md flex flex-col justify-center
+}
+
+.title {
+  @apply text-2xl font-semibold text-white
+}
+
+.input-check {
+  @apply text-orange-600 border-gray-200 rounded-md focus:border-orange-600 focus:ring focus:ring-opacity-40 focus:ring-orange-500
+}
+
+.link {
+  @apply block text-sm text-orange-500 hover:underline font-semibold
+}
+
+.btn {
+  /* @apply w-full px-4 py-2 text-sm text-center font-semibold text-white bg-orange-600 rounded-md focus:outline-none hover:bg-orange-500 */
+  @apply w-full px-4 py-2 text-sm text-center font-semibold text-white bg-orange-600 rounded-md focus:outline-none hover:bg-orange-500
+}
