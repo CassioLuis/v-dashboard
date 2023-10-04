@@ -21,7 +21,7 @@ async function getByLogin (data: ZodObject) {
   if (login.name && login.name === data.name) return false // funciona sem essa linha, mas com ela evita uma execução desnecessaria
   login.name = data.name
   const response = await User.getByLogin(data.name)
-  if (response.length) {
+  if (response) {
     login.erro = true
     return false
   }
@@ -39,7 +39,7 @@ async function getByEmail (data: ZodObject) {
   if (email.name && email.name === data.email) return false
   email.name = data.email
   const response = await User.getByEmail(data.email)
-  if (response.length) {
+  if (response) {
     email.erro = true
     return false
   }

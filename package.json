@@ -1,6 +1,9 @@
 {
   "name": "tailwind-dashboard",
   "version": "0.0.1",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
