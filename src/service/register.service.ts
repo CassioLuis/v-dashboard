@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const url = 'https://player-api-z98a.onrender.com/'
-const url = 'http://localhost:3000/'
+const url = 'https://player-api-z98a.onrender.com/'
+// const url = 'http://localhost:3000/'
 
 export default class User {
 
