@@ -10,6 +10,7 @@ import Modal from './views/Modal.vue'
 import Card from './views/Card.vue'
 import Blank from './views/Blank.vue'
 import Register from './views/Register.vue'
+import ChangePass from './views/ChancePass.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -22,6 +23,12 @@ const routes: RouteRecordRaw[] = [
     path: '/register',
     name: 'Register',
     component: Register,
+    meta: { layout: 'empty' },
+  },
+  {
+    path: '/recuperacao',
+    name: 'ChangePass',
+    component: ChangePass,
     meta: { layout: 'empty' },
   },
   {

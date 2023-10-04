@@ -68,6 +68,7 @@ function login() {
             <a
               class="block text-sm text-indigo-700 fontme hover:underline"
               href="#"
+              @click.prevent="router.push('/recuperacao')"
             >Esqueceu sua senha?</a>
           </div>
         </div>
