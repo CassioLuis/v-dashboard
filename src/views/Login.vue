@@ -15,7 +15,7 @@ function login () {
   <div class="layout">
     <div class="form">
       <div class="flex flex-col items-center justify-center">
-        <img type="image" src="/logo-2.png" alt="" class="h-36 absolute top-36">
+        <img type="image" src="/logo-2.png" alt="" class="h-36">
         <!-- <span class="text-xl mt-4 text-white font-semibold">Logar</span> -->
       </div>
 

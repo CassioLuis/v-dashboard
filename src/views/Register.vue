@@ -47,7 +47,7 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
     </div>
     <div class="form">
       <div class="flex flex-col items-center justify-center">
-        <img type="image" src="/logo-2.png" alt="" class="h-36 absolute top-20">
+        <img type="image" src="/logo-2.png" alt="" class="h-36">
         <!-- <span class="text-xl mt-4 text-white font-semibold">Registrar</span> -->
       </div>
       <!-- <Notify v-if="success" :emphasis-msg="email" status="Sucess" msg="Cadastro efetuado com sucesso!" class="mt-4" /> -->
@@ -84,10 +84,10 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
 
         <div class="flex items-center justify-center mt-4">
           <div>
-            <label class="inline-flex items-center">
+            <label class="inline-flex items-center ">
               <input type="checkbox" name="terms" v-model="terms" class="input-check">
               <span class="mx-2 label">Eu li e concordo com os Termos de Uso</span>
-              <span class="text-red-500 font-semibold text-xs">{{ errors.terms }}</span>
+              <span class=" text-red-500 font-semibold text-xs">{{ errors.terms }}</span>
             </label>
           </div>
         </div>
