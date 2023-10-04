@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate'
+import { ref } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import User from '../service/register.service.js'
 import { zodSchema } from '../schemas/zod.registerform'
+import Notify from '../components/Notify.vue'
 
 const router = useRouter()
 
@@ -27,9 +29,15 @@ const { value: terms } = useField('terms')
 
 const register = handleSubmit(onValidForm)
 
-async function onValidForm (values: UserValues) {
-  await User.add(values)
-  alert('dados inseridos')
+const success = ref<Boolean>(false)
+
+async function onValidForm (values: UserValues, { resetForm }: any) {
+  const response: any = await User.add(values)
+  if (response.status === 200) {
+    success.value = true
+    resetForm()
+  }
+  if (response.status === 400) console.log('usuario ja cadastrado')
 }
 </script>
 
@@ -40,7 +48,7 @@ async function onValidForm (values: UserValues) {
         <img type="image" src="/logo.png" alt="" class="h-24">
         <!-- <span class="text-2xl font-semibold text-gray-700">--------</span> -->
       </div>
-
+      <!-- <Notify v-if="success" :emphasis-msg="email" status="Sucess" msg="Cadastro efetuado com sucesso!" class="mt-4" /> -->
       <form class="mt-4" @submit="register">
         <label class="block">
           <span class="text-sm text-gray-700">Nome</span>

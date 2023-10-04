@@ -17,6 +17,7 @@ let email = {
 }
 
 async function getByLogin (data: ZodObject) {
+  if (!data.name) return true
   if (login.name && login.name === data.name && !login.erro) return true
   if (login.name && login.name === data.name) return false // funciona sem essa linha, mas com ela evita uma execução desnecessaria
   login.name = data.name
@@ -35,6 +36,7 @@ const nameRefine = {
 }
 
 async function getByEmail (data: ZodObject) {
+  if (!data.email) return true
   if (email.name && email.name === data.email && !email.erro) return true
   if (email.name && email.name === data.email) return false
   email.name = data.email
@@ -53,12 +55,12 @@ const emailRefine = {
 }
 
 export const zodSchema = zod.object({
-  trueName: zod.string().nonempty('Digite o nome.').min(6, { message: 'O nome deve ter no mínimo 6 caracteres.' }),
-  name: zod.string().nonempty('Digite o login.').min(4, { message: 'O login deve ter no mínimo 4 caracteres.' }),
-  email: zod.string().nonempty('Digite o email.').email({ message: 'Digite um email válido.' }),
-  password: zod.string().nonempty('Digite a senha.').min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }),
-  passwordConfirm: zod.string().nonempty('Digite a confirmação da senha.'),
-  terms: zod.boolean(),
+  trueName: zod.string().nonempty('Digite o nome.').min(6, { message: 'O nome deve ter no mínimo 6 caracteres.' }).default(''),
+  name: zod.string().nonempty('Digite o login.').min(4, { message: 'O login deve ter no mínimo 4 caracteres.' }).default(''),
+  email: zod.string().nonempty('Digite o email.').email({ message: 'Digite um email válido.' }).default(''),
+  password: zod.string().nonempty('Digite a senha.').min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }).default(''),
+  passwordConfirm: zod.string().nonempty('Digite a confirmação da senha.').default(''),
+  terms: zod.boolean().default(false),
   isValid: zod.boolean().default(false)
 })
   .refine(data => data.password === data.passwordConfirm, {
