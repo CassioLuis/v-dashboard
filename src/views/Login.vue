@@ -1,14 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import Auth from '../service/auth.service'
+import LoginContract from '../service/interfaces/auth'
+import Notify from '../components/Notify.vue'
 
 const router = useRouter()
 const email = ref('johndoe@mail.com')
 const password = ref('@#!@#asdf1231!_!@#')
+const data = reactive<LoginContract>({
+  name: '',
+  password: ''
+})
 
-function login () {
-  // router.push('/dashboard')
+const error = ref(false)
+const loading = ref(false)
+
+async function signin () {
+  loading.value = true
+  const response = await Auth.login(data)
+  loading.value = false
+  if (response.status === 200) {
+    return router.push('/dashboard')
+  }
+  return error.value = true
 }
+
+watch(data, (vl) => {
+  error.value = false
+})
 </script>
 
 <template>
@@ -16,19 +36,21 @@ function login () {
     <div class="form">
       <div class="flex flex-col items-center justify-center">
         <img type="image" src="/logo-2.png" alt="" class="h-36">
-        <!-- <span class="text-xl mt-4 text-white font-semibold">Logar</span> -->
+        <span class="text-xl mt-4 text-white font-semibold">Logar</span>
       </div>
 
-      <form class="mt-4" @submit.prevent="login">
+      <form class="mt-4" @submit.prevent="signin">
         <label class="block">
-          <span class="label">Email</span>
-          <input v-model="email" type="email" class="input">
+          <span class="label">Login</span>
+          <input v-model="data.name" type="text" class="input">
         </label>
 
         <label class="block mt-3">
           <span class="label">Senha</span>
-          <input v-model="password" type="password" class="input">
+          <input v-model="data.password" type="password" class="input">
         </label>
+
+        <Notify v-if="error" status="Error" msg="Usuário inválido!" class="mt-4" />
 
         <div class="flex items-center justify-between mt-4">
           <div>
@@ -45,12 +67,23 @@ function login () {
 
         <div class="mt-6">
           <button type="submit" class="btn">
-            Entrar
+            <font-awesome-icon v-if="loading" icon="fa-solid fa-circle-notch" spin />
+            <span v-else>Entrar</span>
           </button>
           <div class="mt-2">
-            <a class="link text-center" href="#"
-              @click.prevent="router.push('/register')">Cadastre-se</a>
+            <a class="link text-center" href="#" @click.prevent="router.push('/register')">Cadastre-se</a>
           </div>
+        </div>
+        <div class="flex justify-center mt-10 gap-4 pt-10">
+          <a href="https://discord.gg/YjrRxbAJ">
+            <img type="image" src="/discord.png" alt="" class="h-12 cursor-pointer">
+          </a>
+          <a href="https://discord.gg/YjrRxbAJ">
+            <img type="image" src="/instagram.png" alt="" class="h-12">
+          </a>
+          <a href="https://discord.gg/YjrRxbAJ">
+            <img type="image" src="/facebook.png" alt="" class="h-12">
+          </a>
         </div>
       </form>
     </div>

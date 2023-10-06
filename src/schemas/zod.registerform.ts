@@ -57,7 +57,7 @@ const emailRefine = {
 export const zodSchema = zod.object({
   trueName: zod.string().nonempty('Digite o nome.').min(6, { message: 'O nome deve ter no mínimo 6 caracteres.' }).default(''),
   name: zod.string().nonempty('Digite o login.').min(4, { message: 'O login deve ter no mínimo 4 caracteres.' }).default(''),
-  email: zod.string().nonempty('Digite o email.').email({ message: 'Digite um email válido.' }).default(''),
+  email: zod.string().nonempty('Digite o email.').email({ message: 'Digite um email válido.' }).toLowerCase().default(''),
   password: zod.string().nonempty('Digite a senha.').min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }).default(''),
   passwordConfirm: zod.string().nonempty('Digite a confirmação da senha.').default(''),
   terms: zod.boolean().default(false),

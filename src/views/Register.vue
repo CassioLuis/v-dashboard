@@ -22,22 +22,23 @@ const { handleSubmit, isSubmitting, errors, meta } = useForm({ validationSchema 
 
 const { value: trueName } = useField('trueName')
 const { value: name } = useField('name')
-const { value: email } = useField('email')
+const { value: email } = useField<string>('email')
 const { value: password } = useField('password')
 const { value: passwordConfirm } = useField('passwordConfirm')
 const { value: terms } = useField('terms')
 
 const register = handleSubmit(onValidForm)
 
-const success = ref<Boolean>(false)
+const status = ref<string>('')
 
 async function onValidForm (values: UserValues, { resetForm }: any) {
   const response: any = await User.add(values)
   if (response.status === 200) {
-    success.value = true
+    status.value = 'Success'
     resetForm()
+    return
   }
-  if (response.status === 400) console.log('usuario ja cadastrado')
+  return status.value = 'Error'
 }
 </script>
 
@@ -48,10 +49,17 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
     <div class="form">
       <div class="flex flex-col items-center justify-center">
         <img type="image" src="/logo-2.png" alt="" class="h-36">
-        <!-- <span class="text-xl mt-4 text-white font-semibold">Registrar</span> -->
+        <span class="text-xl mt-4 text-white font-semibold">Registrar</span>
       </div>
-      <!-- <Notify v-if="success" :emphasis-msg="email" status="Sucess" msg="Cadastro efetuado com sucesso!" class="mt-4" /> -->
-      <form class="mt-4" @submit="register">
+      <div v-if="status === 'Success'" class="mt-4">
+        <Notify emphasis-msg="Parabéns!" :status="status" msg=" Cadastro efetuado com sucesso!"/>
+        <a class="mt-4 block text-center ml-1 link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
+      </div>
+      <div v-else-if="status === 'Error'" class="mt-4">
+        <Notify emphasis-msg="Erro!" :status="status" msg=" Cadastro não efetuado!"/>
+        <a class="mt-4 block text-center ml-1 link" href="#" @click.prevent="router.push('/register')">Voltar para registro</a>
+      </div>
+      <form v-else class="mt-4" @submit="register">
         <label class="block">
           <span class="label">Nome</span>
           <input name="trueName" v-model="trueName" type="text" class="input">
@@ -101,7 +109,7 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
           </button>
         </div>
         <div class="mt-2 center flex items-center justify-center text-white">
-          Já tem uma conta?
+          Já possui uma conta?
           <a class="block text-center ml-1 link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
         </div>
       </form>
