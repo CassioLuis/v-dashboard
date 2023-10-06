@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSidebar } from '../composables/useSidebar'
+import { useAppStore } from '../stores/application'
+
+const router = useRouter()
+const session = useAppStore()
+const { setToken } = session
+
+function logOut() {
+  setToken('')
+  return router.push('/')
+}
 
 const dropdownOpen = ref(false)
 const { isOpen } = useSidebar()
@@ -108,12 +119,12 @@ const { isOpen } = useSidebar()
               href="#"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
             >Products</a>
-            <router-link
-              to="/"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+            <a
+              class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+              @click.prevent="logOut"
             >
               Log out
-            </router-link>
+            </a>
           </div>
         </transition>
       </div>

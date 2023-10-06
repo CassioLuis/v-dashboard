@@ -1,19 +1,26 @@
 import { createApp } from 'vue'
+import { createPinia, storeToRefs } from 'pinia'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCircleNotch, faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUserSecret, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faUserSecret, faCircleNotch)
+import { useAppStore } from './stores/application'
 
 import DashboardLayout from './components/DashboardLayout.vue'
 import EmptyLayout from './components/EmptyLayout.vue'
 
-const app = createApp(App)
+library.add(faUserSecret, faCircleNotch)
 
-app.component('font-awesome-icon', FontAwesomeIcon)
+const pinia = createPinia()
+const app = createApp(App)
+app.provide('pinia', pinia)
+app.provide('useAppStore', useAppStore)
+app.provide('storeToRefs', storeToRefs)
+
+app.use(pinia)
+app.component('FontAwesomeIcon', FontAwesomeIcon)
 app.component('DefaultLayout', DashboardLayout)
 app.component('EmptyLayout', EmptyLayout)
 app.use(router)

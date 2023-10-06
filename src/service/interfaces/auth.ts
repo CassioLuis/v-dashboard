@@ -1,4 +1,4 @@
 export default interface LoginContract {
-  name: string,
+  name: string
   password: string
 }

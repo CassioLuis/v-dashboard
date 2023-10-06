@@ -13,6 +13,31 @@ const layout = computed(
 
 <template>
   <component :is="layout">
-    <router-view/>
+    <router-view />
   </component>
 </template>
+
+<!-- how to transition -->
+
+<!-- <template>
+  <component :is="layout">
+    <router-view v-slot="{ Component }">
+      <transition name="slide" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </component>
+</template>
+
+<style>
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+
+.slide-enter-form,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30%)
+}
+</style> -->

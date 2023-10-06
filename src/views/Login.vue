@@ -1,32 +1,36 @@
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Auth from '../service/auth.service'
-import LoginContract from '../service/interfaces/auth'
+import type LoginContract from '../service/interfaces/auth'
 import Notify from '../components/Notify.vue'
+import { useAppStore } from '../stores/application'
 
 const router = useRouter()
-const email = ref('johndoe@mail.com')
-const password = ref('@#!@#asdf1231!_!@#')
+const session = useAppStore()
+const { setToken } = session
+
 const data = reactive<LoginContract>({
   name: '',
-  password: ''
+  password: '',
 })
 
 const error = ref(false)
 const loading = ref(false)
 
-async function signin () {
+async function signin() {
   loading.value = true
   const response = await Auth.login(data)
+  const { token } = response.data
   loading.value = false
   if (response.status === 200) {
+    setToken(token)
     return router.push('/dashboard')
   }
   return error.value = true
 }
 
-watch(data, (vl) => {
+watch(data, () => {
   error.value = false
 })
 </script>
@@ -39,7 +43,7 @@ watch(data, (vl) => {
         <span class="text-xl mt-4 text-white font-semibold">Logar</span>
       </div>
 
-      <form class="mt-4" @submit.prevent="signin">
+      <form class="mt-4" @submit.prevent="signin" :disabled="loading">
         <label class="block">
           <span class="label">Login</span>
           <input v-model="data.name" type="text" class="input">
