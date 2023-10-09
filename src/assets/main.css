@@ -69,3 +69,8 @@
   /* @apply w-full px-4 py-2 text-sm text-center font-semibold text-white bg-orange-600 rounded-md focus:outline-none hover:bg-orange-500 */
   @apply w-full px-4 py-2 text-sm text-center font-semibold text-white bg-orange-600 rounded-md focus:outline-none hover:bg-orange-500
 }
+
+.btn-disabled {
+  /* @apply w-full px-4 py-2 text-sm text-center font-semibold text-white bg-orange-600 rounded-md focus:outline-none hover:bg-orange-500 */
+  @apply w-full px-4 py-2 text-sm text-center font-semibold text-white bg-orange-500 rounded-md focus:outline-none
+}

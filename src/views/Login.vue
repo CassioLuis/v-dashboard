@@ -3,7 +3,6 @@ import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Auth from '../service/auth.service'
 import type LoginContract from '../service/interfaces/auth'
-import Notify from '../components/Notify.vue'
 import { useAppStore } from '../stores/application'
 
 const router = useRouter()
@@ -18,11 +17,11 @@ const data = reactive<LoginContract>({
 const error = ref(false)
 const loading = ref(false)
 
-async function signin() {
+async function signin () {
   loading.value = true
   const response = await Auth.login(data)
-  const { token } = response.data
   loading.value = false
+  const { token } = response.data
   if (response.status === 200) {
     setToken(token)
     return router.push('/dashboard')
@@ -43,18 +42,20 @@ watch(data, () => {
         <span class="text-xl mt-4 text-white font-semibold">Logar</span>
       </div>
 
-      <form class="mt-4" @submit.prevent="signin" :disabled="loading">
+      <form class="mt-4" @submit.prevent="signin">
         <label class="block">
           <span class="label">Login</span>
-          <input v-model="data.name" type="text" class="input">
+          <input v-model="data.name" type="text" class="input" :disabled="loading">
         </label>
 
         <label class="block mt-3">
           <span class="label">Senha</span>
-          <input v-model="data.password" type="password" class="input">
+          <input v-model="data.password" type="password" class="input" :disabled="loading">
         </label>
 
-        <Notify v-if="error" status="Error" msg="Usuário inválido!" class="mt-4" />
+        <div v-if="error" class="solid-alert-danger bg-blend-soft-light mt-4">
+          Usuário inválido!
+        </div>
 
         <div class="flex items-center justify-between mt-4">
           <div>
@@ -70,7 +71,7 @@ watch(data, () => {
         </div>
 
         <div class="mt-6">
-          <button type="submit" class="btn">
+          <button type="submit" :class="{'btn': !loading, 'btn-disabled': loading}" :disabled="loading">
             <font-awesome-icon v-if="loading" icon="fa-solid fa-circle-notch" spin />
             <span v-else>Entrar</span>
           </button>

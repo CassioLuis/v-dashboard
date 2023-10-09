@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import User from '../service/register.service.js'
 import { zodSchema } from '../schemas/zod.registerform'
-import Notify from '../components/Notify.vue'
 
 const router = useRouter()
 
@@ -15,6 +14,11 @@ interface UserValues {
   password: string;
   passwordConfirm: string;
   terms: boolean;
+}
+
+interface Register {
+  error: boolean
+  success: boolean
 }
 
 const validationSchema = toTypedSchema(zodSchema)
@@ -29,16 +33,24 @@ const { value: terms } = useField('terms')
 
 const register = handleSubmit(onValidForm)
 
-const status = ref<string>('')
+const registerStatus = reactive<Register>({
+  error: false,
+  success: false
+})
 
 async function onValidForm (values: UserValues, { resetForm }: any) {
   const response: any = await User.add(values)
   if (response.status === 200) {
-    status.value = 'Success'
+    registerStatus.success = true
     resetForm()
     return
   }
-  return status.value = 'Error'
+  registerStatus.error = true
+}
+
+function resetRegisterStatus () {
+  registerStatus.error = false
+  registerStatus.success = false
 }
 </script>
 
@@ -51,14 +63,21 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
         <img type="image" src="/logo-2.png" alt="" class="h-36">
         <span class="text-xl mt-4 text-white font-semibold">Registrar</span>
       </div>
-      <div v-if="status === 'Success'" class="mt-4">
-        <Notify emphasis-msg="Parabéns!" :status="status" msg=" Cadastro efetuado com sucesso!"/>
-        <a class="mt-4 block text-center ml-1 link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
+
+      <div v-if="registerStatus.error">
+        <div class="mt-4 w-full solid-alert-danger">
+          <span class="font-bold">Erro!</span> Cadastro não efetuado.
+        </div>
+        <a class="mt-4 text-center link" href="#" @click.prevent="resetRegisterStatus">Voltar para registro</a>
       </div>
-      <div v-else-if="status === 'Error'" class="mt-4">
-        <Notify emphasis-msg="Erro!" :status="status" msg=" Cadastro não efetuado!"/>
-        <a class="mt-4 block text-center ml-1 link" href="#" @click.prevent="router.push('/register')">Voltar para registro</a>
+
+      <div v-else-if="!registerStatus.error && registerStatus.success">
+        <div class="solid-alert-success mt-4 w-full">
+          <span class="font-bold">Sucesso!</span> Cadastro efetuado.
+        </div>
+        <a class="mt-4 text-center link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
       </div>
+
       <form v-else class="mt-4" @submit="register">
         <label class="block">
           <span class="label">Nome</span>
@@ -102,8 +121,7 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
 
         <div class="mt-6">
           <button type="submit" :disabled="isSubmitting || !meta.valid"
-            :class="{ 'bg-orange-500': isSubmitting || !meta.valid, 'bg-orange-600': meta.valid && !isSubmitting }"
-            class="w-full px-4 py-2 text-sm text-center text-white rounded-md focus:outline-none hover:bg-orange-500 font-semibold">
+            :class="{ 'btn-disabled': isSubmitting || !meta.valid, 'btn': meta.valid && !isSubmitting }">
             <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
             <span v-else>Registrar</span>
           </button>
@@ -116,4 +134,3 @@ async function onValidForm (values: UserValues, { resetForm }: any) {
     </div>
   </div>
 </template>
-../schemas/zod.registerform.js

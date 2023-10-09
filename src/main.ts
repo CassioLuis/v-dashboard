@@ -6,6 +6,7 @@ import { faCircleNotch, faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
+import './assets/alerts.css'
 import { useAppStore } from './stores/application'
 
 import DashboardLayout from './components/DashboardLayout.vue'

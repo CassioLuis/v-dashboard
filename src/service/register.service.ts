@@ -1,7 +1,5 @@
 import axios from 'axios'
-
-const url = 'https://player-api-z98a.onrender.com/'
-// const url = 'http://localhost:3000/'
+import { url } from './url'
 
 export default class User {
   static async add(body: any) {

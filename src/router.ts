@@ -84,7 +84,6 @@ const router = createRouter({
 router.beforeEach((to) => {
   const auth = useAppStore()
   const { getToken } = storeToRefs(auth)
-  console.log(getToken.value)
   if (to.meta.requiresAuth && !getToken.value) return { name: 'Login' }
   if (to.name === 'Login' && getToken.value) return { name: 'Dashboard' }
   // return { name: 'Login' }
