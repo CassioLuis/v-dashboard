@@ -6,20 +6,23 @@ interface ZodObject {
   email: string
 }
 
-let login = {
+const login = {
   name: '',
-  erro: false
+  erro: false,
 }
 
-let email = {
+const email = {
   name: '',
-  erro: false
+  erro: false,
 }
 
-async function getByLogin (data: ZodObject) {
-  if (!data.name) return true
-  if (login.name && login.name === data.name && !login.erro) return true
-  if (login.name && login.name === data.name) return false // funciona sem essa linha, mas com ela evita uma execução desnecessaria
+async function getByLogin(data: ZodObject) {
+  if (!data.name)
+    return true
+  if (login.name && login.name === data.name && !login.erro)
+    return true
+  if (login.name && login.name === data.name)
+    return false // funciona sem essa linha, mas com ela evita uma execução desnecessaria
   login.name = data.name
   const response = await User.getByLogin(data.name)
   if (response) {
@@ -32,13 +35,16 @@ async function getByLogin (data: ZodObject) {
 
 const nameRefine = {
   message: 'Login em uso.',
-  path: ['name']
+  path: ['name'],
 }
 
-async function getByEmail (data: ZodObject) {
-  if (!data.email) return true
-  if (email.name && email.name === data.email && !email.erro) return true
-  if (email.name && email.name === data.email) return false
+async function getByEmail(data: ZodObject) {
+  if (!data.email)
+    return true
+  if (email.name && email.name === data.email && !email.erro)
+    return true
+  if (email.name && email.name === data.email)
+    return false
   email.name = data.email
   const response = await User.getByEmail(data.email)
   if (response) {
@@ -51,7 +57,7 @@ async function getByEmail (data: ZodObject) {
 
 const emailRefine = {
   message: 'E-mail em uso.',
-  path: ['email']
+  path: ['email'],
 }
 
 export const zodSchema = zod.object({
@@ -61,15 +67,15 @@ export const zodSchema = zod.object({
   password: zod.string().nonempty('Digite a senha.').min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }).default(''),
   passwordConfirm: zod.string().nonempty('Digite a confirmação da senha.').default(''),
   terms: zod.boolean().default(false),
-  isValid: zod.boolean().default(false)
+  isValid: zod.boolean().default(false),
 })
   .refine(data => data.password === data.passwordConfirm, {
     message: 'As senhas devem ser iguais.',
-    path: ['passwordConfirm']
+    path: ['passwordConfirm'],
   })
   .refine(data => data.terms === true, {
     message: 'Você deve concordar com os termos e condições.',
-    path: ['terms']
+    path: ['terms'],
   })
   .refine(getByLogin, nameRefine)
   .refine(getByEmail, emailRefine)

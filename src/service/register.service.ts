@@ -40,17 +40,18 @@ export default class User {
     }
   }
 
-  static async login(login: string) {
+  static async changePass(token: string, newPass: string) {
     try {
-      const { data } = await axios.post(`${url}auth`, login)
-      if (data)
-        return data
+      const response = await axios.put(`${url}user/changePass`, { newPass }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (response)
+        return response
     }
     catch ({ response }: any) {
-      if (response.status === 404)
-        return
-
-      return { message: response.data }
+      return { message: response }
     }
   }
 }

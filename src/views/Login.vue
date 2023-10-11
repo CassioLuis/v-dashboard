@@ -17,7 +17,7 @@ const data = reactive<LoginContract>({
 const error = ref(false)
 const loading = ref(false)
 
-async function signin () {
+async function signin() {
   loading.value = true
   const response = await Auth.login(data)
   loading.value = false
@@ -71,12 +71,13 @@ watch(data, () => {
         </div>
 
         <div class="mt-6">
-          <button type="submit" :class="{'btn': !loading, 'btn-disabled': loading}" :disabled="loading">
+          <button type="submit" :class="{ 'btn': !loading, 'btn-disabled': loading }" :disabled="loading">
             <font-awesome-icon v-if="loading" icon="fa-solid fa-circle-notch" spin />
             <span v-else>Entrar</span>
           </button>
           <div class="mt-2">
             <a class="link text-center" href="#" @click.prevent="router.push('/register')">Cadastre-se</a>
+            <a class="link text-center" href="#" @click.prevent="router.push('/alterar-senha')">alterar-senha</a>
           </div>
         </div>
         <div class="flex justify-center mt-10 gap-4 pt-10">

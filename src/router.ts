@@ -10,7 +10,8 @@ import Modal from './views/Modal.vue'
 import Card from './views/Card.vue'
 import Blank from './views/Blank.vue'
 import Register from './views/Register.vue'
-import ChangePass from './views/ChancePass.vue'
+import ForgotPass from './views/ForgotPass.vue'
+import ChangePass from './views/ChangePass.vue'
 import { useAppStore } from './stores/application'
 
 const routes: RouteRecordRaw[] = [
@@ -28,6 +29,12 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/recuperacao',
+    name: 'ForgotPass',
+    component: ForgotPass,
+    meta: { layout: 'empty', requiresAuth: false },
+  },
+  {
+    path: '/alterar-senha',
     name: 'ChangePass',
     component: ChangePass,
     meta: { layout: 'empty', requiresAuth: false },
@@ -84,8 +91,10 @@ const router = createRouter({
 router.beforeEach((to) => {
   const auth = useAppStore()
   const { getToken } = storeToRefs(auth)
-  if (to.meta.requiresAuth && !getToken.value) return { name: 'Login' }
-  if (to.name === 'Login' && getToken.value) return { name: 'Dashboard' }
+  if (to.meta.requiresAuth && !getToken.value)
+    return { name: 'Login' }
+  if (to.name === 'Login' && getToken.value)
+    return { name: 'Dashboard' }
   // return { name: 'Login' }
 })
 
