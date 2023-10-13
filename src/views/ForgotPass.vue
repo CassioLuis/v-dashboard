@@ -16,17 +16,21 @@ interface Recover {
   email: string
   error: boolean
   mailSended: boolean
+  isSubmitting: boolean
 }
 
 const recoverStatus = reactive<Recover>({
   email: '',
   error: false,
   mailSended: false,
+  isSubmitting: false,
 })
 
 async function recover() {
   try {
+    recoverStatus.isSubmitting = true
     const response = await Auth.forgot(recoverStatus)
+    recoverStatus.isSubmitting = false
     if (!response.status || response.status !== 200) {
       setForgotPassTokenInvalid(false)
       recoverStatus.mailSended = false
@@ -118,8 +122,12 @@ watch(recoverStatus, () => {
         </label>
 
         <div class="mt-6">
-          <button type="submit" class="btn">
-            Enviar
+          <button
+            type="submit" :disabled="recoverStatus.isSubmitting || !recoverStatus.email"
+            :class="{ 'btn-disabled': recoverStatus.isSubmitting || !recoverStatus.email, 'btn': !recoverStatus.isSubmitting }"
+          >
+            <font-awesome-icon v-if="recoverStatus.isSubmitting" icon="fa-solid fa-circle-notch" spin />
+            <span v-else>Enviar</span>
           </button>
 
           <div class="mt-2 flex items-center justify-center mx-2 label">

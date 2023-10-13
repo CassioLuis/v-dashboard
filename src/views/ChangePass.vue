@@ -44,6 +44,7 @@ async function onValidePass(values: UserValues, { resetForm }: any) {
   }
   if (response.status === 200)
     resetForm()
+  router.push('/')
 }
 
 const recoverStatus = reactive<Recover>({
@@ -85,7 +86,7 @@ function resetRecoverStatus() {
             Esquece a senha?
           </h1>
           <p class="text-zinc-100 mt-2 mb-4 text-sm">
-            Não se preocupe! Basta digitar seu e-mail e enviaremos as instruções para redefinir sua senha!
+            Configure sua nova senha!
           </p>
         </div>
         <label class="block mt-3">
