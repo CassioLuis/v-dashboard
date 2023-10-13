@@ -45,14 +45,14 @@ async function recover() {
   }
 }
 
-watch(recoverStatus.email, () => {
+watch(recoverStatus, () => {
   setForgotPassTokenInvalid(false)
 })
 
-function resetRecoverStatus() {
-  recoverStatus.error = false
-  recoverStatus.mailSended = false
-}
+// function resetRecoverStatus() {
+//   recoverStatus.error = false
+//   recoverStatus.mailSended = false
+// }
 </script>
 
 <template>
