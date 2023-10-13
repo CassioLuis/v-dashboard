@@ -52,11 +52,6 @@ async function recover() {
 watch(recoverStatus, () => {
   setForgotPassTokenInvalid(false)
 })
-
-// function resetRecoverStatus() {
-//   recoverStatus.error = false
-//   recoverStatus.mailSended = false
-// }
 </script>
 
 <template>
@@ -70,7 +65,7 @@ watch(recoverStatus, () => {
         <div class="solid-alert-success mt-4 w-full">
           <span class="font-bold">Sucesso!</span> foi enviado uma menssagem para seu endereço de e-mail!
         </div>
-        <a class="mt-4 text-center link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
+        <!-- <a class="mt-4 text-center link" href="#" @click.prevent="router.push('/')">Acessar Conta</a> -->
       </div>
 
       <form v-else class="mt-4" @submit.prevent="recover">
@@ -131,8 +126,7 @@ watch(recoverStatus, () => {
           </button>
 
           <div class="mt-2 flex items-center justify-center mx-2 label">
-            Já tem uma conta?
-            <a class="link ml-2" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
+            <a class="link ml-2" href="#" @click.prevent="router.push('/')">Voltar para o login</a>
           </div>
         </div>
       </form>

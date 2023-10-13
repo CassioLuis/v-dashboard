@@ -22,9 +22,7 @@ interface UserValues {
 }
 
 interface Recover {
-  email: string
-  error: boolean
-  mailSended: boolean
+  recovered: boolean
 }
 
 const validationSchema = toTypedSchema(zodSchema)
@@ -35,6 +33,10 @@ const { value: passwordConfirm } = useField<string>('passwordConfirm')
 
 const recover = handleSubmit(onValidePass)
 
+const recoverStatus = reactive<Recover>({
+  recovered: false,
+})
+
 async function onValidePass(values: UserValues, { resetForm }: any) {
   const response: any = await User.changePass(getForgotToken.value, values.password)
   if (response.status !== 200) {
@@ -42,42 +44,34 @@ async function onValidePass(values: UserValues, { resetForm }: any) {
     resetForm()
     router.push('/recuperacao')
   }
-  if (response.status === 200)
+  if (response.status === 200) {
     resetForm()
-  router.push('/')
-}
-
-const recoverStatus = reactive<Recover>({
-  email: '',
-  error: false,
-  mailSended: false,
-})
-
-function resetRecoverStatus() {
-  recoverStatus.error = false
-  recoverStatus.mailSended = false
+    recoverStatus.recovered = true
+  }
 }
 </script>
 
 <template>
   <div class="layout">
     <div class="form">
-      <div class="flex flex-col items-center justify-center">
+      <div class="mb-4 flex flex-col items-center justify-center">
         <img type="image" src="/logo-2.png" alt="" class="h-36">
       </div>
 
-      <div v-if="recoverStatus.error">
-        <div class="mt-8 w-full solid-alert-danger">
-          <span class="font-bold">Erro!</span> e-mail inválido!
+      <div v-if="recoverStatus.recovered" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-teal-50 border border-teal-200 rounded-md p-4" role="alert">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-4 w-4 text-teal-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <div class="text-sm text-teal-800 font-normal">
+              Senha alterada com sucesso!
+              <a class="block text-black font-semibold hover:underline" href="#" @click.prevent="router.push('/')">Ir para o login.</a>
+            </div>
+          </div>
         </div>
-        <a class="mt-4 text-center link" href="#" @click.prevent="resetRecoverStatus">Voltar para recuperação</a>
-      </div>
-
-      <div v-else-if="!recoverStatus.error && recoverStatus.mailSended">
-        <div class="solid-alert-success mt-4 w-full">
-          <span class="font-bold">Sucesso!</span> e-mail enviado para sua caixa de entrada.
-        </div>
-        <a class="mt-4 text-center link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
       </div>
 
       <form v-else class="mt-4" @submit.prevent="recover">
@@ -111,8 +105,7 @@ function resetRecoverStatus() {
           </button>
 
           <div class="mt-2 flex items-center justify-center mx-2 label">
-            Já tem uma conta?
-            <a class="link ml-2" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
+            <a class="link ml-2" href="#" @click.prevent="router.push('/')">Voltar para o login</a>
           </div>
         </div>
       </form>
