@@ -77,7 +77,7 @@ watch(data, () => {
           </button>
           <div class="mt-2">
             <a class="link text-center" href="#" @click.prevent="router.push('/register')">Cadastre-se</a>
-            <a class="link text-center" href="#" @click.prevent="router.push('/alterar-senha')">alterar-senha</a>
+            <a class="link" href="http://localhost:5173/alterar-senha/123451231236789">Click</a>
           </div>
         </div>
         <div class="flex justify-center mt-10 gap-4 pt-10">

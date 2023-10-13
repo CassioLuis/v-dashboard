@@ -34,10 +34,17 @@ const routes: RouteRecordRaw[] = [
     meta: { layout: 'empty', requiresAuth: false },
   },
   {
-    path: '/alterar-senha',
+    path: '/alterar-senha/:token',
     name: 'ChangePass',
     component: ChangePass,
     meta: { layout: 'empty', requiresAuth: false },
+    beforeEnter(to) {
+      const auth = useAppStore()
+      const { setForgotToken } = auth
+      const [, , token] = to.path.split('/')
+      const encodedString = token.replace(/\%20/g, '.')
+      setForgotToken(encodedString)
+    },
   },
   {
     path: '/dashboard',

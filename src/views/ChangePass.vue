@@ -5,10 +5,16 @@ import { reactive } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import { useField, useForm } from 'vee-validate'
+import { storeToRefs } from 'pinia'
 import { zodSchema } from '../schemas/zod.changePass'
 import User from '../service/register.service'
+import { useAppStore } from '../stores/application'
 
 const router = useRouter()
+
+const auth = useAppStore()
+const { setForgotPassTokenInvalid } = auth
+const { getForgotToken } = storeToRefs(auth)
 
 interface UserValues {
   password: string
@@ -30,13 +36,11 @@ const { value: passwordConfirm } = useField<string>('passwordConfirm')
 const recover = handleSubmit(onValidePass)
 
 async function onValidePass(values: UserValues, { resetForm }: any) {
-  const response: any = await User.changePass(
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.yJpZCI6MTM3NiwiaWF0IjoxNjk3MDU2MDk5LCJleHAiOjE2OTcwNTY1OTl9.44NwTd734EuKLr9GGXDrbC10Prov4H7vzyTTJ07SHo0',
-    values.password,
-  )
+  const response: any = await User.changePass(getForgotToken.value, values.password)
   if (response.status !== 200) {
-    alert('Erro! senha nao alterada')
+    setForgotPassTokenInvalid(true)
     resetForm()
+    router.push('/recuperacao')
   }
   if (response.status === 200)
     resetForm()
@@ -97,9 +101,6 @@ function resetRecoverStatus() {
         </label>
 
         <div class="mt-6">
-          <!-- <button type="submit" class="btn">
-            Enviar
-          </button> -->
           <button
             type="submit" :disabled="isSubmitting || !meta.valid"
             :class="{ 'btn-disabled': isSubmitting || !meta.valid, 'btn': meta.valid && !isSubmitting }"
