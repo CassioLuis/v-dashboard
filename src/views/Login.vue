@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import Auth from '../service/auth.service'
 import type LoginContract from '../service/interfaces/auth'
 import { useAppStore } from '../stores/application'
 
 const router = useRouter()
-const session = useAppStore()
-const { setToken } = session
+const userSession = useAppStore()
+const { setToken, setPaymentsHistory } = userSession
+const { getPaymentHistory, getToken } = storeToRefs(userSession)
+
+watch(getToken, async () => {
+  await setPaymentsHistory()
+})
 
 const data = reactive<LoginContract>({
   name: '',

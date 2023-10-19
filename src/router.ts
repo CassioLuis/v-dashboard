@@ -12,6 +12,7 @@ import Blank from './views/Blank.vue'
 import Register from './views/Register.vue'
 import ForgotPass from './views/ForgotPass.vue'
 import ChangePass from './views/ChangePass.vue'
+import Donation from './views/Donation.vue'
 import { useAppStore } from './stores/application'
 
 const routes: RouteRecordRaw[] = [
@@ -86,6 +87,12 @@ const routes: RouteRecordRaw[] = [
     path: '/blank',
     name: 'Blank',
     component: Blank,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/donation',
+    name: 'Doação',
+    component: Donation,
     meta: { requiresAuth: true },
   },
 ]
