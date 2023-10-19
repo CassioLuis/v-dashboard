@@ -1,11 +1,22 @@
 import { defineStore } from 'pinia'
 import PaymentsService from '../service/payments.service'
 
+interface Payment {
+  _id: string
+  orderId: number
+  mysqlUserId: number
+  paymentMethod: string
+  status: string
+  dateCreated: Date
+  transactionAmount: number
+  __v: number
+}
+
 interface State {
   token: string
   forgotPassToken: string
   forgotPassTokenInvalid: boolean
-  paymentsHistory: []
+  paymentsHistory: Payment[]
 }
 
 export const useAppStore = defineStore('userSession', {
@@ -21,7 +32,7 @@ export const useAppStore = defineStore('userSession', {
     getToken: state => state.token,
     getForgotToken: state => state.forgotPassToken,
     getForgotPassTokenInvalid: state => state.forgotPassTokenInvalid,
-    getPaymentHistory: state => state.paymentsHistory,
+    getPaymentHistory: (state): Payment[] => state.paymentsHistory,
   },
   actions: {
     setToken(token: string) {
@@ -34,7 +45,7 @@ export const useAppStore = defineStore('userSession', {
       this.forgotPassTokenInvalid = status
     },
     async setPaymentsHistory() {
-      const response = await PaymentsService.getAllByUser(this.getToken)
+      const response: any = await PaymentsService.getAllByUser(this.getToken)
       this.paymentsHistory = response?.data.reverse()
     },
   },

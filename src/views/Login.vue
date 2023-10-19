@@ -9,7 +9,7 @@ import { useAppStore } from '../stores/application'
 const router = useRouter()
 const userSession = useAppStore()
 const { setToken, setPaymentsHistory } = userSession
-const { getPaymentHistory, getToken } = storeToRefs(userSession)
+const { getToken } = storeToRefs(userSession)
 
 watch(getToken, async () => {
   await setPaymentsHistory()

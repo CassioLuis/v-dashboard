@@ -22,6 +22,14 @@ const user = ref<UserPayment>({
   confirm: '',
 })
 
+function getTotal() {
+  console.log(getPaymentHistory.target)
+  return getPaymentHistory.reduce((item, acc) => {
+    console.log(item)
+    return acc = acc + item.transactionAmount
+  }, 0)
+}
+
 const qrCode = ref('')
 
 async function newPayment() {
@@ -181,7 +189,7 @@ const toggle = ref(false)
 
                 <div class="mx-5">
                   <h4 class="text-2xl font-semibold text-gray-700">
-                    200,521
+                    {{ getPaymentHistory.length }}
                   </h4>
                   <div class="text-gray-500">
                     Total de Compras
@@ -207,7 +215,7 @@ const toggle = ref(false)
 
                 <div class="mx-5">
                   <h4 class="text-2xl font-semibold text-gray-700">
-                    215,542
+                    {{ getTotal() }}
                   </h4>
                   <div class="text-gray-500">
                     Total de Cash
