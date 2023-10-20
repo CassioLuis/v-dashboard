@@ -6,7 +6,7 @@ import PaymentsService from '../service/payments.service'
 
 const userSession = useAppStore()
 const { setPaymentsHistory } = userSession
-const { getPaymentHistory } = storeToRefs(userSession)
+const { getPaymentHistory, getPaymentsTotal } = storeToRefs(userSession)
 
 interface UserPayment {
   username: string
@@ -21,14 +21,6 @@ const user = ref<UserPayment>({
   password: '',
   confirm: '',
 })
-
-function getTotal() {
-  console.log(getPaymentHistory.target)
-  return getPaymentHistory.reduce((item, acc) => {
-    console.log(item)
-    return acc = acc + item.transactionAmount
-  }, 0)
-}
 
 const qrCode = ref('')
 
@@ -215,7 +207,7 @@ const toggle = ref(false)
 
                 <div class="mx-5">
                   <h4 class="text-2xl font-semibold text-gray-700">
-                    {{ getTotal() }}
+                    {{ getPaymentsTotal }}
                   </h4>
                   <div class="text-gray-500">
                     Total de Cash
@@ -259,8 +251,8 @@ const toggle = ref(false)
                   <div class="flex items-center">
                     <div class="flex-shrink-0 w-10 h-10">
                       <img
-                        class="w-10 h-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        class="w-10 h-10"
+                        src="/gold-coin.png"
                         alt=""
                       >
                     </div>
@@ -287,7 +279,7 @@ const toggle = ref(false)
 
                 <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                   <span
-                    :class="{ 'bg-green-100 text-green-800': u.status === 'Sucesso', 'bg-red-100 text-red-800': u.status === 'Cancelado', 'bg-orange-100 text-orange-800': u.status === 'Pendente' }"
+                    :class="{ 'bg-green-100 text-green-800': u.status === 'Aprovado', 'bg-red-100 text-red-800': u.status === 'Cancelado', 'bg-orange-100 text-orange-800': u.status === 'Pendente' }"
                     class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full"
                   >{{ u.status }}</span>
                 </td>

@@ -8,6 +8,7 @@ interface Payment {
   paymentMethod: string
   status: string
   dateCreated: Date
+  dateLastUpdated: Date
   transactionAmount: number
   __v: number
 }
@@ -33,6 +34,7 @@ export const useAppStore = defineStore('userSession', {
     getForgotToken: state => state.forgotPassToken,
     getForgotPassTokenInvalid: state => state.forgotPassTokenInvalid,
     getPaymentHistory: (state): Payment[] => state.paymentsHistory,
+    getPaymentsTotal: state => state.paymentsHistory.filter(item => item.status === 'Aprovado').reduce((acc, item) => acc += item.transactionAmount, 0),
   },
   actions: {
     setToken(token: string) {
@@ -46,6 +48,14 @@ export const useAppStore = defineStore('userSession', {
     },
     async setPaymentsHistory() {
       const response: any = await PaymentsService.getAllByUser(this.getToken)
+      response?.data.forEach((item: Payment) => {
+        if (item.status === 'pending')
+          return item.status = 'Pendente'
+        if (item.status === 'approved')
+          return item.status = 'Aprovado'
+        if (item.status === 'canceled')
+          return item.status = 'Cancelado'
+      })
       this.paymentsHistory = response?.data.reverse()
     },
   },

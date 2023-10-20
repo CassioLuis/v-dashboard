@@ -26,7 +26,7 @@ const inactiveClass = ref(
     >
       <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-          <img src="/logo.png" alt="" class="h-24">
+          <img src="/logo-2.png" alt="" class="h-24">
           <!-- <span class="mx-2 text-2xl font-semibold text-white">V-Dashboard</span> -->
         </div>
       </div>
