@@ -13,6 +13,7 @@ interface UserPayment {
   email: string
   password: string
   confirm: string
+  donationAmount: number
 }
 
 const user = ref<UserPayment>({
@@ -20,6 +21,7 @@ const user = ref<UserPayment>({
   email: '',
   password: '',
   confirm: '',
+  donationAmount: 0,
 })
 
 const qrCode = ref('')
@@ -27,7 +29,7 @@ const qrCode = ref('')
 async function newPayment() {
   const response = await PaymentsService.create({
     payment_method_id: 'pix',
-    transaction_amount: 0.1,
+    transaction_amount: user.value.donationAmount,
     payer: {
       first_name: 'Test',
       last_name: 'Test',
@@ -95,6 +97,14 @@ const toggle = ref(false)
                 <form @submit.prevent="newPayment">
                   <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                     <div>
+                      <label class="text-gray-700" for="username">Valor</label>
+                      <input
+                        v-model="user.donationAmount"
+                        class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                        type="number"
+                      >
+                    </div>
+                    <div>
                       <label class="text-gray-700" for="username">Username</label>
                       <input
                         v-model="user.username"
@@ -135,13 +145,13 @@ const toggle = ref(false)
                     <button
                       class="px-4 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                     >
-                      Save
+                      Enviar Donate
                     </button>
-                    <button
+                    <!-- <button
                       class="px-4 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                     >
                       Search
-                    </button>
+                    </button> -->
                   </div>
                 </form>
               </div>
@@ -250,11 +260,7 @@ const toggle = ref(false)
                 <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 w-10 h-10">
-                      <img
-                        class="w-10 h-10"
-                        src="/gold-coin.png"
-                        alt=""
-                      >
+                      <img class="w-10 h-10" src="/gold-coin.png" alt="">
                     </div>
 
                     <div class="ml-4">

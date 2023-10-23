@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import Cookies from 'js-cookie'
 import PaymentsService from '../service/payments.service'
 
 interface Payment {
@@ -30,16 +31,12 @@ export const useAppStore = defineStore('userSession', {
     }
   },
   getters: {
-    getToken: state => state.token,
     getForgotToken: state => state.forgotPassToken,
     getForgotPassTokenInvalid: state => state.forgotPassTokenInvalid,
     getPaymentHistory: (state): Payment[] => state.paymentsHistory,
     getPaymentsTotal: state => state.paymentsHistory.filter(item => item.status === 'Aprovado').reduce((acc, item) => acc += item.transactionAmount, 0),
   },
   actions: {
-    setToken(token: string) {
-      this.token = token
-    },
     setForgotToken(forgotToken: string) {
       this.forgotPassToken = forgotToken
     },
@@ -47,7 +44,12 @@ export const useAppStore = defineStore('userSession', {
       this.forgotPassTokenInvalid = status
     },
     async setPaymentsHistory() {
-      const response: any = await PaymentsService.getAllByUser(this.getToken)
+      const token = Cookies.get('token')
+
+      if (!token)
+        return
+
+      const response: any = await PaymentsService.getAllByUser(token)
       response?.data.forEach((item: Payment) => {
         if (item.status === 'pending')
           return item.status = 'Pendente'
@@ -56,6 +58,7 @@ export const useAppStore = defineStore('userSession', {
         if (item.status === 'canceled')
           return item.status = 'Cancelado'
       })
+
       this.paymentsHistory = response?.data.reverse()
     },
   },

@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import Cookies from 'js-cookie'
 import { useSidebar } from '../composables/useSidebar'
-import { useAppStore } from '../stores/application'
 
 const router = useRouter()
-const session = useAppStore()
-const { setToken } = session
 
 function logOut() {
-  setToken('')
+  Cookies.remove('token')
   return router.push('/')
 }
 

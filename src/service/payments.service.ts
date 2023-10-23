@@ -1,17 +1,15 @@
 import axios from 'axios'
-import { storeToRefs } from 'pinia'
-import { useAppStore } from '../stores/application'
+import Cookies from 'js-cookie'
 import { url } from './url'
 import type PaymentContract from './interfaces/payment'
 
 export default class Payment {
   static async create(payment: PaymentContract): Promise<any> {
-    const userSession = useAppStore()
-    const { getToken } = storeToRefs(userSession)
+    const token = Cookies.get('token')
     try {
       const response = await axios.post(`${url}payments`, payment, {
         headers: {
-          Authorization: `Bearer ${getToken.value}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       if (response)

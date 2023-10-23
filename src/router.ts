@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import { storeToRefs } from 'pinia'
+import Cookies from 'js-cookie'
 import Dashboard from './views/Dashboard.vue'
 import Forms from './views/Forms.vue'
 import Tables from './views/Tables.vue'
@@ -103,13 +103,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const auth = useAppStore()
-  const { getToken } = storeToRefs(auth)
-  if (to.meta.requiresAuth && !getToken.value)
+  const token = Cookies.get('token')
+  if (to.meta.requiresAuth && !token)
     return { name: 'Login' }
-  if (to.name === 'Login' && getToken.value)
+  if (to.name === 'Login' && token)
     return { name: 'Dashboard' }
-  // return { name: 'Login' }
 })
 
 export default router
