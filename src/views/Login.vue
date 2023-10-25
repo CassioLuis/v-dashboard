@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
 import Auth from '../service/auth.service'
 import type LoginContract from '../service/interfaces/auth'
-import { useAppStore } from '../stores/application'
 
 const router = useRouter()
-
-const userSession = useAppStore()
-const { setPaymentsHistory } = userSession
-
-onMounted(async () => {
-  await setPaymentsHistory()
-})
 
 const data = reactive<LoginContract>({
   name: '',
@@ -29,7 +21,7 @@ async function signin() {
   loading.value = false
   const { token } = response.data
   if (response.status === 200) {
-    Cookies.set('token', token)
+    Cookies.set('token', token, { expires: 1 })
     return router.push('/dashboard')
   }
   return error.value = true

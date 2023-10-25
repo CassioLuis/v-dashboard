@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import PaymentsService from '../service/payments.service'
+import TableConstrutor from '../composables/tableConstructor'
 
 interface Payment {
   _id: string
@@ -11,14 +12,48 @@ interface Payment {
   dateCreated: Date
   dateLastUpdated: Date
   transactionAmount: number
+  goldAmount: number
+  qrCode: string
   __v: number
+}
+
+interface THead {
+  title: string
+}
+
+interface Cells {
+  value: string | number
+  name: string
+}
+
+interface TBody {
+  orderId: number
+  paymentMethod: string
+  status: string
+  dateLastUpdated: Date
+  transactionAmount: number
+  goldAmount: number
+  qrCode: string
+  cells: Cells[]
+}
+
+interface DonationTotal {
+  donationQtd: number
+  goldAmount: number
+  transactionAmount: string | number
+}
+
+interface Payments {
+  donationTotal: DonationTotal
+  tHeaders: Array<THead>
+  tBody: Array<TBody>
 }
 
 interface State {
   token: string
   forgotPassToken: string
   forgotPassTokenInvalid: boolean
-  paymentsHistory: Payment[]
+  paymentsHistory: Payments
 }
 
 export const useAppStore = defineStore('userSession', {
@@ -27,14 +62,24 @@ export const useAppStore = defineStore('userSession', {
       token: '',
       forgotPassToken: '',
       forgotPassTokenInvalid: false,
-      paymentsHistory: [],
+      paymentsHistory: {
+        donationTotal: {
+          donationQtd: 0,
+          goldAmount: 0,
+          transactionAmount: '0,00' || 0,
+        },
+        tHeaders: [],
+        tBody: [],
+      },
     }
   },
   getters: {
     getForgotToken: state => state.forgotPassToken,
     getForgotPassTokenInvalid: state => state.forgotPassTokenInvalid,
-    getPaymentHistory: (state): Payment[] => state.paymentsHistory,
-    getPaymentsTotal: state => state.paymentsHistory.filter(item => item.status === 'Aprovado').reduce((acc, item) => acc += item.transactionAmount, 0),
+    getPaymentHistory: (state): Payments => state.paymentsHistory,
+    getPaymentsTotal: state => state.paymentsHistory.donationTotal.transactionAmount,
+    getQtdDonations: state => state.paymentsHistory.donationTotal.donationQtd,
+    getGoldDonationTotal: state => state.paymentsHistory.donationTotal.goldAmount,
   },
   actions: {
     setForgotToken(forgotToken: string) {
@@ -49,17 +94,11 @@ export const useAppStore = defineStore('userSession', {
       if (!token)
         return
 
-      const response: any = await PaymentsService.getAllByUser(token)
-      response?.data.forEach((item: Payment) => {
-        if (item.status === 'pending')
-          return item.status = 'Pendente'
-        if (item.status === 'approved')
-          return item.status = 'Aprovado'
-        if (item.status === 'canceled')
-          return item.status = 'Cancelado'
-      })
-
-      this.paymentsHistory = response?.data.reverse()
+      const response = await PaymentsService.getAllByUser(token)
+      if (!response)
+        return
+      const payments: Payment[] = response.data
+      this.paymentsHistory = TableConstrutor.donationHistory(payments)
     },
   },
 })

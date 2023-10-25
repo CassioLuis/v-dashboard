@@ -1,12 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/application'
 import PaymentsService from '../service/payments.service'
 
 const userSession = useAppStore()
 const { setPaymentsHistory } = userSession
-const { getPaymentHistory, getPaymentsTotal } = storeToRefs(userSession)
+const { getPaymentHistory, getPaymentsTotal, getQtdDonations, getGoldDonationTotal } = storeToRefs(userSession)
+
+onMounted(async () => {
+  await setPaymentsHistory()
+})
+
+// const formattedPayment = computed(() => {
+//   const options = { style: 'currency', currency: 'BRL' }
+//   return getPaymentsTotal.value.toLocaleString('pt-BR', options)
+// })
 
 interface UserPayment {
   username: string
@@ -15,6 +24,10 @@ interface UserPayment {
   confirm: string
   donationAmount: number
 }
+
+// const data = reactive({
+//   refreshing: false,
+// })
 
 const user = ref<UserPayment>({
   username: '',
@@ -45,6 +58,12 @@ async function newPayment() {
   qrCode.value = response.data.qrCode
   setPaymentsHistory()
 }
+
+// async function refreshTable() {
+//   data.refreshing = true
+//   await setPaymentsHistory()
+//   data.refreshing = false
+// }
 
 const toggle = ref(false)
 </script>
@@ -191,7 +210,7 @@ const toggle = ref(false)
 
                 <div class="mx-5">
                   <h4 class="text-2xl font-semibold text-gray-700">
-                    {{ getPaymentHistory.length }}
+                    {{ getQtdDonations }}
                   </h4>
                   <div class="text-gray-500">
                     Total de Compras
@@ -229,9 +248,12 @@ const toggle = ref(false)
         </div>
         <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
           <table class="min-w-full">
-            <thead>
+            <thead class="relative">
               <tr>
-                <th
+                <th v-for="(header, idx) in getPaymentHistory.tHeaders" :key="idx" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                  {{ header.title }}
+                </th>
+              <!-- <th
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
                   Name
@@ -250,13 +272,47 @@ const toggle = ref(false)
                   class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
                   Role
+                  <span class="absolute w-16 top-0 right-0 bottom-0 p-1 flex items-center justify-center">
+                    <button
+                      class="h-6 w-8 flex items-center p-1 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"
+                      @click.prevent="refreshTable"
+                    >
+                      <svg
+                        :class="{ 'elemento-girando': data.refreshing }" class="w-5 h-5 mx-1"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </span>
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" />
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" /> -->
               </tr>
             </thead>
 
             <tbody class="bg-white">
-              <tr v-for="(u, index) in getPaymentHistory" :key="index">
+              <tr v-for="(body, idx) in getPaymentHistory.tBody" :key="idx">
+                <td v-for="(td, idx2) in body.cells" :key="idx2" class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+                  <span v-if="td.name === 'qrCode'">
+                    <img width="200" height="200" :src="`data:image/jpeg;base64,${td.value}`">
+                  </span>
+                  <span
+                    v-else-if="td.name === 'status'"
+                    :class="{ 'bg-green-100 text-green-800': td.value === 'Aprovado', 'bg-red-100 text-red-800': td.value === 'Cancelado', 'bg-orange-100 text-orange-800': td.value === 'Pendente' }"
+                    class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full"
+                  >
+                    {{ td.value }}
+                  </span>
+                  <span v-else>
+                    {{ td.value }}
+                  </span>
+                </td>
+              </tr>
+              <!-- <tr v-for="(u, index) in getPaymentHistory" :key="index">
                 <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 w-10 h-10">
@@ -297,7 +353,7 @@ const toggle = ref(false)
                 <td class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap">
                   <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -305,3 +361,20 @@ const toggle = ref(false)
     </div>
   </div>
 </template>
+
+<style lang="css">
+.elemento-girando {
+  animation: girar 3s linear infinite;
+}
+
+@keyframes girar {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  25%,
+  75% {
+    transform: rotate(0deg);
+  }
+}
+</style>

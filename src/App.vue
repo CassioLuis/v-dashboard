@@ -1,20 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import Cookies from 'js-cookie'
-import { useAppStore } from './stores/application'
-
-const router = useRouter()
-const token = Cookies.get('token')
-
-const userSession = useAppStore()
-const { setPaymentsHistory } = userSession
-
-onMounted(async () => {
-  if (!token)
-    return router.push('/')
-  await setPaymentsHistory()
-})
 
 const defaultLayout = 'default'
 

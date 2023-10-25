@@ -28,6 +28,7 @@
     "dotenv": "^16.3.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
     "mysql2": "^3.6.1",
     "pinia": "^2.1.6",
     "vee-validate": "^4.11.7",
