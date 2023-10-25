@@ -1,9 +1,9 @@
 import axios from 'axios'
-import type LoginContract from './interfaces/auth'
+import type { ILogin } from '../interfaces'
 import { url } from './url'
 
 export default class User {
-  static async login(login: LoginContract): Promise<any> {
+  static async login(login: ILogin): Promise<any> {
     try {
       const response = await axios.post(`${url}auth`, login)
       return response

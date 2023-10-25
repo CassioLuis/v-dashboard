@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/application'
-import PaymentsService from '../service/payments.service'
+import DonationForm from '../components/DonationForm.vue'
 
 const userSession = useAppStore()
 const { setPaymentsHistory } = userSession
@@ -12,60 +12,15 @@ onMounted(async () => {
   await setPaymentsHistory()
 })
 
-// const formattedPayment = computed(() => {
-//   const options = { style: 'currency', currency: 'BRL' }
-//   return getPaymentsTotal.value.toLocaleString('pt-BR', options)
-// })
-
-interface UserPayment {
-  username: string
-  email: string
-  password: string
-  confirm: string
-  donationAmount: number
-}
-
-// const data = reactive({
-//   refreshing: false,
-// })
-
-const user = ref<UserPayment>({
-  username: '',
-  email: '',
-  password: '',
-  confirm: '',
-  donationAmount: 0,
+const data = reactive({
+  refreshing: false,
 })
 
-const qrCode = ref('')
-
-async function newPayment() {
-  const response = await PaymentsService.create({
-    payment_method_id: 'pix',
-    transaction_amount: user.value.donationAmount,
-    payer: {
-      first_name: 'Test',
-      last_name: 'Test',
-      email: 'teste@gmail.com',
-      identification: {
-        type: 'CPF',
-        number: '05663593160',
-      },
-    },
-    description: 'Payment for product',
-    external_reference: 'MP0001',
-  })
-  qrCode.value = response.data.qrCode
-  setPaymentsHistory()
+async function refreshTable() {
+  data.refreshing = true
+  await setPaymentsHistory()
+  data.refreshing = false
 }
-
-// async function refreshTable() {
-//   data.refreshing = true
-//   await setPaymentsHistory()
-//   data.refreshing = false
-// }
-
-const toggle = ref(false)
 </script>
 
 <template>
@@ -73,113 +28,7 @@ const toggle = ref(false)
     <h3 class="text-3xl font-medium text-gray-700">
       Doações
     </h3>
-    <div class="mt-8">
-      <!-- <h4 class="text-gray-600">
-        Forms
-      </h4> -->
-      <img v-if="qrCode" width="200" height="200" :src="`data:image/jpeg;base64,${qrCode}`">
-      <div class="mt-4">
-        <div class="p-6 bg-white rounded-md shadow-sm">
-          <div class="hs-accordion-group">
-            <div id="hs-basic-with-arrow-heading-one" class="hs-accordion">
-              <button
-                class="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center gap-x-3 w-full font-semibold text-left text-black transition hover:text-gray-400"
-                aria-controls="hs-basic-with-arrow-collapse-one" @click="toggle = !toggle"
-              >
-                <svg
-                  class="hs-accordion-active:hidden hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 block w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
-                  width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  />
-                </svg>
-                <svg
-                  class="hs-accordion-active:block hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 hidden w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
-                  width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  />
-                </svg>
-                <h2 class="text-lg font-semibold text-gray-700 capitalize">
-                  Nova doação
-                </h2>
-              </button>
-              <div
-                id="hs-basic-with-arrow-collapse-one" :class="{ 'block': toggle, 'h-0': !toggle }"
-                class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-                aria-labelledby="hs-basic-with-arrow-heading-one"
-              >
-                <form @submit.prevent="newPayment">
-                  <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                    <div>
-                      <label class="text-gray-700" for="username">Valor</label>
-                      <input
-                        v-model="user.donationAmount"
-                        class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                        type="number"
-                      >
-                    </div>
-                    <div>
-                      <label class="text-gray-700" for="username">Username</label>
-                      <input
-                        v-model="user.username"
-                        class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                        type="text"
-                      >
-                    </div>
-
-                    <div>
-                      <label class="text-gray-700" for="emailAddress">Email Address</label>
-                      <input
-                        v-model="user.email"
-                        class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                        type="email"
-                      >
-                    </div>
-
-                    <div>
-                      <label class="text-gray-700" for="password">Password</label>
-                      <input
-                        v-model="user.password"
-                        class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                        type="password"
-                      >
-                    </div>
-
-                    <div>
-                      <label class="text-gray-700" for="passwordConfirmation">Password Confirmation</label>
-                      <input
-                        v-model="user.confirm"
-                        class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                        type="password"
-                      >
-                    </div>
-                  </div>
-
-                  <div class="flex justify-end mt-4 gap-2">
-                    <button
-                      class="px-4 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                    >
-                      Enviar Donate
-                    </button>
-                    <!-- <button
-                      class="px-4 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                    >
-                      Search
-                    </button> -->
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <DonationForm />
     <div class="mt-8" />
 
     <div class="flex flex-col mt-8">
@@ -236,7 +85,7 @@ const toggle = ref(false)
 
                 <div class="mx-5">
                   <h4 class="text-2xl font-semibold text-gray-700">
-                    {{ getPaymentsTotal }}
+                    {{ getPaymentsTotal }} - Gold: {{ getGoldDonationTotal }}
                   </h4>
                   <div class="text-gray-500">
                     Total de Cash
@@ -250,29 +99,12 @@ const toggle = ref(false)
           <table class="min-w-full">
             <thead class="relative">
               <tr>
-                <th v-for="(header, idx) in getPaymentHistory.tHeaders" :key="idx" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                  {{ header.title }}
-                </th>
-              <!-- <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
-                >
-                  Name
-                </th>
                 <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                  v-for="(header, idx) in getPaymentHistory.tHeaders" :key="idx"
+                  class="text-center px-4 py-2 text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
-                  Title
-                </th>
-                <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
-                >
-                  Status
-                </th>
-                <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
-                >
-                  Role
-                  <span class="absolute w-16 top-0 right-0 bottom-0 p-1 flex items-center justify-center">
+                  <span v-if="header.title === 'QR Code'" class="w-full flex justify-between items-center">
+                    <span>{{ header.title }}</span>
                     <button
                       class="h-6 w-8 flex items-center p-1 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"
                       @click.prevent="refreshTable"
@@ -289,16 +121,38 @@ const toggle = ref(false)
                       </svg>
                     </button>
                   </span>
+                  <span v-else>
+                    {{ header.title }}
+                  </span>
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" /> -->
               </tr>
             </thead>
 
             <tbody class="bg-white">
-              <tr v-for="(body, idx) in getPaymentHistory.tBody" :key="idx">
-                <td v-for="(td, idx2) in body.cells" :key="idx2" class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
+              <tr v-for="body in getPaymentHistory.tBody" :key="body.orderId">
+                <td
+                  v-for="(td, idx) in body.cells" :key="idx"
+                  class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
+                >
                   <span v-if="td.name === 'qrCode'">
-                    <img width="200" height="200" :src="`data:image/jpeg;base64,${td.value}`">
+                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
+                    <!-- <img width="200" height="200" :src="`data:image/jpeg;base64,${td.value}`"> -->
+                  </span>
+                  <span v-else-if="td.name === 'orderId'" class="flex">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 w-10 h-10">
+                        <img class="w-10 h-10" src="/gold-coin.png" alt="">
+                      </div>
+
+                      <div class="ml-4">
+                        <div class="text-sm font-medium leading-5 text-gray-900">
+                          Donate
+                        </div>
+                        <div class="text-sm leading-5 text-gray-500">
+                          nº {{ td.value }}
+                        </div>
+                      </div>
+                    </div>
                   </span>
                   <span
                     v-else-if="td.name === 'status'"
@@ -312,48 +166,6 @@ const toggle = ref(false)
                   </span>
                 </td>
               </tr>
-              <!-- <tr v-for="(u, index) in getPaymentHistory" :key="index">
-                <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <div class="flex-shrink-0 w-10 h-10">
-                      <img class="w-10 h-10" src="/gold-coin.png" alt="">
-                    </div>
-
-                    <div class="ml-4">
-                      <div class="text-sm font-medium leading-5 text-gray-900">
-                        {{ u._id }}
-                      </div>
-                      <div class="text-sm leading-5 text-gray-500">
-                        {{ u.orderId }}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-
-                <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                  <div class="text-sm leading-5 text-gray-900">
-                    {{ u.mysqlUserId }}
-                  </div>
-                  <div class="text-sm leading-5 text-gray-500">
-                    {{ u.paymentMethod }}
-                  </div>
-                </td>
-
-                <td class="px-6 py-4 border-b border-gray-200 whitespace-nowrap">
-                  <span
-                    :class="{ 'bg-green-100 text-green-800': u.status === 'Aprovado', 'bg-red-100 text-red-800': u.status === 'Cancelado', 'bg-orange-100 text-orange-800': u.status === 'Pendente' }"
-                    class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full"
-                  >{{ u.status }}</span>
-                </td>
-
-                <td class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap">
-                  {{ u.transactionAmount }}
-                </td>
-
-                <td class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                </td>
-              </tr> -->
             </tbody>
           </table>
         </div>

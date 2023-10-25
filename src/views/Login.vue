@@ -3,11 +3,11 @@ import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
 import Auth from '../service/auth.service'
-import type LoginContract from '../service/interfaces/auth'
+import type { ILogin } from '../interfaces'
 
 const router = useRouter()
 
-const data = reactive<LoginContract>({
+const data = reactive<ILogin>({
   name: '',
   password: '',
 })
@@ -92,3 +92,4 @@ watch(data, () => {
     </div>
   </div>
 </template>
+../interfaces/auth

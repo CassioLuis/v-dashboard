@@ -1,25 +1,11 @@
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import type { INewPayment, IPayment } from '../interfaces'
 import { url } from './url'
-import type PaymentContract from './interfaces/payment'
-
-interface IPayment {
-  _id: string
-  orderId: number
-  mysqlUserId: number
-  paymentMethod: string
-  status: string
-  dateCreated: Date
-  dateLastUpdated: Date
-  transactionAmount: number
-  goldAmount: number
-  qrCode: string
-  __v: number
-}
 
 export default class Payment {
-  static async create(payment: PaymentContract): Promise<any> {
+  static async create(payment: INewPayment): Promise<any> {
     const token = Cookies.get('token')
     try {
       const response = await axios.post(`${url}payments`, payment, {
@@ -30,23 +16,23 @@ export default class Payment {
       if (response)
         return response
     }
-    catch ({ response }: any) {
-      return { message: response }
+    catch (error: any) {
+      return { message: error }
     }
   }
 
   static async getAllByUser(token: string) {
     try {
-      const response: AxiosResponse<IPayment> = await axios.get<IPayment>(`${url}payments/search`, {
+      const response: AxiosResponse<IPayment | any> = await axios.get<IPayment | any>(`${url}payments/search`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       if (response)
-        return response
+        return response.data
     }
-    catch ({ response }: any) {
-      return { message: response }
+    catch (error: any) {
+      return { message: error }
     }
   }
 }

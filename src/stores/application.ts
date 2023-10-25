@@ -1,69 +1,17 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import PaymentsService from '../service/payments.service'
-import TableConstrutor from '../composables/tableConstructor'
-
-interface Payment {
-  _id: string
-  orderId: number
-  mysqlUserId: number
-  paymentMethod: string
-  status: string
-  dateCreated: Date
-  dateLastUpdated: Date
-  transactionAmount: number
-  goldAmount: number
-  qrCode: string
-  __v: number
-}
-
-interface THead {
-  title: string
-}
-
-interface Cells {
-  value: string | number
-  name: string
-}
-
-interface TBody {
-  orderId: number
-  paymentMethod: string
-  status: string
-  dateLastUpdated: Date
-  transactionAmount: number
-  goldAmount: number
-  qrCode: string
-  cells: Cells[]
-}
-
-interface DonationTotal {
-  donationQtd: number
-  goldAmount: number
-  transactionAmount: string | number
-}
-
-interface Payments {
-  donationTotal: DonationTotal
-  tHeaders: Array<THead>
-  tBody: Array<TBody>
-}
-
-interface State {
-  token: string
-  forgotPassToken: string
-  forgotPassTokenInvalid: boolean
-  paymentsHistory: Payments
-}
+import TableConstructor from '../composables/tableConstructor'
+import type { IPayment, IPaymentsHistory, IState } from '../interfaces'
 
 export const useAppStore = defineStore('userSession', {
-  state: (): State => {
+  state: (): IState => {
     return {
       token: '',
       forgotPassToken: '',
       forgotPassTokenInvalid: false,
       paymentsHistory: {
-        donationTotal: {
+        donationTotals: {
           donationQtd: 0,
           goldAmount: 0,
           transactionAmount: '0,00' || 0,
@@ -76,10 +24,10 @@ export const useAppStore = defineStore('userSession', {
   getters: {
     getForgotToken: state => state.forgotPassToken,
     getForgotPassTokenInvalid: state => state.forgotPassTokenInvalid,
-    getPaymentHistory: (state): Payments => state.paymentsHistory,
-    getPaymentsTotal: state => state.paymentsHistory.donationTotal.transactionAmount,
-    getQtdDonations: state => state.paymentsHistory.donationTotal.donationQtd,
-    getGoldDonationTotal: state => state.paymentsHistory.donationTotal.goldAmount,
+    getPaymentHistory: (state): IPaymentsHistory => state.paymentsHistory,
+    getPaymentsTotal: state => state.paymentsHistory.donationTotals.transactionAmount,
+    getQtdDonations: state => state.paymentsHistory.donationTotals.donationQtd,
+    getGoldDonationTotal: state => state.paymentsHistory.donationTotals.goldAmount,
   },
   actions: {
     setForgotToken(forgotToken: string) {
@@ -94,11 +42,10 @@ export const useAppStore = defineStore('userSession', {
       if (!token)
         return
 
-      const response = await PaymentsService.getAllByUser(token)
-      if (!response)
-        return
-      const payments: Payment[] = response.data
-      this.paymentsHistory = TableConstrutor.donationHistory(payments)
+      const data = await PaymentsService.getAllByUser(token)
+
+      const payments: IPayment[] = data
+      this.paymentsHistory = TableConstructor.donationHistory(payments)
     },
   },
 })
