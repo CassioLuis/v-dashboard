@@ -56,7 +56,7 @@ export const donationSchema = zod.object({
     })
     .default(''),
   transactionAmount: zod
-    .number({ message: 'Use apenas números.' })
+    .number()
     .min(10, { message: 'O Valor mínimo é de R$ 10,00' })
     .default(10),
 })
