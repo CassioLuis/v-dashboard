@@ -10,7 +10,7 @@ export default class Format {
       return status = 'Pendente'
     if (status === 'approved')
       return status = 'Aprovado'
-    if (status === 'canceled')
+    if (status === 'cancelled')
       return status = 'Cancelado'
   }
 
