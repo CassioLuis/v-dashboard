@@ -22,7 +22,7 @@ async function signin() {
   const { token } = response.data
   if (response.status === 200) {
     Cookies.set('token', token, { expires: 1 })
-    return router.push('/dashboard')
+    return router.push('/inicio')
   }
   return error.value = true
 }

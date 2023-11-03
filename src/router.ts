@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import Cookies from 'js-cookie'
-import Dashboard from './views/Dashboard.vue'
+import Home from './views/Home.vue'
 import Forms from './views/Forms.vue'
 import Tables from './views/Tables.vue'
 import UIElements from './views/UIElements.vue'
@@ -48,9 +48,9 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/inicio',
+    name: 'Home',
+    component: Home,
     meta: { requiresAuth: true },
   },
   {
@@ -107,7 +107,7 @@ router.beforeEach((to) => {
   if (to.meta.requiresAuth && !token)
     return { name: 'Login' }
   if (to.name === 'Login' && token)
-    return { name: 'Dashboard' }
+    return { name: 'Home' }
 })
 
 export default router

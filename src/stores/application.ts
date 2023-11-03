@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import PaymentsService from '../service/payments.service'
-import TableConstructor from '../composables/tableConstructor'
+import TableConstructor from '../composables/TableConstructor'
 import type { IPayment, IPaymentsHistory, IState } from '../interfaces'
 
 export const useAppStore = defineStore('userSession', {
@@ -28,6 +28,7 @@ export const useAppStore = defineStore('userSession', {
     getPaymentsTotal: state => state.paymentsHistory.donationTotals.transactionAmount,
     getQtdDonations: state => state.paymentsHistory.donationTotals.donationQtd,
     getGoldDonationTotal: state => state.paymentsHistory.donationTotals.goldAmount,
+    getPayment: state => (id: any) => state.paymentsHistory.tBody.filter(item => item.orderId === id),
   },
   actions: {
     setForgotToken(forgotToken: string) {
@@ -46,6 +47,10 @@ export const useAppStore = defineStore('userSession', {
 
       const payments: IPayment[] = data
       this.paymentsHistory = TableConstructor.donationHistory(payments)
+    },
+    setOpenModal(id: any) {
+      const [payment] = this.getPayment(id)
+      payment.openModal = !payment.openModal
     },
   },
 })

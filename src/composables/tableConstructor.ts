@@ -3,13 +3,13 @@ import Format from './Format'
 
 export default class TableConstructor {
   private static readonly tHeaders = [
-    { title: 'Order' },
-    { title: 'Método' },
-    { title: 'Status' },
-    { title: 'Data' },
-    { title: 'Valor' },
-    { title: 'Gold' },
-    { title: 'QR Code' },
+    { title: 'Order', styles: 'text-center' },
+    { title: 'Método', styles: 'text-left' },
+    { title: 'Status', styles: 'text-left' },
+    { title: 'Data', styles: 'text-left' },
+    { title: 'Valor', styles: 'text-left' },
+    { title: 'Gold', styles: 'text-left' },
+    { title: 'QR Code', styles: 'text-center' },
   ]
 
   static donationHistory(donationTable: IPayment[]): IPaymentsHistory {
@@ -25,23 +25,26 @@ export default class TableConstructor {
     }, { goldAmount: 0, transactionAmount: 0, donationQtd: 0 })
 
     const tBody = donationTable.map((item) => {
-      // console.log(item)
+      const date = new Date(item.dateLastUpdated)
+
       return {
         orderId: item.orderId,
         paymentMethod: item.paymentMethod,
         status: item.status,
         dateLastUpdated: item.dateLastUpdated,
-        transactionAmount: item.transactionAmount,
+        numberDate: date.getTime(),
+        transactionAmount: Format.BRL(item.transactionAmount),
         goldAmount: item.goldAmount,
         qrCode: item.qrCode,
+        openModal: false,
         cells: [
-          { value: item.orderId, name: 'orderId' },
-          { value: item.paymentMethod, name: 'paymentMethod' },
-          { value: Format.status(item.status), name: 'status' },
-          { value: Format.date(item.dateLastUpdated), name: 'dateLastUpdated' },
-          { value: Format.BRL(item.transactionAmount), name: 'transactionAmount' },
-          { value: item.goldAmount, name: 'goldAmount' },
-          { value: item.qrCode, name: 'qrCode' },
+          { value: item.orderId, name: 'orderId', styles: 'text-left' },
+          { value: item.paymentMethod, name: 'paymentMethod', styles: 'text-left' },
+          { value: Format.status(item.status), name: 'status', styles: 'text-left' },
+          { value: Format.date(item.dateLastUpdated), name: 'dateLastUpdated', styles: 'text-left' },
+          { value: Format.BRL(item.transactionAmount), name: 'transactionAmount', styles: 'text-left' },
+          { value: Format.number(item.goldAmount), name: 'goldAmount', styles: 'text-left' },
+          { value: item.qrCode, name: 'qrCode', styles: 'text-left' },
         ],
       }
     })
@@ -49,10 +52,11 @@ export default class TableConstructor {
     return {
       donationTotals: {
         ...donationTotals,
+        goldAmount: Format.number(donationTotals.goldAmount),
         transactionAmount: Format.BRL(donationTotals.transactionAmount),
       },
       tHeaders: this.tHeaders,
-      tBody,
+      tBody: tBody.sort((a, b) => b.numberDate - a.numberDate),
     }
   }
 }

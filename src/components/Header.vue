@@ -81,14 +81,12 @@ const { isOpen } = useSidebar()
 
       <div class="relative">
         <button
-          class="relative z-10 block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none"
+          class="flex justify-center items-center bg-slate-200 border relative z-10 w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none"
           @click="dropdownOpen = !dropdownOpen"
         >
-          <img
-            class="object-cover w-full h-full"
-            src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=296&q=80"
-            alt="Your avatar"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+            <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+          </svg>
         </button>
 
         <div
@@ -107,21 +105,21 @@ const { isOpen } = useSidebar()
         >
           <div
             v-show="dropdownOpen"
-            class="absolute right-0 z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl"
+            class="border absolute right-0 z-20 w-48 py-1 mt-2 bg-white rounded-md shadow-xl"
           >
-            <a
+            <!-- <a
               href="#"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
             >Profile</a>
             <a
               href="#"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-            >Products</a>
+            >Products</a> -->
             <a
               class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
               @click.prevent="logOut"
             >
-              Log out
+              Sair
             </a>
           </div>
         </transition>

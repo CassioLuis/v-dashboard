@@ -43,7 +43,7 @@ function validCpf(data: ZodObject): any {
 }
 
 export const donationSchema = zod.object({
-  paymentMethod: zod.string().nonempty('Preencha com o método.').transform(value => value.toLowerCase()).default(''),
+  paymentMethod: zod.string().nonempty('Escolha um método.').transform(value => value.toLowerCase()).default(''),
   firstName: zod.string().nonempty('Digite o nome.').default(''),
   lastName: zod.string().nonempty('Digite o sobrenome.').default(''),
   email: zod.string().nonempty('Digite o email.').email({ message: 'Digite um email válido.' }).toLowerCase().default(''),
@@ -56,9 +56,12 @@ export const donationSchema = zod.object({
     })
     .default(''),
   transactionAmount: zod
-    .number()
-    .min(10, { message: 'O Valor mínimo é de R$ 10,00' })
-    .default(10),
+    .number({
+      required_error: 'Digite o valor.',
+      invalid_type_error: 'Digite o valor.',
+    })
+    .int()
+    .min(10, { message: 'O Valor mínimo é de R$ 10,00' }),
 })
   .refine(validCpf, {
     message: 'Digite um CPF Válido (3).',

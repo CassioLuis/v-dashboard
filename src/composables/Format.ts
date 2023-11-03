@@ -18,4 +18,8 @@ export default class Format {
     const options = { style: 'currency', currency: 'BRL' }
     return number.toLocaleString('pt-BR', options)
   }
+
+  static number(number: number) {
+    return number.toLocaleString('pt-BR', { minimumFractionDigits: 0 })
+  }
 }

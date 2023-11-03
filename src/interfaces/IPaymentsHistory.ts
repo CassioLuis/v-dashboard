@@ -1,10 +1,12 @@
 interface ItHead {
   title: string
+  styles: string | undefined
 }
 
 interface ICells {
   value: string | number | undefined
   name: string
+  styles: string | undefined
 }
 
 interface ItBody {
@@ -12,15 +14,17 @@ interface ItBody {
   paymentMethod: string
   status: string
   dateLastUpdated: Date
-  transactionAmount: number
+  numberDate: number
+  transactionAmount: string
   goldAmount: number
   qrCode: string
+  openModal: boolean
   cells: ICells[]
 }
 
 interface IDonationTotals {
   donationQtd: number
-  goldAmount: number
+  goldAmount: string | number
   transactionAmount: string | number
 }
 

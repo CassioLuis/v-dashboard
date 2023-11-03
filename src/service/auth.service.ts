@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { ILogin } from '../interfaces'
-import { url } from './url'
+import url from './url'
 
 export default class User {
   static async login(login: ILogin): Promise<any> {

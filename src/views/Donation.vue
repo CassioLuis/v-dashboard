@@ -3,9 +3,10 @@ import { onMounted, reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/application'
 import DonationForm from '../components/DonationForm.vue'
+import Modal from '../components/Modal.vue'
 
 const userSession = useAppStore()
-const { setPaymentsHistory } = userSession
+const { setPaymentsHistory, setOpenModal } = userSession
 const { getPaymentHistory, getPaymentsTotal, getQtdDonations, getGoldDonationTotal } = storeToRefs(userSession)
 
 onMounted(async () => {
@@ -14,6 +15,7 @@ onMounted(async () => {
 
 const data = reactive({
   refreshing: false,
+  modalOpen: false,
 })
 
 async function refreshTable() {
@@ -34,7 +36,7 @@ async function refreshTable() {
     <div class="flex flex-col mt-8">
       <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <h4 class="text-gray-600">
-          Histório de Doações
+          Histórico de Doações
         </h4>
         <div class="my-4">
           <div class="flex justify-between flex-wrap -mx-6">
@@ -83,9 +85,9 @@ async function refreshTable() {
                   </svg>
                 </div>
 
-                <div class="mx-5">
-                  <h4 class="text-2xl font-semibold text-gray-700">
-                    {{ getPaymentsTotal }} - Gold: {{ getGoldDonationTotal }}
+                <div class="mx-5 overflow-hidden">
+                  <h4 class="text-2xl font-semibold text-gray-700 whitespace-nowrap overflow-hidden text-ellipsis ...">
+                    {{ getPaymentsTotal }} → {{ getGoldDonationTotal }} gold
                   </h4>
                   <div class="text-gray-500">
                     Total de Cash
@@ -101,7 +103,8 @@ async function refreshTable() {
               <tr>
                 <th
                   v-for="(header, idx) in getPaymentHistory.tHeaders" :key="idx"
-                  class="text-center px-4 py-2 text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                  :class="header.styles"
+                  class="px-4 py-2 text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                 >
                   <span v-if="header.title === 'QR Code'" class="w-full flex justify-between items-center">
                     <span>{{ header.title }}</span>
@@ -132,11 +135,40 @@ async function refreshTable() {
               <tr v-for="body in getPaymentHistory.tBody" :key="body.orderId">
                 <td
                   v-for="(td, idx) in body.cells" :key="idx"
-                  class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
+                  :class="td.styles"
+                  class="px-4 py-2 border-b border-gray-200 whitespace-nowrap"
                 >
                   <span v-if="td.name === 'qrCode'">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                    <!-- <img width="200" height="200" :src="`data:image/jpeg;base64,${td.value}`"> -->
+                    <a
+                      href="#" class="text-indigo-600 hover:text-indigo-900 hover:underline font-semibold"
+                      @click.prevent="setOpenModal(body.orderId)"
+                    >
+                      Ver
+                    </a>
+                    <Modal :open="body.openModal">
+                      <template #content>
+                        <div class="flex flex-col gap-2">
+                          <img :src="`data:image/jpeg;base64,${td.value}`" class="border w-64">
+                          <div class="flex justify-between">
+                            <div>
+                              <h1 class="text-left font-semibold text-lg">Order</h1>
+                              <p class="text-left text-sm">nº {{ body.orderId }}</p>
+                            </div>
+                            <div>
+                              <p class="text-left font-semibold text-lg">{{ body.transactionAmount }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                      <template #footer>
+                        <button
+                          class="p-3 px-6 py-3 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400 focus:outline-none"
+                          @click="setOpenModal(body.orderId)"
+                        >
+                          Fechar
+                        </button>
+                      </template>
+                    </Modal>
                   </span>
                   <span v-else-if="td.name === 'orderId'" class="flex">
                     <div class="flex items-center">

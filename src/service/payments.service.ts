@@ -2,7 +2,7 @@ import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import type { INewPayment, IPayment } from '../interfaces'
-import { url } from './url'
+import url from './url'
 
 export default class Payment {
   static async create(payment: INewPayment): Promise<any> {
