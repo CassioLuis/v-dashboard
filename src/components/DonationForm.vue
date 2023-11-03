@@ -34,46 +34,10 @@ async function onValidForm(values: any, { resetForm }: any) {
     external_reference: 'MP0001',
   })
   resetForm()
-  // qrCode.value = response.data.qrCode
 }
-
-// interface UserPayment {
-//   username: string
-//   email: string
-//   password: string
-//   confirm: string
-//   donationAmount: number
-// }
-
-// const user = ref<UserPayment>({
-//   username: '',
-//   email: '',
-//   password: '',
-//   confirm: '',
-//   donationAmount: 0,
-// })
 
 const qrCode = ref('')
 
-// async function newPayment() {
-//   const response = await PaymentsService.create({
-//     payment_method_id: 'pix',
-//     transaction_amount: user.value.donationAmount,
-//     payer: {
-//       first_name: 'Test',
-//       last_name: 'Test',
-//       email: 'teste@gmail.com',
-//       identification: {
-//         type: 'CPF',
-//         number: '05663593160',
-//       },
-//     },
-//     description: 'Payment for product',
-//     external_reference: 'MP0001',
-//   })
-//   qrCode.value = response.data.qrCode
-//   // await setPaymentsHistory()
-// }
 const toggle = ref(false)
 </script>
 
@@ -184,7 +148,7 @@ const toggle = ref(false)
                     </div>
                     <div class="flex-1 items-center md:flex md:justify-between ml-4">
                       <p class="flex items-center text-md text-orange-700">
-                        A Cada<span class="flex font-semibold">&nbsp;R$ 10,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1000 Golds.</span>
+                        A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
                       </p>
                     </div>
                   </div>
