@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import PaymentsService from '../service/payments.service'
-import TableConstructor from '../composables/tableConstructor.ts'
+import TableConstructor from '../composables/tableConstructor'
 import type { IPayment, IPaymentsHistory, IState } from '../interfaces'
 
 export const useAppStore = defineStore('userSession', {
