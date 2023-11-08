@@ -13,11 +13,18 @@ import Register from './views/Register.vue'
 import ForgotPass from './views/ForgotPass.vue'
 import ChangePass from './views/ChangePass.vue'
 import Donation from './views/Donation.vue'
+import LandingPage from './views/LandingPage.vue'
 import { useAppStore } from './stores/application'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
+    name: 'LandingPage',
+    component: LandingPage,
+    meta: { layout: 'empty', requiresAuth: false },
+  },
+  {
+    path: '/login',
     name: 'Login',
     component: Login,
     meta: { layout: 'empty', requiresAuth: false },
