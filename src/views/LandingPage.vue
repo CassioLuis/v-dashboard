@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
 
 const router = useRouter()
 
@@ -20,13 +21,13 @@ function toggleDarkMode() {
 
 <template>
   <div class="flex flex-col h-screen w-screen">
-    <nav class="container py-8 flex justify-between items-center">
+    <nav class="font-outfit container py-7 flex justify-between items-center">
       <div class="space-x-4 flex items-center">
         <Avatar>
           <AvatarImage src="/logo-2.png" alt="@radix-vue" />
           <AvatarFallback>BS</AvatarFallback>
         </Avatar>
-        <span>Perfect World Blackstar</span>
+        <span class="font-semibold text-lg">Perfect World Blackstar</span>
       </div>
       <div class="flex gap-2">
         <Button variant="ghost">
@@ -74,23 +75,25 @@ function toggleDarkMode() {
         </i>
       </div>
     </nav>
-    <main class="grow container py-8 flex items-center">
+    <Separator class="container" />
+    <main class="font-domine grow container py-8 flex items-center">
       <div class="flex items-center w-full lg:w-1/2">
         <div class="max-w-2xl mb-8">
           <h1 class="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
-            Free Landing Page Template for startups
+            Perfect World Blackstar, Explore um mundo único e exclusivo.
           </h1>
           <p class="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
-            Nextly is a free landing page & marketing website
-            template for startups and indie projects. Its built with
-            Next.js & TailwindCSS. And its completely open-source.
+            Apresentamos um ambiente personalizado e dedicado, construído para
+            oferecer a melhor experiência de jogo. Desfrute de recursos exclusivos
+            e uma comunidade apaixonada. Bem-vindo ao nosso reino,
+            onde a aventura é infinita e a diversão é garantida.
           </p>
 
           <div class="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-            <Button size="xl">
+            <Button size="xl" class="font-semibold">
               Download
             </Button>
-            <Button variant="link" size="xl" @click="router.push('/register')">
+            <Button variant="ghost" size="xl" @click="router.push('/register')">
               Cadastre-se
             </Button>
           </div>

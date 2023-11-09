@@ -13,16 +13,22 @@ export default class TableConstructor {
   ]
 
   static donationHistory(donationTable: IPayment[]): IPaymentsHistory {
-    const donationTotals = donationTable.filter((item: any) => item.status === 'approved').reduce((acc: any, item: any) => {
-      acc.donationQtd++
-      acc.goldAmount += item.goldAmount
-      acc.transactionAmount += item.transactionAmount
-      return {
-        goldAmount: acc.goldAmount,
-        donationQtd: acc.donationQtd,
-        transactionAmount: acc.transactionAmount,
-      }
-    }, { goldAmount: 0, transactionAmount: 0, donationQtd: 0 })
+    const donationTotals = donationTable
+      .filter((item: any) => item.status === 'approved')
+      .reduce((acc: any, item: any) => {
+        acc.donationQtd++
+        acc.goldAmount += item.goldAmount
+        acc.transactionAmount += item.transactionAmount
+        return {
+          goldAmount: acc.goldAmount,
+          donationQtd: acc.donationQtd,
+          transactionAmount: acc.transactionAmount,
+        }
+      }, {
+        goldAmount: 0,
+        transactionAmount: 0,
+        donationQtd: 0,
+      })
 
     const tBody = donationTable.map((item) => {
       const date = new Date(item.dateLastUpdated)
