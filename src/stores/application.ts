@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import PaymentsService from '../service/payments.service'
 import TableConstructor from '../composables/TableConstructor'
-import type { IPayment, IPaymentsHistory, IState } from '../interfaces'
+import type { IPayment, IState } from '../interfaces'
 
 export const useAppStore = defineStore('userSession', {
   state: (): IState => {
@@ -22,13 +22,13 @@ export const useAppStore = defineStore('userSession', {
     }
   },
   getters: {
-    getForgotToken: state => state.forgotPassToken,
-    getForgotPassTokenInvalid: state => state.forgotPassTokenInvalid,
-    getPaymentHistory: (state): IPaymentsHistory => state.paymentsHistory,
-    getPaymentsTotal: state => state.paymentsHistory.donationTotals.transactionAmount,
-    getQtdDonations: state => state.paymentsHistory.donationTotals.donationQtd,
-    getGoldDonationTotal: state => state.paymentsHistory.donationTotals.goldAmount,
-    getPayment: state => (id: any) => state.paymentsHistory.tBody.filter(item => item.orderId === id),
+    getForgotToken: (state: IState) => state.forgotPassToken,
+    getForgotPassTokenInvalid: (state: IState) => state.forgotPassTokenInvalid,
+    getPaymentHistory: (state: IState) => state.paymentsHistory,
+    getPaymentsTotal: (state: IState) => state.paymentsHistory.donationTotals.transactionAmount,
+    getQtdDonations: (state: IState) => state.paymentsHistory.donationTotals.donationQtd,
+    getGoldDonationTotal: (state: IState) => state.paymentsHistory.donationTotals.goldAmount,
+    getPayment: (state: IState) => (id: any) => state.paymentsHistory.tBody.filter(item => item.orderId === id),
   },
   actions: {
     setForgotToken(forgotToken: string) {
