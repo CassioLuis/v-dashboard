@@ -1,21 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useField, useForm } from 'vee-validate'
+import { h } from 'vue'
+import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { donationSchema } from '../schemas/zod.donationForm'
 import PaymentsService from '../service/payments.service'
+import { Card } from './ui/card'
+import { Button } from './ui/button'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { Input } from '@/components/ui/input'
+import { toast } from '@/components/ui/toast'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 
 const validationSchema = toTypedSchema(donationSchema)
-const { handleSubmit, isSubmitting, errors, meta } = useForm({ validationSchema })
+const { handleSubmit, isSubmitting, meta } = useForm({ validationSchema })
 
-const { value: paymentMethod } = useField('paymentMethod')
-const { value: firstName } = useField('firstName')
-const { value: lastName } = useField('lastName')
-const { value: email } = useField('email')
-const { value: number } = useField('number')
-const { value: transactionAmount } = useField('transactionAmount')
+const createDonation = handleSubmit(onValidForm, onInvalidForm)
 
-const createDonation = handleSubmit(onValidForm)
+function onInvalidForm(invalid: any) {
+  return toast({
+    title: 'You submitted the following values:',
+    description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(invalid, null, 2))),
+  })
+}
 
 async function onValidForm(values: any, { resetForm }: any) {
   await PaymentsService.create({
@@ -33,142 +45,197 @@ async function onValidForm(values: any, { resetForm }: any) {
     description: 'Doação para PW Blackstar',
     external_reference: 'MP0001',
   })
+  toast({
+    title: 'You submitted the following values:',
+    description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
+  })
   resetForm()
 }
-
-const qrCode = ref('')
-
-const toggle = ref(false)
 </script>
 
 <template>
-  <div class="mt-8">
-    <img v-if="qrCode" width="200" height="200" :src="`data:image/jpeg;base64,${qrCode}`">
-    <div class="mt-4">
-      <div class="p-6 bg-white rounded-md shadow-sm">
-        <div class="hs-accordion-group">
-          <div id="hs-basic-with-arrow-heading-one" class="hs-accordion">
-            <button
-              class="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center gap-x-3 w-full font-semibold text-left text-black transition hover:text-gray-400"
-              aria-controls="hs-basic-with-arrow-collapse-one" @click="toggle = !toggle"
-            >
-              <svg
-                class="hs-accordion-active:hidden hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 block w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
-                width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                />
-              </svg>
-              <svg
-                class="hs-accordion-active:block hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 hidden w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
-                width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                />
-              </svg>
-              <h2 class="text-lg font-semibold text-gray-700 capitalize">
-                Nova doação
-              </h2>
-            </button>
-            <div
-              id="hs-basic-with-arrow-collapse-one" :class="{ 'block': toggle, 'h-0': !toggle }"
-              class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-              aria-labelledby="hs-basic-with-arrow-heading-one"
-            >
-              <form @submit.prevent="createDonation">
-                <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                  <div>
-                    <label class="text-gray-700" for="username">Name</label>
-                    <input
-                      v-model="firstName"
-                      class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                      type="text"
-                    >
-                    <span class="text-red-500 font-semibold text-xs">{{ errors.firstName }}</span>
+  <Card class="mt-8 p-4">
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1" class="border-none">
+        <AccordionTrigger class="font-semibold">
+          Nova Doação
+        </AccordionTrigger>
+        <AccordionContent>
+          <div class="w-full transition-[height] duration-300">
+            <form @submit.prevent="createDonation">
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <FormField v-slot="{ componentField }" name="firstName">
+                  <FormItem>
+                    <FormLabel>Nome</FormLabel>
+                    <FormControl>
+                      <Input type="text" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage class="text-xs" />
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="lastName">
+                  <FormItem>
+                    <FormLabel>Sobrenome</FormLabel>
+                    <FormControl>
+                      <Input type="text" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage class="text-xs" />
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="number">
+                  <FormItem>
+                    <FormLabel>CPF</FormLabel>
+                    <FormControl>
+                      <Input v-mask="['###.###.###-##']" type="text" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage class="text-xs" />
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="email">
+                  <FormItem>
+                    <FormLabel>E-mail</FormLabel>
+                    <FormControl>
+                      <Input type="email" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage class="text-xs" />
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="paymentMethod">
+                  <FormItem>
+                    <FormLabel>Método</FormLabel>
+                    <FormControl>
+                      <Input type="select" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage class="text-xs" />
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="transactionAmount">
+                  <FormItem>
+                    <FormLabel>Valor</FormLabel>
+                    <FormControl>
+                      <Input type="number" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage class="text-xs" />
+                  </FormItem>
+                </FormField>
+              </div>
+              <div class="bg-orange-50 border border-orange-200 rounded-md p-4 mt-12" role="alert">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <img src="/gold-ingot-chinese.png" class="w-10 h-10">
                   </div>
-                  <div>
-                    <label class="text-gray-700" for="username">Sobrenome</label>
-                    <input
-                      v-model="lastName"
-                      class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                      type="text"
-                    >
-                    <span class="text-red-500 font-semibold text-xs">{{ errors.lastName }}</span>
-                  </div>
-                  <div>
-                    <label class="text-gray-700" for="password">CPF</label>
-                    <input
-                      v-model="number"
-                      v-mask="['###.###.###-##']"
-                      class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                      type="text"
-                    >
-                    <span class="text-red-500 font-semibold text-xs">{{ errors.number }}</span>
-                  </div>
-                  <div>
-                    <label class="text-gray-700" for="emailAddress">Email</label>
-                    <input
-                      v-model="email"
-                      class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                      type="email"
-                    >
-                    <span class="text-red-500 font-semibold text-xs">{{ errors.email }}</span>
-                  </div>
-                  <div>
-                    <label class="text-gray-700" for="passwordConfirmation">Método</label>
-                    <select
-                      v-model="paymentMethod"
-                      class="cursor-pointer w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                    >
-                      <option v-for="(option, idx) in ['Pix']" :key="idx" class="h-16 cursor-pointer">
-                        {{ option }}
-                      </option>
-                    </select>
-                    <span class="text-red-500 font-semibold text-xs">{{ errors.paymentMethod }}</span>
-                  </div>
-                  <div>
-                    <label class="text-gray-700" for="username">Valor</label>
-                    <input
-                      v-model="transactionAmount"
-                      class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
-                      type="number"
-                    >
-                    <span class="text-red-500 font-semibold text-xs">{{ errors.transactionAmount }}</span>
+                  <div class="flex-1 items-center md:flex md:justify-between ml-4">
+                    <p class="flex items-center text-md text-orange-700">
+                      A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
+                    </p>
                   </div>
                 </div>
-
-                <div class="bg-orange-50 border border-orange-200 rounded-md p-4 mt-12" role="alert">
-                  <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                      <img src="/gold-ingot-chinese.png" class="w-10 h-10">
-                    </div>
-                    <div class="flex-1 items-center md:flex md:justify-between ml-4">
-                      <p class="flex items-center text-md text-orange-700">
-                        A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="flex justify-end mt-4 gap-2">
-                  <button
-                    type="submit" :disabled="isSubmitting || !meta.valid"
-                    class="h-12"
-                    :class="{ 'btn-success-disabled': isSubmitting || !meta.valid, 'btn-success': meta.valid && !isSubmitting }"
+              </div>
+              <div class="flex justify-end mt-4 gap-2">
+                <Button
+                  variant="secondary"
+                  type="submit" :disabled="isSubmitting || !meta.valid"
+                  :class="{ 'btn-success-disabled': isSubmitting || !meta.valid, 'btn-success': meta.valid && !isSubmitting }"
+                >
+                  <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
+                  <span v-else>Enviar Donate</span>
+                </Button>
+              </div>
+            </form>
+            <!-- <form @submit.prevent="createDonation">
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <div>
+                  <label class="text-gray-700" for="username">Name</label>
+                  <input
+                    v-model="firstName"
+                    class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                    type="text"
                   >
-                    <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
-                    <span v-else>Enviar Donate</span>
-                  </button>
+                  <span class="text-red-500 font-semibold text-xs">{{ errors.firstName }}</span>
                 </div>
-              </form>
-            </div>
+                <div>
+                  <label class="text-gray-700" for="username">Sobrenome</label>
+                  <input
+                    v-model="lastName"
+                    class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                    type="text"
+                  >
+                  <span class="text-red-500 font-semibold text-xs">{{ errors.lastName }}</span>
+                </div>
+                <div>
+                  <label class="text-gray-700" for="password">CPF</label>
+                  <input
+                    v-model="number"
+                    v-mask="['###.###.###-##']"
+                    class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                    type="text"
+                  >
+                  <span class="text-red-500 font-semibold text-xs">{{ errors.number }}</span>
+                </div>
+                <div>
+                  <label class="text-gray-700" for="emailAddress">Email</label>
+                  <input
+                    v-model="email"
+                    class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                    type="email"
+                  >
+                  <span class="text-red-500 font-semibold text-xs">{{ errors.email }}</span>
+                </div>
+                <div>
+                  <label class="text-gray-700" for="passwordConfirmation">Método</label>
+                  <select
+                    v-model="paymentMethod"
+                    class="cursor-pointer w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                  >
+                    <option v-for="(option, idx) in ['Pix']" :key="idx" class="h-16 cursor-pointer">
+                      {{ option }}
+                    </option>
+                  </select>
+                  <span class="text-red-500 font-semibold text-xs">{{ errors.paymentMethod }}</span>
+                </div>
+                <div>
+                  <label class="text-gray-700" for="username">Valor</label>
+                  <input
+                    v-model="transactionAmount"
+                    class="w-full mt-2 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
+                    type="number"
+                  >
+                  <span class="text-red-500 font-semibold text-xs">{{ errors.transactionAmount }}</span>
+                </div>
+              </div>
+
+              <div class="bg-orange-50 border border-orange-200 rounded-md p-4 mt-12" role="alert">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <img src="/gold-ingot-chinese.png" class="w-10 h-10">
+                  </div>
+                  <div class="flex-1 items-center md:flex md:justify-between ml-4">
+                    <p class="flex items-center text-md text-orange-700">
+                      A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end mt-4 gap-2">
+                <button
+                  type="submit" :disabled="isSubmitting || !meta.valid"
+                  class="h-12"
+                  :class="{ 'btn-success-disabled': isSubmitting || !meta.valid, 'btn-success': meta.valid && !isSubmitting }"
+                >
+                  <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
+                  <span v-else>Enviar Donate</span>
+                </button>
+              </div>
+            </form> -->
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  </Card>
 </template>
