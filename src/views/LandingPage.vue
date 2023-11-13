@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 const router = useRouter()
 
@@ -100,15 +101,16 @@ function toggleDarkMode() {
         </div>
       </div>
       <div class="flex items-center justify-center w-full lg:w-1/2">
-        <div class="flex justify-end">
-          <img
+        <AspectRatio :ratio="9 / 10" class="flex justify-end">
+          <img src="/landing-img.png" alt="Image" class="rounded-md object-cover">
+          <!-- <img
             src="/landing-img.png"
             class="bg-cover overflow-hidden w-[500px]"
             alt="Hero Illustration"
             loading="eager"
             placeholder="blur"
-          >
-        </div>
+          > -->
+        </AspectRatio>
       </div>
     </main>
   </div>

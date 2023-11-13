@@ -33,17 +33,17 @@ async function refreshTable() {
 
 <template>
   <div>
-    <h3 class="text-3xl font-medium text-gray-700">
+    <h1 class="text-3xl font-medium">
       Doações
-    </h3>
+    </h1>
     <DonationForm />
     <div class="mt-8" />
 
     <div class="flex flex-col mt-8">
       <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <h4 class="text-gray-600">
+        <h2>
           Histórico de Doações
-        </h4>
+        </h2>
         <div class="my-4 -mx-6 px-4">
           <div class="flex justify-between flex-wrap gap-2 sm:gap-0 md:gap-0 lg:gap-0">
             <div class="w-full px-2 mt-6 sm:w-1/3 xl:w-1/3 sm:mt-0">
