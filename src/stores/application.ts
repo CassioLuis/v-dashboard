@@ -48,9 +48,5 @@ export const useAppStore = defineStore('userSession', {
       const payments: IPayment[] = data
       this.paymentsHistory = TableConstructor.donationHistory(payments)
     },
-    setOpenModal(id: any) {
-      const [payment] = this.getPayment(id)
-      payment.openModal = !payment.openModal
-    },
   },
 })

@@ -4,11 +4,13 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { donationSchema } from '../schemas/zod.donationForm'
 import PaymentsService from '../service/payments.service'
-import { Card } from './ui/card'
-import { Button } from './ui/button'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/toast'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   Select,
   SelectContent,
@@ -68,105 +70,102 @@ async function onValidForm(values: any, { resetForm }: any) {
         <AccordionTrigger class="font-semibold p-4">
           Nova Doação
         </AccordionTrigger>
-        <AccordionContent class="p-4">
-          <div class="w-full transition-[height] duration-300">
-            <form @submit.prevent="createDonation">
-              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                <FormField v-slot="{ componentField }" name="firstName">
-                  <FormItem>
-                    <FormLabel>Nome</FormLabel>
-                    <FormControl>
-                      <Input type="text" v-bind="componentField" />
-                    </FormControl>
-                    <FormMessage class="text-xs" />
-                  </FormItem>
-                </FormField>
+        <AccordionContent class="px-4">
+          <form @submit.prevent="createDonation">
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+              <FormField v-slot="{ componentField }" name="firstName">
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input type="text" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage class="text-xs" />
+                </FormItem>
+              </FormField>
 
-                <FormField v-slot="{ componentField }" name="lastName">
-                  <FormItem>
-                    <FormLabel>Sobrenome</FormLabel>
-                    <FormControl>
-                      <Input type="text" v-bind="componentField" />
-                    </FormControl>
-                    <FormMessage class="text-xs" />
-                  </FormItem>
-                </FormField>
+              <FormField v-slot="{ componentField }" name="lastName">
+                <FormItem>
+                  <FormLabel>Sobrenome</FormLabel>
+                  <FormControl>
+                    <Input type="text" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage class="text-xs" />
+                </FormItem>
+              </FormField>
 
-                <FormField v-slot="{ componentField }" name="number">
-                  <FormItem>
-                    <FormLabel>CPF</FormLabel>
-                    <FormControl>
-                      <Input v-mask="['###.###.###-##']" type="text" v-bind="componentField" />
-                    </FormControl>
-                    <FormMessage class="text-xs" />
-                  </FormItem>
-                </FormField>
+              <FormField v-slot="{ componentField }" name="number">
+                <FormItem>
+                  <FormLabel>CPF</FormLabel>
+                  <FormControl>
+                    <Input v-mask="['###.###.###-##']" type="text" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage class="text-xs" />
+                </FormItem>
+              </FormField>
 
-                <FormField v-slot="{ componentField }" name="email">
-                  <FormItem>
-                    <FormLabel>E-mail</FormLabel>
-                    <FormControl>
-                      <Input type="email" v-bind="componentField" />
-                    </FormControl>
-                    <FormMessage class="text-xs" />
-                  </FormItem>
-                </FormField>
+              <FormField v-slot="{ componentField }" name="email">
+                <FormItem>
+                  <FormLabel>E-mail</FormLabel>
+                  <FormControl>
+                    <Input type="email" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage class="text-xs" />
+                </FormItem>
+              </FormField>
 
-                <FormField v-slot="{ componentField }" name="paymentMethod">
-                  <FormItem>
-                    <FormLabel>Método</FormLabel>
-                    <Select v-bind="componentField">
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione o método" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="pix">
-                            pix
-                          </SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage class="text-xs" />
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="transactionAmount">
-                  <FormItem>
-                    <FormLabel>Valor</FormLabel>
+              <FormField v-slot="{ componentField }" name="paymentMethod">
+                <FormItem>
+                  <FormLabel>Método</FormLabel>
+                  <Select v-bind="componentField">
                     <FormControl>
-                      <Input type="number" v-bind="componentField" />
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o método" />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage class="text-xs" />
-                  </FormItem>
-                </FormField>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="pix">
+                          pix
+                        </SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage class="text-xs" />
+                </FormItem>
+              </FormField>
+
+              <FormField v-slot="{ componentField }" name="transactionAmount">
+                <FormItem>
+                  <FormLabel>Valor</FormLabel>
+                  <FormControl>
+                    <Input type="number" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage class="text-xs" />
+                </FormItem>
+              </FormField>
+            </div>
+            <Separator class="my-6" />
+            <Alert class="flex items-center gap-4" variant="destructive">
+              <div class="flex-shrink-0">
+                <img src="/gold-ingot-chinese.png" class="w-10 h-10">
               </div>
-              <div class="bg-orange-50 border border-orange-200 rounded-md p-4 mt-12" role="alert">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0">
-                    <img src="/gold-ingot-chinese.png" class="w-10 h-10">
-                  </div>
-                  <div class="flex-1 items-center md:flex md:justify-between ml-4">
-                    <p class="flex items-center text-md text-orange-700">
-                      A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <AlertDescription>
+                  <p class="flex items-center text-md text-orange-700">
+                    A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
+                  </p>
+                </AlertDescription>
               </div>
-              <div class="flex justify-end mt-4 gap-2">
-                <Button
-                  variant="secondary"
-                  type="submit" :disabled="isSubmitting || !meta.valid"
-                  :class="{ 'btn-success-disabled': isSubmitting || !meta.valid, 'btn-success': meta.valid && !isSubmitting }"
-                >
-                  <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
-                  <span v-else>Enviar Donate</span>
-                </Button>
-              </div>
-            </form>
-          </div>
+            </Alert>
+            <Button
+              variant="default"
+              type="submit" :disabled="isSubmitting || !meta.valid"
+              class="w-full mt-4"
+            >
+              <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
+              <span v-else>Enviar Donate</span>
+            </Button>
+          </form>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

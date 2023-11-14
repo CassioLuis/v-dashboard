@@ -3,16 +3,37 @@ import { onMounted, reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/application'
 import DonationForm from '../components/DonationForm.vue'
-import Modal from '../components/Modal.vue'
+import { Badge } from '@/components/ui/badge'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const userSession = useAppStore()
-const { setPaymentsHistory, setOpenModal } = userSession
+const { setPaymentsHistory } = userSession
 const { getPaymentHistory, getPaymentsTotal, getQtdDonations, getGoldDonationTotal } = storeToRefs(userSession)
 
 onMounted(async () => {
@@ -36,8 +57,8 @@ async function refreshTable() {
     <h1 class="text-3xl font-medium">
       Doações
     </h1>
+
     <DonationForm />
-    <div class="mt-8" />
 
     <div class="flex flex-col mt-8">
       <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -119,57 +140,54 @@ async function refreshTable() {
           </div>
         </div>
         <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-          <table class="min-w-full">
-            <thead class="relative">
-              <tr>
-                <th
-                  v-for="(header, idx) in getPaymentHistory.tHeaders" :key="idx"
-                  :class="header.styles"
-                  class="px-4 py-2 text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
-                >
-                  <span v-if="header.title === 'QR Code'" class="w-full flex justify-between items-center">
-                    <span>{{ header.title }}</span>
-                    <button
-                      class="h-6 w-8 flex items-center p-1 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"
-                      @click.prevent="refreshTable"
-                    >
-                      <svg
-                        :class="{ 'elemento-girando': data.refreshing }" class="w-5 h-5 mx-1"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </span>
-                  <span v-else>
-                    {{ header.title }}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-
-            <tbody class="bg-white">
-              <tr v-for="body in getPaymentHistory.tBody" :key="body.orderId">
-                <td
-                  v-for="(td, idx) in body.cells" :key="idx"
-                  :class="td.styles"
-                  class="px-4 py-2 border-b border-gray-200 whitespace-nowrap"
-                >
+          <div class="p-2 flex justify-end">
+            <Button
+              variant="ghost"
+              @click.prevent="refreshTable"
+            >
+              <svg
+                :class="{ 'elemento-girando': data.refreshing }" class="w-5 h-5 mx-1"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Atualizar Histórico
+            </Button>
+          </div>
+          <Table>
+            <TableCaption>Lista de suas ordens recentes.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead v-for="(header, idx) in getPaymentHistory.tHeaders" :key="idx" class="w-[100px] font-semibold">
+                  {{ header.title }}
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow v-for="body in getPaymentHistory.tBody" :key="body.orderId">
+                <TableCell v-for="(td, idx) in body.cells" :key="idx" class="font-medium">
                   <span v-if="td.name === 'qrCode'">
-                    <a
-                      href="#" class="text-indigo-600 hover:text-indigo-900 hover:underline font-semibold"
-                      @click.prevent="setOpenModal(body.orderId)"
-                    >
-                      Ver
-                    </a>
-                    <Modal :open="body.openModal">
-                      <template #content>
-                        <div class="flex flex-col gap-2">
-                          <img :src="`data:image/jpeg;base64,${td.value}`" class="border w-64">
+                    <Dialog>
+                      <DialogTrigger as-child>
+                        <Button variant="link" class="font-semibold">
+                          Ver
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent class="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Efetuar Pagamento</DialogTitle>
+                          <DialogDescription>
+                            Para efetuar o pagamento, aponte a câmera do seu celular para o qr-code.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div class="grid gap-4 py-4">
+                          <div class="flex justify-center">
+                            <img :src="`data:image/jpeg;base64,${td.value}`" class="border w-64">
+                          </div>
                           <div class="flex justify-between">
                             <div>
                               <h1 class="text-left font-semibold text-lg">Order</h1>
@@ -180,47 +198,65 @@ async function refreshTable() {
                             </div>
                           </div>
                         </div>
-                      </template>
-                      <template #footer>
-                        <button
-                          class="p-3 px-6 py-3 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400 focus:outline-none"
-                          @click="setOpenModal(body.orderId)"
-                        >
-                          Fechar
-                        </button>
-                      </template>
-                    </Modal>
+                        <DialogFooter>
+                          <DialogClose as-child>
+                            <Button class="w-full" type="button" variant="secondary">
+                              Fechar
+                            </Button>
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                  </span>
+                  <span v-else-if="td.name === 'status'">
+                    <Badge
+                      v-if="td.value === 'Cancelado'"
+                      variant="secondaryDanger"
+                    >
+                      {{ td.value }}
+                    </Badge>
+                    <Badge
+                      v-else-if="td.value === 'Aprovado'"
+                      variant="secondarySuccess"
+                    >
+                      {{ td.value }}
+                    </Badge>
+                    <Badge
+                      v-else
+                      variant="secondaryWarning"
+                    >
+                      {{ td.value }}
+                    </Badge>
+                  </span>
+                  <span v-else-if="td.name === 'paymentMethod'">
+                    <Badge variant="outline">
+                      {{ td.value }}
+                    </Badge>
                   </span>
                   <span v-else-if="td.name === 'orderId'" class="flex">
                     <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img class="w-10 h-10" src="/gold-coin.png" alt="">
-                      </div>
+                      <Avatar class="flex-shrink-0 w-10 h-10">
+                        <AvatarImage class="w-10 h-10" src="/gold-coin.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
 
                       <div class="flex flex-col ml-4">
-                        <span class="font-semibold text-sm leading-5 text-gray-900">
+                        <span class="font-medium text-sm leading-5">
                           Donate
                         </span>
-                        <span class="text-sm leading-5 text-gray-500">
+                        <span class="text-sm leading-5 text-gray-400">
                           nº {{ td.value }}
                         </span>
                       </div>
                     </div>
                   </span>
-                  <span
-                    v-else-if="td.name === 'status'"
-                    :class="{ 'bg-green-100 text-green-800': td.value === 'Aprovado', 'bg-red-100 text-red-800': td.value === 'Cancelado', 'bg-orange-100 text-orange-800': td.value === 'Pendente' }"
-                    class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full"
-                  >
-                    {{ td.value }}
-                  </span>
                   <span v-else>
                     {{ td.value }}
                   </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

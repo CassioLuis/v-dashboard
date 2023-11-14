@@ -83,7 +83,7 @@ function toggleDarkMode() {
           <h1 class="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
             Perfect World Blackstar, Explore um mundo único e exclusivo.
           </h1>
-          <p class="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
+          <p class="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-400">
             Apresentamos um ambiente personalizado e dedicado, construído para
             oferecer a melhor experiência de jogo. Desfrute de recursos exclusivos
             e uma comunidade apaixonada. Bem-vindo ao nosso reino,
