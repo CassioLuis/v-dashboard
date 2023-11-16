@@ -65,7 +65,7 @@ async function refreshTable() {
         <h2>
           Histórico de Doações
         </h2>
-        <div class="my-4 -mx-6 px-4">
+        <div class="mt-4 -mx-6 px-4">
           <div class="flex justify-between flex-wrap gap-2 sm:gap-0 md:gap-0 lg:gap-0">
             <div class="w-full px-2 mt-6 sm:w-1/3 xl:w-1/3 sm:mt-0">
               <Card>
@@ -139,7 +139,7 @@ async function refreshTable() {
             </div>
           </div>
         </div>
-        <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+        <div class="mt-8 p-4 border inline-block min-w-full overflow-hidden align-middle shadow-sm rounded-lg">
           <div class="p-2 flex justify-end">
             <Button
               variant="ghost"
@@ -171,7 +171,7 @@ async function refreshTable() {
               <TableRow v-for="body in getPaymentHistory.tBody" :key="body.orderId">
                 <TableCell v-for="(td, idx) in body.cells" :key="idx" class="font-medium">
                   <span v-if="td.name === 'qrCode'">
-                    <Dialog>
+                    <Dialog v-if="body.status === 'pending'">
                       <DialogTrigger as-child>
                         <Button variant="link" class="font-semibold">
                           Ver
@@ -190,11 +190,17 @@ async function refreshTable() {
                           </div>
                           <div class="flex justify-between">
                             <div>
-                              <h1 class="text-left font-semibold text-lg">Order</h1>
-                              <p class="text-left text-sm">nº {{ body.orderId }}</p>
+                              <DialogTitle>
+                                Order
+                              </DialogTitle>
+                              <DialogDescription>
+                                nº {{ body.orderId }}
+                              </DialogDescription>
                             </div>
                             <div>
-                              <p class="text-left font-semibold text-lg">{{ body.transactionAmount }}</p>
+                              <DialogTitle class="text-left">
+                                {{ body.transactionAmount }}
+                              </DialogTitle>
                             </div>
                           </div>
                         </div>
@@ -207,6 +213,7 @@ async function refreshTable() {
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
+                    <!-- <span v-else class="text-green-500 font-semibold text-center border w-full">Pago</span> -->
                   </span>
                   <span v-else-if="td.name === 'status'">
                     <Badge

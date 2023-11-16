@@ -77,7 +77,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input type="text" v-bind="componentField" />
+                    <Input type="text" placeholder="Primeiro Nome" v-bind="componentField" />
                   </FormControl>
                   <FormMessage class="text-xs" />
                 </FormItem>
@@ -87,7 +87,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <FormItem>
                   <FormLabel>Sobrenome</FormLabel>
                   <FormControl>
-                    <Input type="text" v-bind="componentField" />
+                    <Input type="text" placeholder="Segundo Nome" v-bind="componentField" />
                   </FormControl>
                   <FormMessage class="text-xs" />
                 </FormItem>
@@ -97,7 +97,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <FormItem>
                   <FormLabel>CPF</FormLabel>
                   <FormControl>
-                    <Input v-mask="['###.###.###-##']" type="text" v-bind="componentField" />
+                    <Input v-mask="['###.###.###-##']" type="text" placeholder="000.000.000-00" v-bind="componentField" />
                   </FormControl>
                   <FormMessage class="text-xs" />
                 </FormItem>
@@ -107,7 +107,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <FormItem>
                   <FormLabel>E-mail</FormLabel>
                   <FormControl>
-                    <Input type="email" v-bind="componentField" />
+                    <Input type="email" placeholder="exemple@email.com" v-bind="componentField" />
                   </FormControl>
                   <FormMessage class="text-xs" />
                 </FormItem>
@@ -125,7 +125,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem value="pix">
-                          pix
+                          Pix
                         </SelectItem>
                       </SelectGroup>
                     </SelectContent>
@@ -138,7 +138,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <FormItem>
                   <FormLabel>Valor</FormLabel>
                   <FormControl>
-                    <Input type="number" v-bind="componentField" />
+                    <Input type="number" placeholder="R$ 0,00" v-bind="componentField" />
                   </FormControl>
                   <FormMessage class="text-xs" />
                 </FormItem>
@@ -150,10 +150,8 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <img src="/gold-ingot-chinese.png" class="w-10 h-10">
               </div>
               <div>
-                <AlertDescription>
-                  <p class="flex items-center text-md text-orange-700">
-                    A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
-                  </p>
+                <AlertDescription class="flex items-center">
+                  A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
                 </AlertDescription>
               </div>
             </Alert>

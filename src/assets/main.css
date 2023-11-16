@@ -5,16 +5,12 @@
 @tailwind utilities;
  
 @layer base {
-  /* .radix-themes.radix-themes-custom-fonts {
-    --default-font-family: "Untitled Sans",-apple-system, BlinkMacSystemFont,"Segoe UI", Helvetica, Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-  } */
-
   :root {
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
   
     --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
+    --card-foreground: 240 10% 3.9%;
   
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
@@ -44,7 +40,7 @@
     --background:20 14.3% 4.1%;
     --foreground:60 9.1% 97.8%;
   
-    --card:20 14.3% 4.1%;
+    --card: 24 9.8% 8%;
     --card-foreground:60 9.1% 97.8%;
   
     --popover:20 14.3% 4.1%;
