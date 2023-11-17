@@ -23,7 +23,7 @@ function logOut() {
 const dropdownOpen = ref(false)
 const { isOpen } = useSidebar()
 
-const isDark = ref()
+const isDark: { value: boolean | undefined } = ref<boolean>(true)
 
 function toggleDarkMode() {
   document.querySelector('body')?.classList.toggle('dark')

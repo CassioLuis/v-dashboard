@@ -42,7 +42,7 @@ const inactiveClass = ref(
         <div v-for="(route, idx) of router.options.routes" :key="idx">
           <router-link
             v-if="route.meta?.isSideMenuOption" :to="route.path"
-            class="flex items-center px-6 py-2 mt-2 transition-all duration-100 border-l-2 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+            class="font-semibold flex items-center px-6 py-2 mt-2 transition-all duration-100 border-l-2 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
             :class="[$route.name === route.name ? activeClass : inactiveClass]"
           >
             <svg

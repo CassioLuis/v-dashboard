@@ -14,6 +14,7 @@ export const badgeVariants = cva(
         outlineSuccess: 'border-green-500 text-green-500',
         outlineWarning: 'border-yellow-500 text-yellow-500',
         outlineDanger: 'border-red-500 text-red-500',
+        outlinePrimary: 'border-primary text-primary',
         secondarySuccess: 'text-green-500 border-transparent bg-secondary hover:bg-secondary/80',
         secondaryWarning: 'text-yellow-500 border-transparent bg-secondary hover:bg-secondary/80',
         secondaryDanger: 'text-red-500 border-transparent bg-secondary hover:bg-secondary/80',
