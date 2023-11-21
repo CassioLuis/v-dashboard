@@ -92,4 +92,3 @@ watch(data, () => {
     </div>
   </div>
 </template>
-../interfaces/auth

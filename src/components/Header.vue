@@ -17,7 +17,7 @@ const router = useRouter()
 
 function logOut() {
   Cookies.remove('token')
-  return router.push('/')
+  return router.push('/login')
 }
 
 const dropdownOpen = ref(false)
@@ -35,7 +35,7 @@ function toggleDarkMode() {
   <header
     class="flex items-center justify-between px-6 py-4 order-b-4"
   >
-    <div class="border flex items-center">
+    <div class="flex items-center">
       <button
         class="text-gray-500 focus:outline-none lg:hidden"
         @click="isOpen = true"

@@ -7,11 +7,11 @@ import VueTheMask from 'vue-the-mask'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
-import './assets/alerts.css'
 import { useAppStore } from './stores/application'
 
-import DashboardLayout from './components/DashboardLayout.vue'
-import EmptyLayout from './components/EmptyLayout.vue'
+import DashboardLayout from './components/layouts/DashboardLayout.vue'
+import EmptyLayout from './components/layouts/EmptyLayout.vue'
+import LandingLayout from './components/layouts/LandingLayout.vue'
 
 library.add(faUserSecret, faCircleNotch)
 
@@ -24,7 +24,8 @@ app.provide('storeToRefs', storeToRefs)
 app.use(pinia)
 app.use(VueTheMask)
 app.component('FontAwesomeIcon', FontAwesomeIcon)
-app.component('DefaultLayout', DashboardLayout)
+app.component('DashboardLayout', DashboardLayout)
 app.component('EmptyLayout', EmptyLayout)
+app.component('LandingLayout', LandingLayout)
 app.use(router)
 app.mount('#app')

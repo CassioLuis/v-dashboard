@@ -7,16 +7,13 @@ import Register from './views/Register.vue'
 import ForgotPass from './views/ForgotPass.vue'
 import ChangePass from './views/ChangePass.vue'
 import Donation from './views/Donation.vue'
-import LandingPage from './views/LandingPage.vue'
 import { useAppStore } from './stores/application'
 
+function lazyLoad(view: string) {
+  return () => import(`./views/${view}.vue`)
+}
+
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    name: 'LandingPage',
-    component: LandingPage,
-    meta: { layout: 'empty', requiresAuth: false, isSideMenuOption: false },
-  },
   {
     path: '/login',
     name: 'Login',
@@ -53,6 +50,7 @@ const routes: RouteRecordRaw[] = [
     name: 'Home',
     component: Home,
     meta: {
+      layout: 'DashboardLayout',
       requiresAuth: true,
       isSideMenuOption: true,
       svg: {
@@ -66,6 +64,7 @@ const routes: RouteRecordRaw[] = [
     name: 'Doação',
     component: Donation,
     meta: {
+      layout: 'DashboardLayout',
       requiresAuth: true,
       isSideMenuOption: true,
       svg: {
@@ -77,36 +76,18 @@ const routes: RouteRecordRaw[] = [
       },
     },
   },
-  // {
-  //   path: '/forms',
-  //   name: 'Forms',
-  //   component: Forms,
-  //   meta: { requiresAuth: true, isSideMenuOption: true },
-  // },
-  // {
-  //   path: '/tables',
-  //   name: 'Tables',
-  //   component: Tables,
-  //   meta: { requiresAuth: true, isSideMenuOption: true },
-  // },
-  // {
-  //   path: '/ui-elements',
-  //   name: 'UIElements',
-  //   component: UIElements,
-  //   meta: { requiresAuth: true, isSideMenuOption: true },
-  // },
-  // {
-  //   path: '/modal',
-  //   name: 'Modal',
-  //   component: Modal,
-  //   meta: { requiresAuth: true, isSideMenuOption: true },
-  // },
-  // {
-  //   path: '/blank',
-  //   name: 'Blank',
-  //   component: Blank,
-  //   meta: { requiresAuth: true, isSideMenuOption: true },
-  // },
+  {
+    path: '/info',
+    name: 'Info',
+    component: lazyLoad('Info'),
+    meta: { layout: 'LandingLayout', navBarItem: true },
+  },
+  {
+    path: '/',
+    name: 'Início',
+    component: lazyLoad('Inicio'),
+    meta: { layout: 'LandingLayout', navBarItem: true },
+  },
 ]
 
 const router = createRouter({
