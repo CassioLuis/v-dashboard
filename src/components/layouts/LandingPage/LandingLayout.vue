@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { NavMenu } from './components'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-
 import {
   Sheet,
   SheetContent,
@@ -11,7 +11,6 @@ import {
   SheetHeader,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
 
 const router = useRouter()
 
@@ -48,9 +47,6 @@ onMounted(() => {
     }, 0)
   })
 })
-
-const activeClass = `${navigationMenuTriggerStyle()} bg-accent text-accent-foreground outline-none`
-const inactiveClass = navigationMenuTriggerStyle()
 </script>
 
 <template>
@@ -65,37 +61,7 @@ const inactiveClass = navigationMenuTriggerStyle()
         </Avatar>
         <span class="font-semibold text-lg text-primary">Pw Blackstar</span>
       </div>
-      <NavigationMenu class="hidden lg:block">
-        <NavigationMenuList>
-          <NavigationMenuItem class="flex gap-2">
-            <router-link to="/">
-              <NavigationMenuLink :class="[$route.path === '/' ? activeClass : inactiveClass]" class="cursor-pointer">
-                Início
-              </NavigationMenuLink>
-            </router-link>
-            <router-link to="/info">
-              <NavigationMenuLink :class="[$route.path === '/info' ? activeClass : inactiveClass]" class="cursor-pointer">
-                Info
-              </NavigationMenuLink>
-            </router-link>
-            <router-link to="/">
-              <NavigationMenuLink :class="[$route.path === '/download' ? activeClass : inactiveClass]" class="cursor-pointer">
-                Download
-              </NavigationMenuLink>
-            </router-link>
-            <router-link to="/register">
-              <NavigationMenuLink :class="[$route.path === '/register' ? activeClass : inactiveClass]" class="cursor-pointer">
-                Registro
-              </NavigationMenuLink>
-            </router-link>
-            <router-link to="/">
-              <NavigationMenuLink :class="[$route.path === '/donation' ? activeClass : inactiveClass]" class="cursor-pointer">
-                Doação
-              </NavigationMenuLink>
-            </router-link>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      <NavMenu class="hidden lg:block" />
       <div class="hidden lg:flex flex-col sm:flex-row items-center gap-4">
         <Button variant="default">
           <a href="/login" target="_blank">
@@ -137,38 +103,8 @@ const inactiveClass = navigationMenuTriggerStyle()
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetDescription class="flex flex-col items-start gap-2">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem class="flex items-start flex-col gap-2">
-                    <router-link to="/">
-                      <NavigationMenuLink :class="[$route.path === '/' ? activeClass : inactiveClass]" class="cursor-pointer">
-                        Início
-                      </NavigationMenuLink>
-                    </router-link>
-                    <router-link to="/info">
-                      <NavigationMenuLink :class="[$route.path === '/info' ? activeClass : inactiveClass]" class="cursor-pointer">
-                        Info
-                      </NavigationMenuLink>
-                    </router-link>
-                    <router-link to="/">
-                      <NavigationMenuLink :class="[$route.path === '/download' ? activeClass : inactiveClass]" class="cursor-pointer">
-                        Download
-                      </NavigationMenuLink>
-                    </router-link>
-                    <router-link to="/register">
-                      <NavigationMenuLink :class="[$route.path === '/register' ? activeClass : inactiveClass]" class="cursor-pointer">
-                        Registro
-                      </NavigationMenuLink>
-                    </router-link>
-                    <router-link to="/">
-                      <NavigationMenuLink :class="[$route.path === '/donation' ? activeClass : inactiveClass]" class="cursor-pointer">
-                        Doação
-                      </NavigationMenuLink>
-                    </router-link>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+            <SheetDescription>
+              <NavMenu orientation="col" />
               <div class="flex sm:flex-row items-center gap-4">
                 <Button variant="default" @click="router.push('/login')">
                   Área do Jogador

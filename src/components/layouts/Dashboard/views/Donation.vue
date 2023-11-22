@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useAppStore } from '../stores/application'
-import DonationForm from '../components/DonationForm.vue'
+import DonationForm from '@/components/DonationForm.vue'
+import { useAppStore } from '@/stores/application'
 import { Badge } from '@/components/ui/badge'
 import {
   Dialog,

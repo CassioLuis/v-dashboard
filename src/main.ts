@@ -9,9 +9,9 @@ import router from './router'
 import './assets/main.css'
 import { useAppStore } from './stores/application'
 
-import DashboardLayout from './components/layouts/DashboardLayout.vue'
-import EmptyLayout from './components/layouts/EmptyLayout.vue'
-import LandingLayout from './components/layouts/LandingLayout.vue'
+import DashboardLayout from './components/layouts/Dashboard/DashboardLayout.vue'
+import EmptyLayout from './components/layouts/Empty/EmptyLayout.vue'
+import LandingLayout from './components/layouts/LandingPage/LandingLayout.vue'
 
 library.add(faUserSecret, faCircleNotch)
 

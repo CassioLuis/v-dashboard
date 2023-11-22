@@ -3,8 +3,8 @@
 import { reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import Auth from '../service/auth.service.js'
-import { useAppStore } from '../stores/application'
+import User from '../../../../service/auth.service'
+import { useAppStore } from '../../../../stores/application'
 
 const auth = useAppStore()
 const { setForgotPassTokenInvalid } = auth
@@ -29,7 +29,7 @@ const recoverStatus = reactive<Recover>({
 async function recover() {
   try {
     recoverStatus.isSubmitting = true
-    const response = await Auth.forgot(recoverStatus)
+    const response = await User.forgot(recoverStatus)
     recoverStatus.isSubmitting = false
     if (!response.status || response.status !== 200) {
       setForgotPassTokenInvalid(false)

@@ -1,14 +1,12 @@
-<!-- eslint-disable no-alert -->
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import { useField, useForm } from 'vee-validate'
 import { storeToRefs } from 'pinia'
-import { zodSchema } from '../schemas/zod.changePass'
-import User from '../service/register.service'
-import { useAppStore } from '../stores/application'
+import User from '../../../../service/register.service'
+import { useAppStore } from '../../../../stores/application'
+import { zodSchema } from '../../../../schemas/zod.changePass'
 
 const router = useRouter()
 
