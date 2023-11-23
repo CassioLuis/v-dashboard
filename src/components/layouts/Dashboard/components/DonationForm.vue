@@ -2,12 +2,17 @@
 import { h } from 'vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { donationSchema } from '../schemas/zod.donationForm'
-import PaymentsService from '../service/payments.service'
+import { donationSchema } from '@/schemas/zod.donationForm'
+import PaymentsService from '@/service/payments.service'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/toast'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -107,7 +112,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <FormItem>
                   <FormLabel>E-mail</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="exemple@email.com" v-bind="componentField" />
+                    <Input type="email" placeholder="exemplo@email.com" v-bind="componentField" />
                   </FormControl>
                   <FormMessage class="text-xs" />
                 </FormItem>

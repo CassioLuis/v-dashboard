@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
 import { storeToRefs } from 'pinia'
-import DonationForm from '@/components/DonationForm.vue'
+import { DonationForm } from '../components'
 import { useAppStore } from '@/stores/application'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -42,7 +42,6 @@ onMounted(async () => {
 
 const data = reactive({
   refreshing: false,
-  modalOpen: false,
 })
 
 async function refreshTable() {
@@ -62,9 +61,7 @@ async function refreshTable() {
 
     <div class="flex flex-col mt-8">
       <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <h2>
-          Histórico de Doações
-        </h2>
+        <h2>Histórico de Doações</h2>
         <div class="mt-4 -mx-6 px-4">
           <div class="flex justify-between flex-wrap gap-2 sm:gap-0 md:gap-0 lg:gap-0">
             <div class="w-full px-2 mt-6 sm:w-1/3 xl:w-1/3 sm:mt-0">
@@ -213,7 +210,6 @@ async function refreshTable() {
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
-                    <!-- <span v-else class="text-green-500 font-semibold text-center border w-full">Pago</span> -->
                   </span>
                   <span v-else-if="td.name === 'status'">
                     <Badge

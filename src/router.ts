@@ -1,15 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import Cookies from 'js-cookie'
-
-// import { useAppStore } from '@/stores/application'
 import landingLayoutRoutes from '@/components/layouts/LandingPage/routes'
-import emptyLayoutRoutes from '@/components/layouts/Empty/routes'
+import authLayoutRoutes from '@/components/layouts/AuthPage/routes'
 import dashboardLayoutRoutes from '@/components/layouts/Dashboard/routes'
 
 const routes: RouteRecordRaw[] = [
   ...landingLayoutRoutes,
-  ...emptyLayoutRoutes,
+  ...authLayoutRoutes,
   ...dashboardLayoutRoutes,
 ]
 

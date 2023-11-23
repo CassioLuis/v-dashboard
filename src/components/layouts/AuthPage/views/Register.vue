@@ -128,7 +128,7 @@ function resetRegisterStatus() {
         </div>
         <div class="mt-2 center flex items-center justify-center text-white">
           Já possui uma conta?
-          <a class="block text-center ml-1 link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
+          <a class="block text-center ml-1 link" href="#" @click.prevent="router.push('/login')">Acessar Conta</a>
         </div>
       </form>
     </div>

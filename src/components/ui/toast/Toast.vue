@@ -1,3 +1,4 @@
+<!-- eslint-disable import/first -->
 <script lang="ts">
 import type { ToastRootEmits, ToastRootProps } from 'radix-vue'
 import type { VariantProps } from 'class-variance-authority'
@@ -12,9 +13,13 @@ export interface ToastProps extends ToastRootProps {
 </script>
 
 <script setup lang="ts">
+// eslint-disable-next-line import/first
 import { ToastRoot, useEmitAsProps } from 'radix-vue'
 
+// eslint-disable-next-line import/first
 import { toastVariants } from '.'
+
+// eslint-disable-next-line import/first
 import { cn } from '@/lib/utils'
 
 const props = defineProps<ToastProps>()

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import Toaster from '@/components/ui/toast/Toaster.vue'
 
 const { currentRoute } = useRouter()
 
@@ -10,5 +11,6 @@ const layout = computed(() => currentRoute.value.meta.layout || 'DefaultLayout')
 <template>
   <component :is="layout">
     <router-view />
+    <Toaster />
   </component>
 </template>

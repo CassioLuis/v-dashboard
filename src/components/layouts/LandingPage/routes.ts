@@ -28,7 +28,7 @@ export default [
   {
     path: '/register',
     name: 'Registro',
-    component: () => import('@/components/layouts/Empty/views/Register.vue'),
-    meta: { layout: 'empty' },
+    component: () => import('@/components/layouts/AuthPage/views/Register.vue'),
+    meta: { layout: 'AuthLayout' },
   },
 ]

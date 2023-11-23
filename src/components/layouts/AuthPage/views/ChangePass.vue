@@ -66,7 +66,7 @@ async function onValidePass(values: UserValues, { resetForm }: any) {
           <div class="ml-3">
             <div class="text-sm text-teal-800 font-normal">
               Senha alterada com sucesso!
-              <a class="block text-black font-semibold hover:underline" href="#" @click.prevent="router.push('/')">Ir para o login.</a>
+              <a class="block text-black font-semibold hover:underline" href="#" @click.prevent="router.push('/login')">Ir para o login.</a>
             </div>
           </div>
         </div>

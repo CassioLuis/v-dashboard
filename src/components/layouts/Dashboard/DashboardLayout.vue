@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Header from '@/components/Header.vue'
-import Sidebar from '@/components/Sidebar.vue'
+import { Header, Sidebar } from './components'
+
 import { Separator } from '@/components/ui/separator'
 </script>
 
