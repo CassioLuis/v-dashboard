@@ -52,7 +52,7 @@ watch(data, () => {
       <FormItem class="col-span-12">
         <FormLabel>Login</FormLabel>
         <FormControl>
-          <Input type="text" placeholder="Login" />
+          <Input v-model="data.name" type="text" placeholder="Login" />
         </FormControl>
         <FormMessage class="text-xs" />
       </FormItem>
@@ -62,7 +62,7 @@ watch(data, () => {
       <FormItem class="col-span-12">
         <FormLabel>Senha</FormLabel>
         <FormControl>
-          <Input type="password" placeholder="Senha" />
+          <Input v-model="data.password" type="password" placeholder="Senha" />
         </FormControl>
         <FormMessage class="text-xs" />
       </FormItem>
