@@ -8,8 +8,8 @@ interface IUrl {
 
 const url: IUrl = {
   // development: 'http://localhost:3000/',
-  production: 'http://104.251.219.246:3000/',
-  development: 'http://104.251.219.246:3000/',
+  production: 'https://104.251.219.246:3000/',
+  development: 'https://104.251.219.246:3000/',
   // development: 'https://player-api-z98a.onrender.com/',
 }
 
