@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
 import { useSidebar } from '@/composables/useSidebar'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -13,11 +12,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-const router = useRouter()
-
 function logOut() {
   Cookies.remove('token')
-  return router.push('/login')
+  return window.location.assign('/login')
 }
 
 const dropdownOpen = ref(false)

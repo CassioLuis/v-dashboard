@@ -33,7 +33,7 @@ async function signin() {
   const { token } = response.data
   if (response.status === 200) {
     Cookies.set('token', token, { expires: 1 })
-    return router.push('/inicio')
+    return window.location.assign('/inicio')
   }
   return error.value = true
 }
@@ -86,7 +86,10 @@ watch(data, () => {
     </Button>
 
     <div class="col-span-12">
-      <Button type="submit" class="w-full" :class="{ 'cursor-default': loading }" :disabled="loading">
+      <Button
+        type="submit" class="w-full" :class="{ 'cursor-default': loading }"
+        :disabled="loading || !data.name || !data.password"
+      >
         <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
         <span v-else>Entrar</span>
       </Button>
