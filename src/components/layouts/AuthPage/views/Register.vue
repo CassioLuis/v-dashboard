@@ -2,9 +2,21 @@
 import { reactive } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
-import { useField, useForm } from 'vee-validate'
+import { useForm } from 'vee-validate'
+import { Loader2 } from 'lucide-vue-next'
 import User from '@/service/register.service.js'
 import { zodSchema } from '@/schemas/zod.registerform'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 const router = useRouter()
 
@@ -22,14 +34,7 @@ interface Register {
 }
 
 const validationSchema = toTypedSchema(zodSchema)
-const { handleSubmit, isSubmitting, errors, meta } = useForm({ validationSchema })
-
-const { value: trueName } = useField('trueName')
-const { value: name } = useField('name')
-const { value: email } = useField<string>('email')
-const { value: password } = useField('password')
-const { value: passwordConfirm } = useField('passwordConfirm')
-const { value: terms } = useField('terms')
+const { handleSubmit, isSubmitting, meta } = useForm({ validationSchema })
 
 const register = handleSubmit(onValidForm)
 
@@ -55,82 +60,121 @@ function resetRegisterStatus() {
 </script>
 
 <template>
-  <div class="layout">
-    <div class="form">
-      <div class="flex flex-col items-center justify-center">
-        <img type="image" src="/logo-2.png" alt="" class="h-36">
-        <span class="text-xl mt-4 text-white font-semibold">Registrar</span>
-      </div>
+  <div
+    class="grid grid-cols-12 gap-y-4 col-span-12"
+    @submit.prevent="register"
+  >
+    <h1 class="col-span-12 text-center py-4 self-end text-2xl font-bold bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+      Registrar
+    </h1>
 
-      <div v-if="registerStatus.error">
-        <div class="mt-4 w-full solid-alert-danger">
-          <span class="font-bold">Erro!</span> Cadastro não efetuado.
-        </div>
-        <a class="mt-4 text-center link" href="#" @click.prevent="resetRegisterStatus">Voltar para registro</a>
-      </div>
+    <div v-if="registerStatus.error" class="col-span-12">
+      <Alert variant="success">
+        <AlertTitle class="font-semibold">
+          Erro!
+        </AlertTitle>
+        <AlertDescription>
+          Cadastro não efetuado.
+        </AlertDescription>
+      </Alert>
+      <a class="mt-4 text-center link" href="#" @click.prevent="resetRegisterStatus">Voltar para registro</a>
+    </div>
 
-      <div v-else-if="!registerStatus.error && registerStatus.success">
-        <div class="solid-alert-success mt-4 w-full">
-          <span class="font-bold">Sucesso!</span> Cadastro efetuado.
-        </div>
-        <a class="mt-4 text-center link" href="#" @click.prevent="router.push('/')">Acessar Conta</a>
-      </div>
+    <div v-else-if="!registerStatus.error && registerStatus.success" class="col-span-12">
+      <Alert variant="success">
+        <AlertTitle class="font-semibold">
+          Sucesso!
+        </AlertTitle>
+        <AlertDescription>
+          Cadastro efetuado.
+        </AlertDescription>
+      </Alert>
+      <a class="mt-4 text-center link" href="#" @click.prevent="router.push('/login')">Acessar Conta</a>
+    </div>
 
-      <form v-else class="mt-4" @submit="register">
-        <label class="block">
-          <span class="label">Nome</span>
-          <input v-model="trueName" name="trueName" type="text" class="input">
-          <span class="text-red-500 font-semibold text-xs">{{ errors.trueName }}</span>
-        </label>
+    <form v-else class="col-span-12 mt-4" @submit="register">
+      <FormField v-slot="{ componentField }" name="trueName">
+        <FormItem class="col-span-12">
+          <FormLabel>Nome</FormLabel>
+          <FormControl>
+            <Input type="text" v-bind="componentField" />
+          </FormControl>
+          <FormMessage class="text-xs" />
+        </FormItem>
+      </FormField>
 
-        <label class="block mt-3">
-          <span class="label">Login no jogo</span>
-          <input v-model="name" name="name" type="text" class="input">
-          <span class="text-red-500 font-semibold text-xs">{{ errors.name }}</span>
-        </label>
+      <FormField v-slot="{ componentField }" name="name">
+        <FormItem class="col-span-12 mt-3">
+          <FormLabel>Login no jogo</FormLabel>
+          <FormControl>
+            <Input type="text" v-bind="componentField" />
+          </FormControl>
+          <FormMessage class="text-xs" />
+        </FormItem>
+      </FormField>
 
-        <label class="block mt-3">
-          <span class="label">Email</span>
-          <input v-model="email" name="email" type="email" class="input">
-          <span class="text-red-500 font-semibold text-xs">{{ errors.email }}</span>
-        </label>
+      <FormField v-slot="{ componentField }" name="email">
+        <FormItem class="col-span-12 mt-3">
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input type="text" v-bind="componentField" />
+          </FormControl>
+          <FormMessage class="text-xs" />
+        </FormItem>
+      </FormField>
 
-        <label class="block mt-3">
-          <span class="label">Senha</span>
-          <input v-model="password" name="password" type="password" class="input">
-          <span class="text-red-500 font-semibold text-xs">{{ errors.password }}</span>
-        </label>
+      <FormField v-slot="{ componentField }" name="password">
+        <FormItem class="col-span-12 mt-3">
+          <FormLabel>Senha</FormLabel>
+          <FormControl>
+            <Input type="password" v-bind="componentField" />
+          </FormControl>
+          <FormMessage class="text-xs" />
+        </FormItem>
+      </FormField>
 
-        <label class="block mt-3">
-          <span class="label">Confirme a senha</span>
-          <input v-model="passwordConfirm" name="passwordConfirm" type="password" class="input">
-          <span class="text-red-500 font-semibold text-xs">{{ errors.passwordConfirm }}</span>
-        </label>
+      <FormField v-slot="{ componentField }" name="passwordConfirm">
+        <FormItem class="col-span-12 mt-3">
+          <FormLabel>Confirme a senha</FormLabel>
+          <FormControl>
+            <Input type="password" v-bind="componentField" />
+          </FormControl>
+          <FormMessage class="text-xs" />
+        </FormItem>
+      </FormField>
 
-        <div class="flex items-center justify-center mt-4">
+      <FormField v-slot="{ value, handleChange }" name="terms">
+        <FormItem class="mt-8 col-span-6 flex flex-col gap-2 items-start gap-x-3 space-y-0 rounded-md">
+          <FormControl class="flex flex-row w-full">
+            <div class="flex flex-row items-center gap-2">
+              <Checkbox :checked="value" @update:checked="handleChange" />
+              <FormLabel class="w-full cursor-pointer">
+                Eu li e concordo com os Termos de Uso
+              </FormLabel>
+            </div>
+          </FormControl>
           <div>
-            <label class="inline-flex items-center ">
-              <input v-model="terms" type="checkbox" name="terms" class="input-check">
-              <span class="mx-2 label">Eu li e concordo com os Termos de Uso</span>
-              <span class=" text-red-500 font-semibold text-xs">{{ errors.terms }}</span>
-            </label>
+            <FormMessage class="text-xs" />
           </div>
-        </div>
+        </FormItem>
+      </FormField>
 
-        <div class="mt-6">
-          <button
-            type="submit" :disabled="isSubmitting || !meta.valid"
-            :class="{ 'btn-disabled': isSubmitting || !meta.valid, 'btn': meta.valid && !isSubmitting }"
-          >
-            <font-awesome-icon v-if="isSubmitting" icon="fa-solid fa-circle-notch" spin />
-            <span v-else>Registrar</span>
-          </button>
-        </div>
+      <div class="col-span-12 mt-8">
+        <Button
+          type="submit"
+          class="w-full"
+          :class="{ 'btn-disabled cursor-default': isSubmitting || !meta.valid, 'btn': meta.valid && !isSubmitting }"
+          :disabled="isSubmitting"
+        >
+          <Loader2 v-if="isSubmitting" class="w-4 h-4 mr-2 animate-spin" />
+          <span v-else>Registrar</span>
+        </Button>
+
         <div class="mt-2 center flex items-center justify-center text-white">
           Já possui uma conta?
           <a class="block text-center ml-1 link" href="#" @click.prevent="router.push('/login')">Acessar Conta</a>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </template>

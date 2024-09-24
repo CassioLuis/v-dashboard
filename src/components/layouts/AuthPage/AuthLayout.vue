@@ -5,15 +5,15 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-screen select-none font-roboto">
-    <Card class="w-[350px] py-8 h-screen rounded-none">
+  <div class="flex flex-col items-center justify-center select-none font-roboto">
+    <Card class="w-[350px] py-8 h-auto rounded-none">
       <CardHeader class="flex justify-center items-center">
         <Avatar class="h-36 w-36">
           <AvatarImage src="/logo-2.png" alt="@radix-vue" />
           <AvatarFallback>BS</AvatarFallback>
         </Avatar>
       </CardHeader>
-      <CardContent class="grid grid-cols-12">
+      <CardContent class="grid grid-cols-12 h-full">
         <div class="col-span-12 grid grid-cols-12">
           <slot />
         </div>

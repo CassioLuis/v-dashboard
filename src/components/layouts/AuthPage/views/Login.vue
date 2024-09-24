@@ -81,7 +81,7 @@ watch(data, () => {
       </FormItem>
     </FormField>
 
-    <Button variant="link" class="items-start justify-end col-span-6 p-0" @click.prevent="router.push('/recuperacao')">
+    <Button type="button" variant="link" class="items-start justify-end col-span-6 p-0" @click="router.push('/recuperacao')">
       Esqueceu sua senha?
     </Button>
 
