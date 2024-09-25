@@ -1,35 +1,26 @@
-<!-- eslint-disable import/first -->
-<script lang="ts">
-import type { ToastRootEmits, ToastRootProps } from 'radix-vue'
-import type { VariantProps } from 'class-variance-authority'
-
-interface ToastVariantProps extends VariantProps<typeof toastVariants> {}
-
-export interface ToastProps extends ToastRootProps {
-  class?: string
-  variant?: ToastVariantProps['variant']
-  'onOpenChange'?: ((value: boolean) => void) | undefined
-};
-</script>
-
 <script setup lang="ts">
-// eslint-disable-next-line import/first
-import { ToastRoot, useEmitAsProps } from 'radix-vue'
-
-// eslint-disable-next-line import/first
-import { toastVariants } from '.'
-
-// eslint-disable-next-line import/first
+import { computed } from 'vue'
+import { ToastRoot, type ToastRootEmits, useForwardPropsEmits } from 'radix-vue'
+import { type ToastProps, toastVariants } from '.'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<ToastProps>()
+
 const emits = defineEmits<ToastRootEmits>()
+
+const delegatedProps = computed(() => {
+  const { class: _, ...delegated } = props
+
+  return delegated
+})
+
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
   <ToastRoot
-    v-bind="{ ...props, ...useEmitAsProps(emits) }"
-    :class="cn(toastVariants({ variant: props.variant }), props.class)"
+    v-bind="forwarded"
+    :class="cn(toastVariants({ variant }), props.class)"
     @update:open="onOpenChange"
   >
     <slot />

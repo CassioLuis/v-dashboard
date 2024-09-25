@@ -31,6 +31,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { useAppStore } from '@/stores/application'
+
+const userSession = useAppStore()
+const { setPaymentsHistory } = userSession
 
 const validationSchema = toTypedSchema(donationSchema)
 const { handleSubmit, isSubmitting, meta } = useForm({ validationSchema })
@@ -45,26 +49,37 @@ function onInvalidForm(invalid: any) {
 }
 
 async function onValidForm(values: any, { resetForm }: any) {
-  await PaymentsService.create({
-    payment_method_id: values.paymentMethod,
-    transaction_amount: values.transactionAmount,
-    payer: {
-      first_name: values.firstName,
-      last_name: values.lastName,
-      email: values.email,
-      identification: {
-        type: 'CPF',
-        number: values.number,
+  try {
+    await PaymentsService.create({
+      payment_method_id: values.paymentMethod,
+      transaction_amount: values.transactionAmount,
+      payer: {
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        identification: {
+          type: 'CPF',
+          number: values.number,
+        },
       },
-    },
-    description: 'Doação para PW Blackstar',
-    external_reference: 'MP0001',
-  })
-  toast({
-    title: 'You submitted the following values:',
-    description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
-  })
-  resetForm()
+      description: 'Doação para PW Blackstar',
+      external_reference: 'MP0001',
+    })
+    toast({
+      title: 'Pedido de doação enviado com sucesso!',
+      description: 'Role até o histórico de doações e efetue o pagamento.',
+      variant: 'success',
+    })
+    await setPaymentsHistory()
+    resetForm()
+  }
+  catch (e: any) {
+    toast({
+      title: 'Erro: Tentativa de doação falhou!',
+      description: `Details: ${e.response.status} - ${e.response.data.message}`,
+      variant: 'error',
+    })
+  }
 }
 </script>
 

@@ -139,7 +139,8 @@ async function refreshTable() {
         <div class="mt-8 p-4 border inline-block min-w-full overflow-hidden align-middle shadow-sm rounded-lg">
           <div class="p-2 flex justify-end">
             <Button
-              variant="ghost"
+              variant="secondary"
+              :disabled="data.refreshing"
               @click.prevent="refreshTable"
             >
               <svg
@@ -152,7 +153,7 @@ async function refreshTable() {
                   clip-rule="evenodd"
                 />
               </svg>
-              Atualizar Histórico
+              Atualizar Status
             </Button>
           </div>
           <Table>
@@ -171,7 +172,7 @@ async function refreshTable() {
                     <Dialog v-if="body.status === 'pending'">
                       <DialogTrigger as-child>
                         <Button variant="link" class="font-semibold">
-                          Ver
+                          Pagar
                         </Button>
                       </DialogTrigger>
                       <DialogContent class="sm:max-w-[425px]">
