@@ -78,6 +78,9 @@
     font-family: 'Roboto', sans-serif;
   }
   
+  .font-comic {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+  }
   
 
   .theme-stone {
@@ -248,7 +251,7 @@
 }
 
 .bg-image {
-  background-image: url('../../public/bg-image.jpg');
+  background-image: url('../../public/_4c92fcc4-24f8-4e62-8b58-690bbc9d2605.jpg');
   background-size: cover; /* Redimensiona a imagem para cobrir todo o elemento */
   background-repeat: no-repeat; /* Evita a repetição da imagem */
   background-position: center; /* Alinha a imagem ao centro do elemento */

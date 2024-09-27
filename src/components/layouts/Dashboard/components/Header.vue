@@ -102,7 +102,7 @@ function toggleDarkMode() {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar class="cursor-pointer border focus:outline-none" @click="dropdownOpen = !dropdownOpen">
-            <AvatarImage src="/logo-2.png" alt="@radix-vue" />
+            <AvatarImage src="/_68313cf0-4bad-45b1-971f-558eb48cf754.jpeg" alt="@radix-vue" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
