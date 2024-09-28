@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 <template>
   <div class="bg-image h-screen flex flex-col items-center !overflow-auto select-none font-roboto">
-    <Card class="w-[350px] py-8 rounded">
+    <Card class="w-full sm:w-[350px] !rounded-none glass min-h-screen !h-full">
       <CardHeader class="flex justify-center items-center">
-        <Avatar class="h-36 w-36">
-          <AvatarImage src="/_68313cf0-4bad-45b1-971f-558eb48cf754.jpeg" alt="@radix-vue" />
+        <Avatar class="h-36 w-36 !bg-transparent">
+          <AvatarImage src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9-removebg-preview.png" alt="@radix-vue" class="!bg-transparent" />
           <AvatarFallback>BS</AvatarFallback>
         </Avatar>
       </CardHeader>
@@ -22,7 +22,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 <style lang="css" scoped>
 .bg-image {
-  background-image: url('../../public/2017-01-03_pw_topos-genericos_concurso1.jpg');
+  background-image: url('../../public/authbg.jpg');
   background-size: cover; /* Redimensiona a imagem para cobrir todo o elemento */
   background-repeat: no-repeat; /* Evita a repetição da imagem */
   background-position: center; /* Alinha a imagem ao centro do elemento */

@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { AlertCircle, Loader2, MailCheck } from 'lucide-vue-next'
 import Auth from '@/service/auth.service'
 import { useAppStore } from '@/stores/application'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { FormControl, FormDescription, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -64,9 +64,9 @@ watch(recoverStatus, () => {
     </h1>
     <FormField v-if="!recoverStatus.mailSended" name="email">
       <FormItem class="col-span-12">
-        <FormLabel>E-mail</FormLabel>
+        <!-- <FormLabel>E-mail</FormLabel> -->
         <FormControl>
-          <Input v-model="recoverStatus.email" type="email" placeholder="exemplo@email.com" />
+          <Input v-model="recoverStatus.email" type="email" placeholder="E-mail" class="placeholder:text-gray-200" />
         </FormControl>
         <FormDescription>
           <p class="col-span-12 text-sm">

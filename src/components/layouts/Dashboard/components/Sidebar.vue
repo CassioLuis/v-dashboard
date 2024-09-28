@@ -34,7 +34,7 @@ const inactiveClass = ref(
     >
       <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-          <img src="/_68313cf0-4bad-45b1-971f-558eb48cf754.jpeg" alt="" class="h-24 rounded-full">
+          <img src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9.jpeg" alt="" class="h-24 rounded-full">
         </div>
       </div>
 

@@ -45,14 +45,14 @@ watch(data, () => {
 
 <template>
   <form class="col-span-12 grid grid-cols-12 gap-y-4" @submit.prevent="signin">
-    <h1 class="col-span-12 text-center py-4 self-end text-2xl font-bold bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+    <h1 class="col-span-12 text-center self-end text-2xl font-semibold bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
       Logar
     </h1>
     <FormField name="login">
       <FormItem class="col-span-12">
-        <FormLabel>Login</FormLabel>
+        <!-- <FormLabel>Login</FormLabel> -->
         <FormControl>
-          <Input v-model="data.name" type="text" placeholder="Login" />
+          <Input v-model="data.name" type="text" placeholder="Login" class="placeholder:text-gray-200" />
         </FormControl>
         <FormMessage class="text-xs" />
       </FormItem>
@@ -60,9 +60,9 @@ watch(data, () => {
 
     <FormField name="password">
       <FormItem class="col-span-12">
-        <FormLabel>Senha</FormLabel>
+        <!-- <FormLabel>Senha</FormLabel> -->
         <FormControl>
-          <Input v-model="data.password" type="password" placeholder="Senha" />
+          <Input v-model="data.password" type="password" placeholder="Senha" class="placeholder:text-gray-200" />
         </FormControl>
         <FormMessage class="text-xs" />
       </FormItem>

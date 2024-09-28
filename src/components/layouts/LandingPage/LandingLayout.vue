@@ -56,7 +56,7 @@ onMounted(() => {
         class="shadow-sm space-x-4 flex items-center bg-secondary px-4 py-2 rounded-md bg-gradient-to-r from-secondary to-background"
       >
         <Avatar>
-          <AvatarImage src="/logo-2.png" alt="@radix-vue" />
+          <AvatarImage src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9.jpeg" alt="@radix-vue" />
           <AvatarFallback>BS</AvatarFallback>
         </Avatar>
         <span class="font-semibold text-lg text-primary">Pw Blackstar</span>
