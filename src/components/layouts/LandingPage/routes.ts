@@ -7,20 +7,20 @@ export default [
     component: views.Inicio,
     meta: { layout: 'LandingLayout' },
   },
+  // {
+  //   path: '/info',
+  //   name: 'Info',
+  //   component: views.Info,
+  //   meta: { layout: 'LandingLayout' },
+  // },
+  // {
+  //   path: '/download',
+  //   name: 'Download',
+  //   component: views.Download,
+  //   meta: { layout: 'LandingLayout' },
+  // },
   {
-    path: '/info',
-    name: 'Info',
-    component: views.Info,
-    meta: { layout: 'LandingLayout' },
-  },
-  {
-    path: '/download',
-    name: 'Download',
-    component: views.Download,
-    meta: { layout: 'LandingLayout' },
-  },
-  {
-    path: '/doacao',
+    path: '/donation',
     name: 'Doação',
     component: views.Inicio,
     meta: { layout: 'LandingLayout' },

@@ -17,6 +17,7 @@ const activeClass = ref(
 const inactiveClass = ref(
   'border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100',
 )
+const navigate = (url: any) => window.location.assign(url)
 </script>
 
 <template>
@@ -34,7 +35,11 @@ const inactiveClass = ref(
     >
       <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-          <img src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9.jpeg" alt="" class="h-24 rounded-full">
+          <img
+            src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9.jpeg" alt=""
+            class="h-24 rounded-full cursor-pointer"
+            @click="navigate('/')"
+          >
         </div>
       </div>
 

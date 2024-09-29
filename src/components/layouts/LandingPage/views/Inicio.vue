@@ -33,9 +33,11 @@ import { Button } from '@/components/ui/button'
           onde a aventura é infinita e a diversão é garantida.
         </p>
         <div class="flex items-center gap-4">
-          <Button variant="default" size="lg" class="font-semibold sm:h-14 sm:px-9 sm:text-lg">
-            Download
-          </Button>
+          <a target="_blank" href="https://mega.nz/file/MbRj3JAZ#aIVroJiLlSOg84HzZlr-QqmlmcE-vInTcKBBnl7w_O4">
+            <Button variant="default" size="lg" class="font-semibold sm:h-14 sm:px-9 sm:text-lg">
+              Download
+            </Button>
+          </a>
           <a href="/register" target="_blank">
             <Button variant="secondary" size="lg" class="sm:h-14 sm:px-9 sm:text-lg">
               Cadastre-se

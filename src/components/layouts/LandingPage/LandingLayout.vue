@@ -63,11 +63,11 @@ onMounted(() => {
       </div>
       <NavMenu class="hidden lg:block" />
       <div class="hidden lg:flex flex-col sm:flex-row items-center gap-4">
-        <Button variant="default">
-          <a href="/login" target="_blank">
+        <a href="/login" target="_blank">
+          <Button variant="default">
             Área do Jogador
-          </a>
-        </Button>
+          </Button>
+        </a>
         <i
           v-if="isDark" class="cursor-pointer text-gray-300 rounded-full outline-none focus:outline-none"
           @click="toggleDarkMode"
@@ -138,7 +138,9 @@ onMounted(() => {
         </SheetContent>
       </Sheet>
     </nav>
-    <slot />
+    <div class="col-span-12">
+      <slot />
+    </div>
     <footer
       class="col-span-12 border-t self-end flex flex-col sm:flex-row justify-center sm:gap-4 items-center font-outfit py-8"
     >

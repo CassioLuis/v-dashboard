@@ -2,6 +2,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+
+const navigate = (url: any) => window.location.assign(url)
 </script>
 
 <template>
@@ -9,7 +11,12 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
     <Card class="w-full sm:w-[350px] !rounded-none glass min-h-screen !h-full">
       <CardHeader class="flex justify-center items-center">
         <Avatar class="h-36 w-36 !bg-transparent">
-          <AvatarImage src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9-removebg-preview.png" alt="@radix-vue" class="!bg-transparent" />
+          <AvatarImage
+            src="/_2d8770bb-d9f3-48c5-99cd-33b9bd3dddf9-removebg-preview.png"
+            alt="@radix-vue"
+            class="!bg-transparent cursor-pointer"
+            @click="navigate('/')"
+          />
           <AvatarFallback>BS</AvatarFallback>
         </Avatar>
       </CardHeader>
