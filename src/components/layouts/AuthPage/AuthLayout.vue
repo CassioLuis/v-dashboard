@@ -29,7 +29,7 @@ const navigate = (url: any) => window.location.assign(url)
 
 <style lang="css" scoped>
 .bg-image {
-  background-image: url('../../public/authbg.jpg');
+  background-image: url('../../../assets/authbg.jpg');
   background-size: cover; /* Redimensiona a imagem para cobrir todo o elemento */
   background-repeat: no-repeat; /* Evita a repetição da imagem */
   background-position: center; /* Alinha a imagem ao centro do elemento */
