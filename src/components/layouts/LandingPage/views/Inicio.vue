@@ -33,7 +33,7 @@ import { Button } from '@/components/ui/button'
           onde a aventura é infinita e a diversão é garantida.
         </p>
         <div class="flex items-center gap-4">
-          <a target="_blank" href="https://drive.google.com/file/d/1yiFTmss2GUHO6p2II7NIqWo197b1uUud/view?usp=drive_link">
+          <a target="_blank" href="https://storage.googleapis.com/pwbs/Perfect%20World%20Blackstar.zip">
             <Button variant="default" size="lg" class="font-semibold sm:h-14 sm:px-9 sm:text-lg">
               Download
             </Button>
