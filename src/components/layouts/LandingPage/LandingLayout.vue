@@ -148,10 +148,12 @@ onMounted(() => {
         <img src="/instagram.png" alt="" width="20" class="mr-2">
         instagram
       </Button>
-      <Button variant="link" class="text-lg font-semibold">
-        <img src="/discord.png" alt="" width="20" class="mr-2">
-        discord
-      </Button>
+      <a href="https://discord.gg/SkwG4swT">
+        <Button variant="link" class="text-lg font-semibold">
+          <img src="/discord.png" alt="" width="20" class="mr-2">
+          discord
+        </Button>
+      </a>
       <Button variant="link" class="text-lg font-semibold">
         <img src="/facebook.png" alt="" width="20" class="mr-2">
         facebook
