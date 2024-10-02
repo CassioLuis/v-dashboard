@@ -69,7 +69,7 @@ function resetRegisterStatus() {
     </h1>
 
     <div v-if="registerStatus.error" class="col-span-12">
-      <Alert variant="success">
+      <Alert variant="destructive">
         <AlertTitle class="font-semibold">
           Erro!
         </AlertTitle>

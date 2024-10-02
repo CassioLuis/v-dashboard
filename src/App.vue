@@ -8,7 +8,7 @@ const layout = computed(() => currentRoute.value.meta.layout || 'DefaultLayout')
 </script>
 
 <template>
-  <component :is="layout" class="overflow-hidden">
+  <component :is="layout" class="overflow-y-auto">
     <router-view />
   </component>
 </template>
