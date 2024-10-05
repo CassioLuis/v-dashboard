@@ -21,9 +21,6 @@ function toggleDarkMode() {
   isDark.value = document.querySelector('body')?.classList.contains('dark')
 }
 
-// function changeThemes(theme: string): void {
-//   document.querySelector('body')?.classList.toggle(theme)
-// }
 onMounted(() => {
   document.addEventListener('DOMContentLoaded', () => {
     const defaultAddClasses = ['opacity-0', 'transition-all', 'ease-in-out', 'duration-1000']
@@ -138,7 +135,7 @@ onMounted(() => {
         </SheetContent>
       </Sheet>
     </nav>
-    <div class="col-span-12">
+    <div class="col-span-12 overflow-y-auto md:overflow-hidden">
       <slot />
     </div>
     <footer

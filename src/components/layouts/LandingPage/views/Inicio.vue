@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,6 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext } from '@/components/ui/carousel'
+import { Card, CardContent } from '@/components/ui/card'
 
 const links = [
   {
@@ -34,6 +37,26 @@ const links = [
     title: 'Link Alternativo 4',
   },
 ]
+
+const img = [
+  'characters.png',
+  'Perfect_world_2.png',
+  'racas_guardiao_ilustracao.png',
+  'racas_humano_ilustracao.png',
+  'characters (1).png',
+]
+
+function shuffleArray(array: string[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]
+  }
+  return img
+}
+
+onMounted(() => {
+  setInterval(() => document!.getElementById('123')!.click(), 3000)
+})
 </script>
 
 <template>
@@ -113,7 +136,7 @@ const links = [
             </DialogContent>
           </Dialog>
 
-          <a href="/register" target="_blank">
+          <a href="/register">
             <Button variant="secondary" size="lg" class="sm:h-14 sm:px-9 sm:text-lg">
               Cadastre-se
             </Button>
@@ -122,7 +145,30 @@ const links = [
       </div>
     </section>
     <section class="right-section col-span-12 lg:col-span-6 flex justify-center lg:justify-end items-center">
-      <img src="/landing-img.png" alt="Image" class="rounded-md object-cover">
+      <!-- <img src="/landing-img.png" alt="Image" class="rounded-md object-cover"> -->
+      <!-- <img src="/Perfect_world_2.png" alt="Image" class="rounded-md object-cover"> -->
+      <Carousel
+        v-slot="{ canScrollNext }"
+        class="h-full relative w-full"
+        :opts="{
+          align: 'center',
+          loop: true,
+        }"
+      >
+        <CarouselContent class="!h-full">
+          <CarouselItem v-for="(url, index) in shuffleArray(img)" :key="index" class="!h-full">
+            <div class="p-1 h-full dark:bg-stone-950">
+              <Card class="h-full dark:bg-stone-950 border-none ">
+                <CardContent class="flex aspect-square items-center justify-center p-6 !h-full">
+                  <img :src="url" alt="Image" class="rounded-md object-cover">
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        </CarouselContent>
+        <!-- <CarouselPrevious /> -->
+        <CarouselNext v-if="canScrollNext" id="123" class="hidden clique" />
+      </Carousel>
     </section>
   </main>
 </template>
