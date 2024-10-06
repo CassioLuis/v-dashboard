@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import { useForm } from 'vee-validate'
-import { Loader2 } from 'lucide-vue-next'
+import { Ban, CheckCheck, Loader2 } from 'lucide-vue-next'
 import User from '@/service/register.service.js'
 import { zodSchema } from '@/schemas/zod.registerform'
 import {
@@ -70,18 +70,18 @@ function resetRegisterStatus() {
 
     <div v-if="registerStatus.error" class="col-span-12">
       <Alert variant="destructive">
+        <Ban class="w-4 h-4" />
         <AlertTitle class="font-semibold">
           Erro!
         </AlertTitle>
-        <AlertDescription>
-          Cadastro não efetuado.
-        </AlertDescription>
+        <AlertDescription>Cadastro não efetuado.</AlertDescription>
       </Alert>
       <a class="mt-4 text-center link" href="#" @click.prevent="resetRegisterStatus">Voltar para registro</a>
     </div>
 
     <div v-else-if="!registerStatus.error && registerStatus.success" class="col-span-12">
       <Alert variant="success">
+        <CheckCheck class="w-4 h-4" />
         <AlertTitle class="font-semibold">
           Sucesso!
         </AlertTitle>

@@ -4,7 +4,7 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import { useField, useForm } from 'vee-validate'
 import { storeToRefs } from 'pinia'
-import { Loader2 } from 'lucide-vue-next'
+import { CheckCheck, Loader2 } from 'lucide-vue-next'
 import User from '../../../../service/register.service'
 import { useAppStore } from '../../../../stores/application'
 import { zodSchema } from '../../../../schemas/zod.changePass'
@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 const router = useRouter()
 
@@ -60,7 +61,7 @@ async function onValidePass(values: UserValues, { resetForm }: any) {
 
 <template>
   <div class="col-span-12 grid grid-cols-12 gap-y-4">
-    <div class="col-span-12">
+    <div v-if="!recoverStatus.recovered" class="col-span-12">
       <h1 class="col-span-12 self-end text-2xl font-semibold bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
         Esquece a senha?
       </h1>
@@ -68,21 +69,11 @@ async function onValidePass(values: UserValues, { resetForm }: any) {
         Configure sua nova senha!
       </p>
     </div>
-    <div v-if="recoverStatus.recovered" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-teal-50 border border-teal-200 rounded-md p-4" role="alert">
-      <div class="flex">
-        <div class="flex-shrink-0">
-          <svg class="h-4 w-4 text-teal-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-          </svg>
-        </div>
-        <div class="ml-3">
-          <div class="text-sm text-teal-800 font-normal">
-            Senha alterada com sucesso!
-            <a class="block text-black font-semibold hover:underline" href="#" @click.prevent="router.push('/login')">Ir para o login.</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Alert v-if="recoverStatus.recovered" variant="success" class="col-span-12">
+      <CheckCheck class="w-4 h-4" />
+      <AlertTitle>Sucesso!</AlertTitle>
+      <AlertDescription>Senha alterada com sucesso!</AlertDescription>
+    </Alert>
 
     <form v-else class="col-span-12 grid grid-cols-12 gap-y-9" @submit.prevent="recover">
       <FormField name="password">

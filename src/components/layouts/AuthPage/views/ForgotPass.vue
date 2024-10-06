@@ -64,7 +64,6 @@ watch(recoverStatus, () => {
     </h1>
     <FormField v-if="!recoverStatus.mailSended" name="email">
       <FormItem class="col-span-12">
-        <!-- <FormLabel>E-mail</FormLabel> -->
         <FormControl>
           <Input v-model="recoverStatus.email" type="email" placeholder="E-mail" class="placeholder:text-gray-200" />
         </FormControl>
