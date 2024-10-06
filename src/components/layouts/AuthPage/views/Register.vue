@@ -95,9 +95,6 @@ function resetRegisterStatus() {
     <form v-else class="col-span-12 flex flex-col !gap-9" @submit="register">
       <FormField v-slot="{ componentField }" name="trueName">
         <FormItem class="flex flex-col col-span-12 relative">
-          <!-- <FormLabel class="!font-semibold">
-            Nome
-          </FormLabel> -->
           <FormControl>
             <Input type="text" v-bind="componentField" placeholder="Nome Pessoal" class="placeholder:text-gray-300" />
           </FormControl>
@@ -107,9 +104,6 @@ function resetRegisterStatus() {
 
       <FormField v-slot="{ componentField }" name="name">
         <FormItem class="flex flex-col col-span-12 relative">
-          <!-- <FormLabel class="!font-semibold">
-            Login no jogo
-          </FormLabel> -->
           <FormControl>
             <Input type="text" v-bind="componentField" placeholder="Login no Jogo" class="placeholder:text-gray-300" />
           </FormControl>
@@ -119,7 +113,6 @@ function resetRegisterStatus() {
 
       <FormField v-slot="{ componentField }" name="email">
         <FormItem class="flex flex-col col-span-12 relative">
-          <!-- <FormLabel>Email</FormLabel> -->
           <FormControl>
             <Input type="text" v-bind="componentField" placeholder="E-mail" class="placeholder:text-gray-300" />
           </FormControl>
@@ -129,7 +122,6 @@ function resetRegisterStatus() {
 
       <FormField v-slot="{ componentField }" name="password">
         <FormItem class="flex flex-col col-span-12 relative">
-          <!-- <FormLabel>Senha</FormLabel> -->
           <FormControl>
             <Input type="password" v-bind="componentField" placeholder="Senha" class="placeholder:text-gray-300" />
           </FormControl>
@@ -139,7 +131,6 @@ function resetRegisterStatus() {
 
       <FormField v-slot="{ componentField }" name="passwordConfirm">
         <FormItem class="flex flex-col col-span-12 relative">
-          <!-- <FormLabel>Confirme a senha</FormLabel> -->
           <FormControl>
             <Input type="password" v-bind="componentField" placeholder="Confirmar Senha" class="placeholder:text-gray-300" />
           </FormControl>

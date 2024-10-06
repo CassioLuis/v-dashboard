@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext } from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
 
 const links = [
@@ -55,7 +55,7 @@ function shuffleArray(array: string[]) {
 }
 
 onMounted(() => {
-  setInterval(() => document!.getElementById('123')!.click(), 3000)
+  setInterval(() => document.getElementById('nextCarousel')!.click(), 3000)
 })
 </script>
 
@@ -166,8 +166,8 @@ onMounted(() => {
             </div>
           </CarouselItem>
         </CarouselContent>
-        <!-- <CarouselPrevious /> -->
-        <CarouselNext v-if="canScrollNext" id="123" class="hidden clique" />
+        <CarouselPrevious class="hidden" />
+        <CarouselNext v-if="canScrollNext" id="nextCarousel" class="hidden" />
       </Carousel>
     </section>
   </main>

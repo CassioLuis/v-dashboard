@@ -22,6 +22,7 @@ export default [
   },
   {
     path: '/alterar-senha/:token',
+    // path: '/alterar-senha',
     name: 'ChangePass',
     component: views.ChangePass,
     meta: { layout: 'AuthLayout', requiresAuth: false, isSideMenuOption: false },

@@ -78,7 +78,7 @@ watch(recoverStatus, () => {
 
     <Alert v-else variant="success" class="col-span-12">
       <MailCheck class="w-4 h-4" />
-      <AlertTitle>Menssagem enviada!</AlertTitle>
+      <AlertTitle>Mensagem enviada!</AlertTitle>
       <AlertDescription>Acesse seu o email e siga as instruções!</AlertDescription>
     </Alert>
 
