@@ -17,22 +17,22 @@ import { Card, CardContent } from '@/components/ui/card'
 
 const links = [
   {
-    link: 'https://drive.google.com/file/d/1Cf5B0paFw_wP7ITIyVVANFt3gDU4b9tF/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/1EZgu7HuNcT2-yjB0ZMBbY4YTYGprF7Xu/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 1',
   },
   {
-    link: 'https://drive.google.com/file/d/1bo-IYA6ea3tJqIWaQ95VN8p1eO3Elb0p/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/1vSvQK9puM12qVIKBvCcdqzot3n2QLRXm/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 2',
   },
   {
-    link: 'https://drive.google.com/file/d/1DMOGUTKhUzvimMcIrwM2xRQAF-FMLjl7/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/1AdtEqRFwBRjgdL5H3vN0l1kS0P9qJjBC/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 3',
   },
   {
-    link: 'https://drive.google.com/file/d/1bq-4q8YI_UqECMRCffoYUBov6hSfhidS/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/170J-Mj5mWjEuxeaLAAMBjQ7KrRpt1NMd/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 4',
   },
