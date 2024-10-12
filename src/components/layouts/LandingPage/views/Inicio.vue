@@ -76,7 +76,7 @@ onMounted(() => {
             Bug Cast
           </Badge>
           <Badge variant="outlinePrimary">
-            Rate Alta
+            Rate Média Alta
           </Badge>
           <Badge variant="outlinePrimary">
             Custom
