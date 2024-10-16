@@ -17,22 +17,22 @@ import { Card, CardContent } from '@/components/ui/card'
 
 const links = [
   {
-    link: 'https://drive.google.com/file/d/1EZgu7HuNcT2-yjB0ZMBbY4YTYGprF7Xu/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/1Dr3YJ_6hKlTIDNxAyQxjXNpOJFZaBrS7/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 1',
   },
   {
-    link: 'https://drive.google.com/file/d/1vSvQK9puM12qVIKBvCcdqzot3n2QLRXm/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/1JGUpae0KCeP8jM0m2v0PVM0fDyfen4nz/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 2',
   },
   {
-    link: 'https://drive.google.com/file/d/1AdtEqRFwBRjgdL5H3vN0l1kS0P9qJjBC/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/1FHilpYyUWbiVbkJTahnM9pdoinq7qZ8e/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 3',
   },
   {
-    link: 'https://drive.google.com/file/d/170J-Mj5mWjEuxeaLAAMBjQ7KrRpt1NMd/view?usp=sharing',
+    link: 'https://drive.google.com/file/d/12VfZzWK3ri7smgFfW3_7HSncL4KTMr8P/view?usp=sharing',
     origin: 'Google Drive',
     title: 'Link Alternativo 4',
   },
@@ -103,25 +103,12 @@ onMounted(() => {
                 </DialogDescription>
               </DialogHeader>
               <div class="gap-4 py-4 overflow-hidden">
-                <div class="flex flex-col gap-10">
+                <div class="flex flex-col gap-2">
                   <div v-for="(link, idx) of links" :key="idx">
-                    <div class="flex gap-2">
-                      <DialogTitle class="text-gray-500 dark:text-gray-100">
-                        {{ link.title }}
-                      </DialogTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1443.061 1249.993"
-                      >
-                        <path fill="#3777e3" d="M240.525 1249.993l240.492-416.664h962.044l-240.514 416.664z" />
-                        <path fill="#ffcf63" d="M962.055 833.329h481.006L962.055 0H481.017z" />
-                        <path fill="#11a861" d="M0 833.329l240.525 416.664 481.006-833.328L481.017 0z" />
-                      </svg>
-                      <DialogTitle class="text-gray-300 dark:text-gray-400">
-                        {{ link.origin }}
-                      </DialogTitle>
-                    </div>
                     <a :href="link.link" target="_blank" class="hover:underline text-orange-500">
-                      {{ link.link }}
+                      <Button class="w-full" type="button" variant="outline">
+                        {{ link.title }}
+                      </Button>
                     </a>
                   </div>
                 </div>
@@ -145,8 +132,6 @@ onMounted(() => {
       </div>
     </section>
     <section class="right-section col-span-12 lg:col-span-6 flex justify-center lg:justify-end items-center">
-      <!-- <img src="/landing-img.png" alt="Image" class="rounded-md object-cover"> -->
-      <!-- <img src="/Perfect_world_2.png" alt="Image" class="rounded-md object-cover"> -->
       <Carousel
         v-slot="{ canScrollNext }"
         class="h-full relative w-full"
