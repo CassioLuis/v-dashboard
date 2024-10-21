@@ -69,11 +69,16 @@ async function onValidePass(values: UserValues, { resetForm }: any) {
         Configure sua nova senha!
       </p>
     </div>
-    <Alert v-if="recoverStatus.recovered" variant="success" class="col-span-12">
-      <CheckCheck class="w-4 h-4" />
-      <AlertTitle>Sucesso!</AlertTitle>
-      <AlertDescription>Senha alterada com sucesso!</AlertDescription>
-    </Alert>
+    <div v-if="recoverStatus.recovered" class="col-span-12">
+      <Alert variant="success" class="col-span-12">
+        <CheckCheck class="w-4 h-4" />
+        <AlertTitle>Sucesso!</AlertTitle>
+        <AlertDescription>Senha alterada com sucesso!</AlertDescription>
+      </Alert>
+      <Button variant="link" class="mt-2 w-full" @click.prevent="router.push('/login')">
+        Ir para o login!
+      </Button>
+    </div>
 
     <form v-else class="col-span-12 grid grid-cols-12 gap-y-9" @submit.prevent="recover">
       <FormField name="password">

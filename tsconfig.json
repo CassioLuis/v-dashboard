@@ -22,5 +22,5 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/components/layouts/**/*.vue"
-  ],
+  ]
 }
