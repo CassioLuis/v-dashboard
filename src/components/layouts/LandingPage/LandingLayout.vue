@@ -141,20 +141,30 @@ onMounted(() => {
     <footer
       class="col-span-12 border-t self-end flex flex-col sm:flex-row justify-center sm:gap-4 items-center font-outfit py-8"
     >
-      <Button variant="link" class="text-lg font-semibold">
-        <img src="/instagram.png" alt="" width="20" class="mr-2">
-        instagram
-      </Button>
-      <a href="https://discord.gg/yFwqwk9hwf">
+      <a href="https://discord.gg/yFwqwk9hwf" target="_blank">
         <Button variant="link" class="text-lg font-semibold">
           <img src="/discord.png" alt="" width="20" class="mr-2">
           discord
         </Button>
       </a>
-      <Button variant="link" class="text-lg font-semibold">
-        <img src="/facebook.png" alt="" width="20" class="mr-2">
-        facebook
-      </Button>
+      <a href="https://www.youtube.com/@PerfectWorldBlackstar-i7q" target="_blank">
+        <Button variant="link" class="text-lg font-semibold">
+          <img src="/youtube.png" alt="" width="20" class="mr-2">
+          YouTube
+        </Button>
+      </a>
+      <a href="https://www.instagram.com/pw_blackstar/" target="_blank">
+        <Button variant="link" class="text-lg font-semibold">
+          <img src="/instagram.png" alt="" width="20" class="mr-2">
+          instagram
+        </Button>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61567372379518" target="_blank">
+        <Button variant="link" class="text-lg font-semibold">
+          <img src="/facebook.png" alt="" width="20" class="mr-2">
+          facebook
+        </Button>
+      </a>
     </footer>
   </div>
 </template>
