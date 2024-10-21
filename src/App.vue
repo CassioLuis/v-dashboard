@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { inject } from '@vercel/analytics'
 
 const { currentRoute } = useRouter()
 
@@ -13,8 +14,9 @@ declare global {
 }
 
 onMounted (() => {
+  inject();
   // Carrega o script do Facebook Pixel
-  (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
+  ((f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) => {
     if (f.fbq)
       return
     n = f.fbq = function (...args: any[]) {
