@@ -43,7 +43,7 @@ const createDonation = handleSubmit(onValidForm, onInvalidForm)
 
 function onInvalidForm(invalid: any) {
   return toast({
-    title: 'You submitted the following values:',
+    title: 'Você enviou os seguintes valores:',
     description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(invalid, null, 2))),
   })
 }
@@ -169,9 +169,16 @@ async function onValidForm(values: any, { resetForm }: any) {
               <div class="flex-shrink-0">
                 <img src="/gold-ingot-chinese.png" class="w-10 h-10">
               </div>
-              <div>
-                <AlertDescription class="flex items-center">
-                  A Cada<span class="flex font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="flex font-semibold">&nbsp;1.000 Golds.</span>
+              <div class="w-full">
+                <AlertDescription class="flex flex-col items-center">
+                  <div class="w-full text-lg">
+                    <del>
+                      A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;<del>1.000</del>&nbsp;Golds.</span>
+                    </del>
+                  </div>
+                  <div class="w-full text-lg text-green-500">
+                    Nos primeiros 3 dias após o lançamento, cash em <span class="font-semibold">DOBRO</span>. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
+                  </div>
                 </AlertDescription>
               </div>
             </Alert>
