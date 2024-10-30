@@ -141,7 +141,7 @@ onMounted(() => {
     <footer
       class="col-span-12 border-t self-end flex flex-col sm:flex-row justify-center sm:gap-4 items-center font-outfit py-8"
     >
-      <a href="https://discord.gg/yFwqwk9hwf" target="_blank">
+      <a href="https://discord.gg/W9XRQJZ82C" target="_blank">
         <Button variant="link" class="text-lg font-semibold">
           <img src="/discord.png" alt="" width="20" class="mr-2">
           discord
