@@ -38,7 +38,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="col-span-12 self-start grid grid-cols-12 font-domine py-8">
+  <main class="col-span-12 self-start grid grid-cols-12 font-domine">
     <section class="left-section col-span-12 lg:col-span-6 flex items-center">
       <div>
         <h1

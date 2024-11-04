@@ -135,7 +135,7 @@ onMounted(() => {
         </SheetContent>
       </Sheet>
     </nav>
-    <div class="col-span-12 overflow-y-auto md:overflow-hidden">
+    <div class="col-span-12 overflow-y-auto">
       <slot />
     </div>
     <footer
