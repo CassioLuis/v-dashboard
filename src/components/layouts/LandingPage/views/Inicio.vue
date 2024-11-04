@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import links from './downloadLinks'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,29 +15,6 @@ import {
 } from '@/components/ui/dialog'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
-
-const links = [
-  {
-    link: 'https://drive.google.com/file/d/1Dr3YJ_6hKlTIDNxAyQxjXNpOJFZaBrS7/view?usp=sharing',
-    origin: 'Google Drive',
-    title: 'Link Alternativo 1',
-  },
-  {
-    link: 'https://drive.google.com/file/d/1JGUpae0KCeP8jM0m2v0PVM0fDyfen4nz/view?usp=sharing',
-    origin: 'Google Drive',
-    title: 'Link Alternativo 2',
-  },
-  {
-    link: 'https://drive.google.com/file/d/1FHilpYyUWbiVbkJTahnM9pdoinq7qZ8e/view?usp=sharing',
-    origin: 'Google Drive',
-    title: 'Link Alternativo 3',
-  },
-  {
-    link: 'https://drive.google.com/file/d/12VfZzWK3ri7smgFfW3_7HSncL4KTMr8P/view?usp=sharing',
-    origin: 'Google Drive',
-    title: 'Link Alternativo 4',
-  },
-]
 
 const img = [
   'characters.png',

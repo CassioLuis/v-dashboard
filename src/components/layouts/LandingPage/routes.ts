@@ -13,12 +13,12 @@ export default [
   //   component: views.Info,
   //   meta: { layout: 'LandingLayout' },
   // },
-  // {
-  //   path: '/download',
-  //   name: 'Download',
-  //   component: views.Download,
-  //   meta: { layout: 'LandingLayout' },
-  // },
+  {
+    path: '/download',
+    name: 'Download',
+    component: views.Download,
+    meta: { layout: 'LandingLayout' },
+  },
   {
     path: '/donation',
     name: 'Doação',
