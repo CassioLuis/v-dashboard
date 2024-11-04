@@ -7,8 +7,8 @@ const navigate = (url: any) => window.location.assign(url)
 </script>
 
 <template>
-  <div class="bg-image h-screen flex flex-col items-center !overflow-auto select-none font-roboto">
-    <Card class="w-full sm:w-[350px] !rounded-none glass min-h-screen !h-full">
+  <div class="w-full h-full bg-image flex justify-center items-start !overflow-auto select-none font-roboto">
+    <Card class="w-full sm:w-[350px] !rounded-none glass min-h-full">
       <CardHeader class="flex justify-center items-center">
         <Avatar class="h-36 w-36 !bg-transparent">
           <AvatarImage
