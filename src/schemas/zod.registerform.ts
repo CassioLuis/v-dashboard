@@ -34,7 +34,7 @@ async function getByLogin(data: ZodObject) {
 }
 
 const nameRefine = {
-  message: 'Login em uso.',
+  message: 'Login inválido.',
   path: ['name'],
 }
 
@@ -56,7 +56,7 @@ async function getByEmail(data: ZodObject) {
 }
 
 const emailRefine = {
-  message: 'E-mail em uso.',
+  message: 'Digite um email válido.',
   path: ['email'],
 }
 

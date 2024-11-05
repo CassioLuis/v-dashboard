@@ -177,7 +177,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                     </del>
                   </div>
                   <div class="w-full text-lg text-green-500">
-                    Cash em <span class="font-semibold">DOBRO</span> até 05/11/2024 às 23:59:00 horas. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
+                    Cash em <span class="font-semibold">DOBRO</span> para os primeiros 20 donates. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
                   </div>
                 </AlertDescription>
               </div>
