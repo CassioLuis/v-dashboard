@@ -23,7 +23,7 @@ function toggleDarkMode() {
 
 onMounted(() => {
   document.addEventListener('DOMContentLoaded', () => {
-    const defaultAddClasses = ['opacity-0', 'transition-all', 'ease-in-out', 'duration-1000']
+    const defaultAddClasses = ['opacity-0', 'transition-transform', 'ease-in-out', 'duration-200']
     const defaultRemoveClasses = ['opacity-0', '-translate-x-40', 'translate-x-40']
 
     const nav = document.querySelector('nav')

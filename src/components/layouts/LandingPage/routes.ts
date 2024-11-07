@@ -14,9 +14,9 @@ export default [
       window.location.href = 'https://infos.pwblackstar.com/'
     },
     component: views.Info,
-    // meta: {
-    //   layout: 'LandingLayout',
-    // },
+    meta: {
+      layout: 'LandingLayout',
+    },
   },
   {
     path: '/download',
@@ -35,5 +35,16 @@ export default [
     name: 'Registro',
     component: () => import('@/components/layouts/AuthPage/views/Register.vue'),
     meta: { layout: 'AuthLayout' },
+  },
+  {
+    path: '/vote-top-100-server',
+    name: 'Vote Top-100 Servers',
+    beforeEnter() {
+      window.location.href = 'https://www.xtremetop100.com/in.php?site=1132376500'
+    },
+    component: views.Info,
+    meta: {
+      adcStyle: 'bg-emerald-300 dark:bg-emerald-500',
+    },
   },
 ]

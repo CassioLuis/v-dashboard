@@ -24,9 +24,14 @@ const inactiveClass = navigationMenuTriggerStyle()
   <NavigationMenu>
     <NavigationMenuList>
       <NavigationMenuItem class="flex gap-2" :class="`flex-${props.orientation}`">
-        <router-link v-for="(route, idx) in landingLayoutRoute" :key="idx" to="" @click="navigate(route.path)">
+        <router-link
+          v-for="(route, idx) in landingLayoutRoute"
+          :key="idx"
+          to=""
+          @click="navigate(route.path)"
+        >
           <NavigationMenuLink
-            :class="[$route.path === route.path ? activeClass : inactiveClass]"
+            :class="[$route.path === route.path ? activeClass : inactiveClass, route.meta?.adcStyle]"
             class="cursor-pointer"
           >
             {{ route.name }}
