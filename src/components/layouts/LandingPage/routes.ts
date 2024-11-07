@@ -7,12 +7,17 @@ export default [
     component: views.Inicio,
     meta: { layout: 'LandingLayout' },
   },
-  // {
-  //   path: '/info',
-  //   name: 'Info',
-  //   component: views.Info,
-  //   meta: { layout: 'LandingLayout' },
-  // },
+  {
+    path: '/info',
+    name: 'Info',
+    beforeEnter() {
+      window.location.href = 'https://infos.pwblackstar.com/'
+    },
+    // component: views.Info,
+    // meta: {
+    //   layout: 'LandingLayout',
+    // },
+  },
   {
     path: '/download',
     name: 'Download',
