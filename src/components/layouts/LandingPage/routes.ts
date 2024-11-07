@@ -13,7 +13,7 @@ export default [
     beforeEnter() {
       window.location.href = 'https://infos.pwblackstar.com/'
     },
-    // component: views.Info,
+    component: views.Info,
     // meta: {
     //   layout: 'LandingLayout',
     // },
