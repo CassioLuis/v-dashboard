@@ -60,8 +60,20 @@ const emailRefine = {
   path: ['email'],
 }
 
+function upperCaseLoginNotPermited(data: ZodObject) {
+  if (data.name === data.name.toLowerCase())
+    return true
+  return false
+}
+
+function whiteSpacesLoginNotPermited(data: ZodObject) {
+  if (data.name.includes(' '))
+    return false
+  return true
+}
+
 export const zodSchema = zod.object({
-  trueName: zod.string().nonempty('Digite o nome.').min(6, { message: 'O nome deve ter no mínimo 6 caracteres.' }).default(''),
+  trueName: zod.string().nonempty('Digite o nome.').min(4, { message: 'O nome deve ter no mínimo 4 caracteres.' }).default(''),
   name: zod.string().nonempty('Digite o login.').min(4, { message: 'O login deve ter no mínimo 4 caracteres.' }).max(16, { message: 'O login deve ter no máximo 16 caracteres.' }).default(''),
   email: zod.string().nonempty('Digite o email.').email({ message: 'Digite um email válido.' }).toLowerCase().default(''),
   password: zod.string().nonempty('Digite a senha.').min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }).default(''),
@@ -79,3 +91,11 @@ export const zodSchema = zod.object({
   })
   .refine(getByLogin, nameRefine)
   .refine(getByEmail, emailRefine)
+  .refine(upperCaseLoginNotPermited, {
+    message: 'Não é permitido letras maiúsculas.',
+    path: ['name'],
+  })
+  .refine(whiteSpacesLoginNotPermited, {
+    message: 'Não é permitido espaços.',
+    path: ['name'],
+  })
