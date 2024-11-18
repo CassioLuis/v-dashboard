@@ -44,7 +44,7 @@ export default [
     },
     component: views.Info,
     meta: {
-      adcStyle: 'bg-gradient-to-r from-emerald-300 to-emerald-500',
+      adcStyle: 'bg-gradient-to-r from-emerald-300 to-emerald-500 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl',
     },
   },
 ]
