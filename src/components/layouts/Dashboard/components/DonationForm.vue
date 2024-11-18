@@ -171,14 +171,12 @@ async function onValidForm(values: any, { resetForm }: any) {
               </div>
               <div class="w-full">
                 <AlertDescription class="flex flex-col items-center">
-                  <div class="w-full text-lg">
-                    <del>
-                      A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;<del>1.000</del>&nbsp;Golds.</span>
-                    </del>
-                  </div>
                   <div class="w-full text-lg text-green-500">
-                    Cash em <span class="font-semibold">DOBRO</span> para os primeiros 20 donates. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
+                    A Cada<span class="font-semibold"> R$ 1,00 </span>Você receberá<span class="font-semibold"> 1.000 Golds.</span>
                   </div>
+                  <!-- <div class="w-full text-lg text-green-500">
+                    Cash em <span class="font-semibold">DOBRO</span> para os primeiros 20 donates. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
+                  </div> -->
                 </AlertDescription>
               </div>
             </Alert>
