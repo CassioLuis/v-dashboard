@@ -177,8 +177,11 @@ async function onValidForm(values: any, { resetForm }: any) {
                     </div>
                   </del>
 
-                  <div class="w-full text-lg text-green-500">
-                    Cupom de <span class="font-semibold"> +50%</span> está ativo, a cada<span class="font-semibold"> R$ 1,00 </span>Você receberá<span class="font-semibold"> 1.500 Golds.</span>
+                  <div class="w-full text-lg text-green-500 flex flex-col">
+                    <span>
+                      Cupom de <span class="font-semibold"> +50%</span> está ativo, a cada<span class="font-semibold"> R$ 1,00 </span>Você receberá<span class="font-semibold"> 1.500 Golds.</span>
+                    </span>
+                    <span class="text-xs text-zinc-400 font-semibold">Válido até 30/11/2024</span>
                   </div>
                   <!-- <div class="w-full text-lg text-green-500">
                     Cash em <span class="font-semibold">DOBRO</span> para os primeiros 20 donates. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
