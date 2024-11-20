@@ -113,7 +113,7 @@ async function onValidForm(values: any, { resetForm }: any) {
                 </FormItem>
               </FormField>
 
-              <FormField v-slot="{ componentField }" name="number">
+              <FormField v-slot="{ componentField }" name="cpf">
                 <FormItem>
                   <FormLabel>CPF</FormLabel>
                   <FormControl>
