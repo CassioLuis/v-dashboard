@@ -170,9 +170,15 @@ async function onValidForm(values: any, { resetForm }: any) {
                 <img src="/gold-ingot-chinese.png" class="w-10 h-10">
               </div>
               <div class="w-full">
-                <AlertDescription class="flex flex-col items-center">
+                <AlertDescription class="flex gap-2 flex-col items-center">
+                  <del class="w-full">
+                    <div class="w-full text-lg text-red-500">
+                      A Cada<span class="font-semibold"> R$ 1,00 </span>Você receberá<span class="font-semibold"> 1.000 Golds.</span>
+                    </div>
+                  </del>
+
                   <div class="w-full text-lg text-green-500">
-                    A Cada<span class="font-semibold"> R$ 1,00 </span>Você receberá<span class="font-semibold"> 1.000 Golds.</span>
+                    Cupom de <span class="font-semibold"> +50%</span> está ativo, a cada<span class="font-semibold"> R$ 1,00 </span>Você receberá<span class="font-semibold"> 1.500 Golds.</span>
                   </div>
                   <!-- <div class="w-full text-lg text-green-500">
                     Cash em <span class="font-semibold">DOBRO</span> para os primeiros 20 donates. A Cada<span class="font-semibold">&nbsp;R$ 1,00&nbsp;</span>Você receberá<span class="font-semibold">&nbsp;2.000 Golds.</span>
