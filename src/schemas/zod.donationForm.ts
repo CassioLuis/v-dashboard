@@ -21,5 +21,5 @@ export const donationSchema = zod.object({
       invalid_type_error: 'Digite o valor.',
     })
     .int()
-    .min(10, { message: 'O Valor mínimo é de R$ 10,00' }),
+    .min(5, { message: 'O Valor mínimo é de R$ 5,00' }),
 })
